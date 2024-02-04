@@ -12,6 +12,9 @@ const config: Config = {
         '13': 'repeat(13, minmax(0, 1fr))',
       },
       colors: {
+        'background': '#F3F4F6', // light gray
+        'foreground': '#1F2937', // dark gray
+     
         blue: {
           400: '#2589FE',
           500: '#0070F3',

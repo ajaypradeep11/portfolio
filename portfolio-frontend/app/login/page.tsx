@@ -1,15 +1,19 @@
 "use client"
-import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
-import { Engine, Render, Events, World, Bodies, Composite, Vertices, Svg, Mouse, MouseConstraint, Bounds, } from 'matter-js';
+import { Engine, Render, Events, World, Bodies, Composite, Mouse, MouseConstraint, Bounds, } from 'matter-js';
 import { useEffect } from 'react';
 import LoginFormImage from '@/app/asset/loginbutton.png';
 import SigninImage from '@/app/asset/signin.png';
 import AuthenticateImage from '@/app/asset/authenticate.png';
 import EnterImage from '@/app/asset/enter.png';
 import AccessImage from '@/app/asset/access.png';
+import { authenticate } from '../lib/actions';
+import { useFormState } from 'react-dom';
+import { Button } from '../ui/button';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 
 export default function LoginPage() {
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   useEffect(() => {
     const gameContainer = document.getElementById('game-container');
     if (gameContainer && gameContainer.firstChild) {
@@ -46,16 +50,73 @@ export default function LoginPage() {
     // create objects
 
     // art & design
-    var illustration = Bodies.rectangle(90, 500, 133, 40, { chamfer: { radius: radius }, render: { sprite: { texture: LoginFormImage.src, xScale: 0.2, yScale: 0.2 } } })
-    var art = Bodies.rectangle(235, 460, 56, 40, { chamfer: { radius: radius }, render: { sprite: { texture: SigninImage.src, xScale: 0.2, yScale: 0.2  } } })
-    var threeD = Bodies.rectangle(190, 460, 52, 40, { chamfer: { radius: radius }, render: { sprite: { texture: AuthenticateImage.src, xScale: 0.2, yScale: 0.2  } } })
-    var graphic = Bodies.rectangle(160, 420, 105, 40, { chamfer: { radius: radius }, render: { sprite: { texture: EnterImage.src, xScale: 0.2, yScale: 0.2  } } })
-    var photo = Bodies.rectangle(250, 380, 86, 40, { chamfer: { radius: radius }, render: { sprite: { texture: AccessImage.src, xScale: 0.2, yScale: 0.2  } } })
+    var illustration = Bodies.rectangle(90, 500, 203, 40, { chamfer: { radius: radius }, render: { sprite: { texture: LoginFormImage.src, xScale: 0.2, yScale: 0.2 } } })
+    var art = Bodies.rectangle(235, 460, 203, 40, { chamfer: { radius: radius }, render: { sprite: { texture: SigninImage.src, xScale: 0.2, yScale: 0.2 } } })
+    var threeD = Bodies.rectangle(190, 460, 203, 40, { chamfer: { radius: radius }, render: { sprite: { texture: AuthenticateImage.src, xScale: 0.2, yScale: 0.2 } } })
+    var graphic = Bodies.rectangle(160, 420, 203, 40, { chamfer: { radius: radius }, render: { sprite: { texture: EnterImage.src, xScale: 0.2, yScale: 0.2 } } })
+    var photo = Bodies.rectangle(250, 380, 203, 40, { chamfer: { radius: radius }, render: { sprite: { texture: AccessImage.src, xScale: 0.2, yScale: 0.2 } } })
+    var x = window.innerWidth  / 2; // center the box horizontally
+    var y = (window.innerHeight + 480 )/ 2; // center the box vertically
+    var width = 250; // replace with your width
+    var height = 150; // replace with your height    var width = 250; // replace with your width
+    var thickness = 10; // replace with your desired thickness
+    var box = Bodies.rectangle(x, y, width, height, {
+      isStatic: true, // make the box static
+      isSensor: true, // make the box a sensor
+      render: {
+        fillStyle: '#080808',
+        lineWidth: 1,
+        opacity: 0, // set the opacity to 50%
+      }
+    });
+    // Create the bottom of the box
+    var bottom = Bodies.rectangle(x, y + height / 2, width, thickness, {
+      isStatic: true,
+      // isSensor: true,
+      render: {
+        fillStyle: '#080808',
+        lineWidth: 1,
+        opacity: 0.5,
+      }
+    });
+
+    // Create the left side of the box
+    var left = Bodies.rectangle(x - width / 2, y, thickness, height, {
+      isStatic: true,
+      // isSensor: true,
+      render: {
+        fillStyle: '#080808',
+        lineWidth: 1,
+        opacity: 0.5,
+      }
+    });
+
+    // Create the right side of the box
+    var right = Bodies.rectangle(x + width / 2, y, thickness, height, {
+      isStatic: true,
+      // isSensor: true,
+      render: {
+        fillStyle: '#080808',
+        lineWidth: 1,
+        opacity: 0.5,
+      }
+    });
 
     World.add(engine.world, [
-      ground, wallLeft, wallRight, roof, illustration,art, threeD, graphic, photo,
+      ground, wallLeft, wallRight, roof, illustration, art, threeD, graphic, photo, bottom, left, right, box
     ]);
-
+    Events.on(engine, 'collisionStart', function (event) {
+      var pairs = event.pairs;
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i];
+        if ((pair.bodyA === illustration && pair.bodyB === box) || (pair.bodyA === box && pair.bodyB === illustration)) {
+          const buttonElement = document.getElementById('something');
+          if (buttonElement) {
+            buttonElement.click();
+          }
+        }
+      }
+    });
     var mouse = Mouse.create(render.canvas),
       mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
@@ -69,53 +130,19 @@ export default function LoginPage() {
 
     World.add(world, mouseConstraint);
 
-    // keep the mouse in sync with rendering
     render.mouse = mouse;
 
-    // Allow page scrolling in matter.js window
-    // mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-    // mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
-
-    // Detect clicks vs. drags
     let click = false;
 
     document.addEventListener('mousedown', () => click = true);
     document.addEventListener('mousemove', () => click = false);
     document.addEventListener('mouseup', () => console.log(click ? 'click' : 'drag'));
 
-    // // Create a On-Mouseup Event-Handler
-    // Events.on(mouseConstraint, 'mouseup', function (event: { source: any; }) {
-    //   var mouseConstraint = event.source;
-    //   var bodies = engine.world.bodies;
-    //   if (!mouseConstraint.bodyB) {
-    //     for (var i = 0; i < bodies.length; i++) {
-    //       var body = bodies[i];
-    //       // Check if clicked or dragged
-    //       if (click === true) {
-    //         if (body && body.bounds && mouseConstraint && mouseConstraint.mouse && mouseConstraint.mouse.position) {
-    //           if (Bounds.contains(body.bounds, mouseConstraint.mouse.position)) {
-    //             var bodyUrl = body.url;
-    //             console.log("Body.Url >> " + bodyUrl);
-    //             // Hyperlinking feature
-    //             if (bodyUrl != undefined) {
-    //               //window.location.href = bodyUrl;
-    //               window.open(bodyUrl, '_blank');
-    //               console.log("Hyperlink was opened");
-    //             }
-    //             break;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // });
-
-    // run the engine
     Engine.run(engine);
 
-    // run the renderer
     Render.run(render);
   }, []);
+
   return (
     <main className="custom-bg flex items-center justify-center md:h-screen">
       <div id="game-container" className="absolute inset-0 z-0"></div>
@@ -125,7 +152,24 @@ export default function LoginPage() {
             <AcmeLogo />
           </div>
         </div> */}
-        <LoginForm />
+        <form action={dispatch} className="space-y-3">
+          <LoginForm />
+          <div
+            className="flex h-8 items-end space-x-1"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {errorMessage && (
+              <>
+                <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                <p className="text-sm text-red-500">{errorMessage}</p>
+              </>
+            )}
+          </div>
+          <Button id='something' className="small-button mt-4 w-full" style={{display: 'none'}}>
+            Log in
+          </Button>
+        </form>
       </div>
     </main>
   );

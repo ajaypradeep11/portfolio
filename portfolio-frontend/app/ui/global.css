@@ -25,6 +25,14 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px rgb(23, 23, 23) inset;
 }
 
+input:-webkit-autofill:focus {
+  /* -webkit-text-fill-color: #31b0dd; */
+  /* -webkit-box-shadow: 0 0 0px 40rem #ffff inset; */
+  border: 1px solid rgb(64, 64, 64);
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px rgb(23, 23, 23) inset;
+}
+
 .custom-bg {
   background-color: rgb(23, 23, 23);
 }
@@ -36,14 +44,45 @@ input:-webkit-autofill {
 
 .custom-input {
   border: 1px solid rgb(64, 64, 64);
+  background-color: rgb(23, 23, 23);
+  color: white;
+}
+
+.custom-table {
+  /* border: 1px solid rgb(64, 64, 64); */
+  background-color: rgb(23, 23, 23);
+  color: white;
+}
+
+.custom-table-bg {
+  border: 1px solid rgb(64, 64, 64);
   background-color: rgba(0,0,0,.8);
   color: white;
 }
 
+.only-border-bg {
+  border: 1px solid rgb(64, 64, 64);
+  /* background-color: rgba(0,0,0,.8);
+  color: white; */
+}
+
 .small-button {
+
   width: 180px
 }
 
 .custom-border {
   border-color: rgb(64 64 64/var(--tw-border-opacity));
 }
+
+#game-container canvas {
+  background-color:  rgb(23, 23, 23) !important;
+}
+  /* width: 100vw;
+  margin: 0;
+  overflow-x: hidden; */
+/* } */
+
+/*.login-form {
+  background: transparent;
+} */

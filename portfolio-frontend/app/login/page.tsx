@@ -21,7 +21,7 @@ export default function LoginPage() {
 
     // create a renderer
     var render = Render.create({
-      element: gameContainer,
+      element: gameContainer || undefined,
       engine: engine,
       options: {
         width: window.innerWidth,

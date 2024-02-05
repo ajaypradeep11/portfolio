@@ -73,8 +73,8 @@ export default function LoginPage() {
     render.mouse = mouse;
 
     // Allow page scrolling in matter.js window
-    mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-    mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+    // mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+    // mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
 
     // Detect clicks vs. drags
     let click = false;
@@ -83,32 +83,32 @@ export default function LoginPage() {
     document.addEventListener('mousemove', () => click = false);
     document.addEventListener('mouseup', () => console.log(click ? 'click' : 'drag'));
 
-    // Create a On-Mouseup Event-Handler
-    Events.on(mouseConstraint, 'mouseup', function (event: { source: any; }) {
-      var mouseConstraint = event.source;
-      var bodies = engine.world.bodies;
-      if (!mouseConstraint.bodyB) {
-        for (var i = 0; i < bodies.length; i++) {
-          var body = bodies[i];
-          // Check if clicked or dragged
-          if (click === true) {
-            if (body && body.bounds && mouseConstraint && mouseConstraint.mouse && mouseConstraint.mouse.position) {
-              if (Bounds.contains(body.bounds, mouseConstraint.mouse.position)) {
-                var bodyUrl = body.url;
-                console.log("Body.Url >> " + bodyUrl);
-                // Hyperlinking feature
-                if (bodyUrl != undefined) {
-                  //window.location.href = bodyUrl;
-                  window.open(bodyUrl, '_blank');
-                  console.log("Hyperlink was opened");
-                }
-                break;
-              }
-            }
-          }
-        }
-      }
-    });
+    // // Create a On-Mouseup Event-Handler
+    // Events.on(mouseConstraint, 'mouseup', function (event: { source: any; }) {
+    //   var mouseConstraint = event.source;
+    //   var bodies = engine.world.bodies;
+    //   if (!mouseConstraint.bodyB) {
+    //     for (var i = 0; i < bodies.length; i++) {
+    //       var body = bodies[i];
+    //       // Check if clicked or dragged
+    //       if (click === true) {
+    //         if (body && body.bounds && mouseConstraint && mouseConstraint.mouse && mouseConstraint.mouse.position) {
+    //           if (Bounds.contains(body.bounds, mouseConstraint.mouse.position)) {
+    //             var bodyUrl = body.url;
+    //             console.log("Body.Url >> " + bodyUrl);
+    //             // Hyperlinking feature
+    //             if (bodyUrl != undefined) {
+    //               //window.location.href = bodyUrl;
+    //               window.open(bodyUrl, '_blank');
+    //               console.log("Hyperlink was opened");
+    //             }
+    //             break;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
 
     // run the engine
     Engine.run(engine);

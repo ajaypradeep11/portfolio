@@ -60,6 +60,11 @@ input:-webkit-autofill:focus {
   color: white;
 }
 
+.custom-table-bg1 {
+  background-color: rgba(0,0,0,.8);
+  color: white;
+}
+
 .only-border-bg {
   border: 1px solid rgb(64, 64, 64);
   /* background-color: rgba(0,0,0,.8);

@@ -6,7 +6,12 @@
 module.exports = {
     experimental: {
         serverActions: {
-            allowedOrigins: ["portfolio-frontend-service-e7of7w5qiq-uk.a.run.app:3000"],
+            allowedOrigins: [
+                "localhost:3000",
+                "portfolio-frontend-e7of7w5qiq-uk.a.run.app",
+                "portfolio.ajaypradeep.com"
+              ]
         },
     },
 }
+

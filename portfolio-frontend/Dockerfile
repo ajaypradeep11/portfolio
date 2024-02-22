@@ -31,7 +31,7 @@ COPY package*.json ./
 # # Rebuild the bcrypt package
 # RUN npm rebuild bcrypt
 # Install production and development dependencies
-RUN npm install
+RUN npm install --omit=dev
 
 COPY . .
 

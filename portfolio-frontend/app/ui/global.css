@@ -34,7 +34,11 @@ input:-webkit-autofill:focus {
 }
 
 .custom-bg {
-  background-color: rgb(23, 23, 23);
+  background-color: rgb(10, 10, 10);
+}
+
+.transparent-bg {
+  background-color: transparent;
 }
 
 .custom-bg-grey {
@@ -81,7 +85,7 @@ input:-webkit-autofill:focus {
 }
 
 #game-container canvas {
-  background-color:  rgb(23, 23, 23) !important;
+  background-color: rgb(10, 10, 10) !important;
 }
   /* width: 100vw;
   margin: 0;
@@ -91,3 +95,12 @@ input:-webkit-autofill:focus {
 /*.login-form {
   background: transparent;
 } */
+
+.technologies {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100px; /* Adjust the size as needed */
+  height: auto;
+  margin: 0 10px; /* Adjust spacing between logos */
+}

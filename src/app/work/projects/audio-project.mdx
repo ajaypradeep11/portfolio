@@ -1,0 +1,82 @@
+---
+title: "Guess the Beat (C++ / FMOD / OpenGL)"
+publishedAt: "2022-10-01"
+summary: "A rhythm-based audio guessing game implemented in C++ with FMOD, supporting multiple levels, sampled/streaming sounds, DSP effects, and external file-based audio configuration. Runs in Debug X64 mode."
+images:
+
+team:
+  - name: "Pradeep"
+    role: "Developer / Student"
+    avatar: "/images/avatar.png"
+    linkedIn: "https://www.linkedin.com/in/majaypradeep/"
+---
+<iframe height="315" src="https://www.youtube.com/embed/your-video-id" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Overview
+
+**Guess the Beat** is an interactive audio game developed in **C++ with FMOD and OpenGL**, designed to test the player’s rhythm recognition skills.  
+
+The game features **three levels**, each introducing unique challenges and audio cues. Players must correctly identify beats within limited attempts to progress through the levels. A combination of **streaming sounds, sampled sounds, DSP effects, and external file loading** make this project both technically rich and gameplay engaging.  
+
+The game runs in **Debug X64 mode** and provides a flexible audio system that allows for replacing sound files without recompilation.
+
+## Gameplay
+
+- The game consists of **Level 1, 2, and 3**.  
+- Each level gives the player **three attempts**. Failing results in **Game Over**.  
+- A **beat is played with Q**, and the player must guess it correctly from given options using **R + number keys (1–4)**.  
+- Successfully completing all three levels results in a win.  
+
+## User Manual
+
+- To change audio without recompiling, replace files in:  
+  `SOLUTION_DIR\common\assets\audio\`  
+- **Streaming Sounds (3)**: Background music (start, in-game, game over).  
+- **Sampled Sounds (8)**:  
+  - Level 1: 4 sound options  
+  - Win/Lose sounds  
+  - Level 2: Left, Right, Center  
+  - Click sound for option selection  
+- **Pause/Play**: Background music can be toggled with `TAB`.  
+- **Attribute Control (5)**: Volume, Pan, Reverb, Lowpass, and Pitch effects applied dynamically.  
+- **External File Loading**:  
+  - `audioGameWonOrLose.txt` → Win/Lose audio  
+  - `audioAutomatedSound.txt` → Automated audio  
+  - `audioQuestionLevel1.txt` → Level 1 options  
+  - `audioQuestionLevel2and3.txt` → Level 2 & 3 options  
+  - `audioBGM.txt` → Background music  
+
+## Controls
+
+- **Enter** → Start the game  
+- **Q** → Replay the given beat  
+- **R** → Replay beat options  
+- **1, 2, 3, 4** → Select beat option  
+- **Tab** → Pause/Play background music  
+- **ESC** → Quit game  
+- **7, 8, 9, 0** → Toggle audio effects for current channel  
+
+### DSP Effect Toggles
+
+- **Z (BGM channel)** → Echo, Flange, Object Pan, Highpass  
+- **X (Voice channel)** → Distortion, Tremolo, Oscillator, Normalize  
+- **C (Options channel)** → Chorus, Pan, Fader, Limiter  
+- **V (Song channel)** → Delay, Convolution Reverb, Lowpass, Compressor  
+
+## Key Features
+
+- **Three Levels** with progressively challenging rhythm guessing.  
+- **Three Streaming BGM Tracks** for intro, in-game, and game over.  
+- **Eight Sampled Sounds** for options and feedback.  
+- **DSP Audio Effects** across multiple channels (BGM, Voice, Options, Song).  
+- **External File-Based Configuration** for dynamic audio updates.  
+- **Pause/Resume Audio** functionality.  
+- **Debug X64 Build** for final submission.  
+
+## Technologies Used
+
+- **C++**: Core implementation.  
+- **FMOD**: Audio system for streaming, sampling, DSP, and attributes.  
+- **OpenGL**: Rendering support for visuals.  
+- **GLFW & GLAD**: Input handling and OpenGL function loading.  
+- **File I/O**: External audio configuration system.  

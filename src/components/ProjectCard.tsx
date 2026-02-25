@@ -19,6 +19,7 @@ interface ProjectCardProps {
   description: string;
   avatars: { src: string }[];
   link: string;
+  ongoing?: boolean;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -29,6 +30,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   avatars,
   link,
+  ongoing,
 }) => {
   return (
     <Column fillWidth gap="m">
@@ -62,7 +64,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 {description}
               </Text>
             )}
-            <Flex gap="24" wrap>
+            <Flex gap="24" wrap vertical="center">
               {content?.trim() && (
                 <SmartLink
                   suffixIcon="arrowRight"
@@ -80,6 +82,36 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 >
                   <Text variant="body-default-s">View project</Text>
                 </SmartLink>
+              )}
+              {ongoing && (
+                <Flex
+                  vertical="center"
+                  gap="8"
+                  paddingX="12"
+                  paddingY="4"
+                  radius="l"
+                  fitWidth
+                  style={{
+                    borderWidth: 1,
+                    borderStyle: "solid",
+                    borderColor: "var(--success-border-strong)",
+                    backgroundColor: "var(--success-background-strong)",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      backgroundColor: "var(--success-solid-strong)",
+                      animation: "pulse 2s ease-in-out infinite",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <Text variant="label-default-s" onBackground="success-strong">
+                    Ongoing
+                  </Text>
+                </Flex>
               )}
             </Flex>
           </Column>

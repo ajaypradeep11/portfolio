@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
-import { AvatarGroup, Button, Column, Flex, Heading, SmartImage, Text } from "@/once-ui/components";
+import { AvatarGroup, Button, Carousel, Column, Flex, Heading, Text } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import { person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
@@ -76,7 +76,7 @@ export default function Project({ params }: WorkParams) {
     })) || [];
 
   return (
-    <Column as="section" maxWidth="m" horizontal="center" gap="l">
+    <Column as="section" maxWidth="xl" horizontal="center" gap="l">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -103,15 +103,48 @@ export default function Project({ params }: WorkParams) {
         <Button href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
           Projects
         </Button>
-        <Heading variant="display-strong-s">{post.metadata.title}</Heading>
+        <Flex gap="m" vertical="center">
+          <Heading variant="display-strong-s">{post.metadata.title}</Heading>
+          {post.metadata.ongoing && (
+            <Flex
+              vertical="center"
+              gap="8"
+              paddingX="12"
+              paddingY="4"
+              radius="l"
+              fitWidth
+              style={{
+                borderWidth: 1,
+                borderStyle: "solid",
+                borderColor: "var(--success-border-strong)",
+                backgroundColor: "var(--success-background-strong)",
+              }}
+            >
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  backgroundColor: "var(--success-solid-strong)",
+                  animation: "pulse 2s ease-in-out infinite",
+                  flexShrink: 0,
+                }}
+              />
+              <Text variant="label-default-s" onBackground="success-strong">
+                Ongoing
+              </Text>
+            </Flex>
+          )}
+        </Flex>
       </Column>
       {post.metadata.images.length > 0 && (
-        <SmartImage
-          priority
+        <Carousel
+          indicator="thumbnail"
           aspectRatio="16 / 9"
-          radius="m"
-          alt="image"
-          src={post.metadata.images[0]}
+          images={post.metadata.images.map((src: string) => ({
+            src,
+            alt: post.metadata.title,
+          }))}
         />
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">

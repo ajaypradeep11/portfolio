@@ -1,0 +1,56 @@
+---
+# Required: Project title displayed on the /work page and project detail page
+title: 'System Design Simulator - React + TypeScript (Full-Stack Developer)'
+
+# Required: Date used for sorting projects (YYYY-MM-DD)
+publishedAt: '2026-02-15'
+
+# Required: Short description shown on the /work listing page
+summary: 'An interactive browser-based simulator with 42 modules covering distributed systems concepts — from caching and load balancing to CAP theorem and architecture patterns — all with live engines, failure injection, and interview prep flashcards.'
+
+# Required: Array of image paths (relative to /public). First image is the hero.
+images:
+  - '/images/projects/system-design-simulator/dash1.png'
+  - '/images/projects/system-design-simulator/dash.png'
+  - '/images/projects/system-design-simulator/dash2.png'
+  - '/images/projects/system-design-simulator/dash3.png'
+  - '/images/projects/system-design-simulator/dash4.png'
+  - '/images/projects/system-design-simulator/dash5.png'
+
+# Required: At least one team member
+team:
+  - name: 'Pradeep'
+    role: 'Full-Stack Developer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+# Optional: External link to live project or repo
+# link: "https://github.com/username/system-design-simulator"
+---
+
+## Overview
+
+System Design Simulator is a fully client-side interactive learning platform for mastering distributed systems and system design concepts. Instead of reading static diagrams or textbooks, users run live simulation engines directly in the browser — injecting failures, toggling algorithms, sending traffic, and watching systems respond in real time. The app covers 42 modules across 13 categories, each with its own pure TypeScript engine, visual output, event logging, guided scenarios, and interview prep flashcards.
+
+## Key Features
+
+- **42 Live Simulation Modules**: Each module has a dedicated simulation engine written in pure TypeScript. Users interact with controls to send requests, trigger failures, switch algorithms, and observe behavior through real-time visualizers and timestamped event logs.
+- **Interactive Mind Map Navigation**: The home page features a pannable, zoomable SVG mind map showing all 42 topics as nodes connected by 46 prerequisite edges. Hovering highlights related topics; clicking navigates directly to a module.
+- **Interview Prep Flashcards**: Every module includes a deck of flashcards (411 total across all modules) with difficulty filtering, shuffle, keyboard navigation, and 3D CSS flip animations — turning the simulator into a complete study tool.
+- **Failure Injection & Auto Traffic**: Every module supports auto-traffic mode that fires random operations on a timer, plus dedicated failure injection buttons (crash servers, inject partitions, simulate floods) to stress-test running simulations.
+- **Guided Scenarios & Help**: A shared right panel on every module provides scenario cards (happy-path, edge-case, failure, comparison) and accordion help sections with contextual concept explanations.
+- **Fuzzy Search**: A global Cmd+K search bar provides instant fuzzy filtering across all 42 modules by name, description, and category.
+
+## Technologies Used
+
+- **React 19 + TypeScript 5.9**: Chosen for its component model and type safety. All 42 modules are code-split via `React.lazy` and `Suspense` for fast initial load. Navigation is managed with pure React state — no router library needed.
+- **Vite 7**: Used as the build tool for near-instant HMR during development and optimized production builds with automatic code splitting.
+- **Tailwind CSS 3 + Radix UI**: Tailwind provides utility-first styling with full light/dark theme support via CSS custom properties. Radix UI supplies accessible, unstyled headless primitives (accordion, tabs, select, scroll area) styled with Tailwind.
+- **Pure TypeScript Simulation Engines**: Every module has a framework-agnostic engine class with zero React imports. Engines like `LRUCache` (doubly-linked list + hash map), `ReplicationEngine` (leader-follower with failover, 714 lines), and `CircuitBreakerEngine` (state machine) implement real algorithms, not mock data.
+
+## Challenges and Learnings
+
+Building 42 self-contained simulation modules required establishing a consistent architecture early — each module follows an identical pattern (engine, control panel, visualizer, event log, scenarios, help content) which kept the ~60,000-line codebase maintainable. The biggest challenge was writing accurate simulation engines that faithfully model real distributed system behaviors (e.g., consistent hashing rings, exponential backoff with jitter, ACID isolation levels) while keeping them performant in the browser. Refactoring from per-module help sidebars to a shared `RightPanel` component was a key architectural lesson in balancing initial speed with long-term maintainability.
+
+## Outcome
+
+Delivered a comprehensive, zero-backend learning platform with 42 interactive modules, 411 interview flashcards, and an SVG mind map connecting all topics. The project serves as both a hands-on study tool for system design interviews and a reference implementation demonstrating patterns like pure simulation engines, code splitting, and component architecture at scale.

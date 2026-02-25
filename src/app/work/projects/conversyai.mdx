@@ -1,0 +1,71 @@
+---
+title: 'ConversyAI - Agent Platform (Full-Stack Developer)'
+publishedAt: '2025-06-01'
+summary: 'A multi-tenant SaaS platform that lets SMBs deploy customized AI agents for customer engagement — handling bookings, billing, Q&A, and escalations through an embeddable chat widget with streaming responses.'
+images:
+  - '/images/projects/conversyai/dash.png'
+  - '/images/projects/conversyai/dash1.png'
+  - '/images/projects/conversyai/dash2.png'
+  - '/images/projects/conversyai/dash3.png'
+  - '/images/projects/conversyai/dash4.png'
+  - '/images/projects/conversyai/dash5.png'
+team:
+  - name: 'Pradeep'
+    role: 'Full-Stack Engineer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+# link: "https://conversyai.com"
+ongoing: true
+---
+
+## Overview
+
+ConversyAI is a no-code AI agent platform designed for small and medium-sized businesses. It enables non-technical business owners to deploy customized, customer-facing AI agents that handle bookings, billing inquiries, product Q&A, and support escalations — all through a shareable link or embeddable chat widget. The platform replaces rigid rule-based chatbots with a multi-agent AI system where specialized agents coordinate under an orchestrator to handle complex, multi-intent customer interactions in real time.
+
+## Key Features
+
+- **4-Step Agent Creation Wizard**: Configure an agent's identity, upload training data (PDFs, websites, voice recordings), connect external tools via OAuth (Google Calendar, Stripe, Gmail, WhatsApp, HubSpot), and deploy — all without writing a single line of code.
+- **Multi-Agent AI System**: A tiered architecture where Gemini 2.5 Pro orchestrates intent classification and routing, while Gemini 2.0 Flash specialists handle Q&A, bookings, billing, and budget consultations — with multi-intent detection for compound requests like "book a massage and ask about pricing."
+- **Customer Intelligence Hub**: Auto-built customer profiles from conversation history with lifecycle stages (New/Active/Repeat/Churned), value segmentation, AI-powered natural language queries about customers, and exportable segmentation views.
+- **Real-Time Streaming Chat**: OTP-verified customer sessions with token-by-token streaming responses via SSE, persistent conversation history across visits, and automatic escalation to human agents when the AI cannot resolve an issue.
+- **Embeddable Widget & Standalone Pages**: Deploy agents as an iframe widget on any website or share a direct conversation link — both with the same OTP verification, streaming, and session persistence.
+
+## Technologies Used
+
+- **React 19 + TypeScript + Vite**: Frontend SPA with Apollo Client for GraphQL data fetching/subscriptions, Redux Toolkit for global state, and Tailwind CSS for styling. GraphQL Code Generator keeps frontend types in sync with the backend schema.
+- **NestJS 11 + GraphQL (Code-First) + Firebase/MongoDB**: Backend API with a dual-database pattern — Firestore as the source of truth with atomic transactions, MongoDB as a synced read layer. Real-time notifications via GraphQL subscriptions over WebSockets.
+- **Azure Cloud (Blob Storage, Static Web Apps, Communication Services)**: File storage, frontend hosting, and email services. Firebase for auth and primary DB, MongoDB Atlas as secondary storage.
+
+## What I Built
+
+### Frontend (React 19 + TypeScript)
+
+- Designed and built the entire **dashboard UI** — sidebar navigation, topbar, charts, and responsive layouts with Tailwind CSS and dark mode support.
+- Implemented the **4-step agent creation wizard** with local state accumulation across steps and a single atomic save on submit.
+- Built the **agent management page** with tabbed navigation (Share, Knowledge Base, Integrations, Settings) and a unified deploy flow that saves all pending changes at once.
+- Developed the **embeddable chat widget** and **standalone conversation page** with OTP-verified customer sessions and real-time token-by-token streaming via SSE.
+- Built the **Customer Intelligence Hub** — customer profiles, lifecycle/value segmentation, AI-powered natural language queries, and exportable views.
+- Built the **Escalation Center** with priority-based queuing, status tracking, and a side panel showing full conversation transcripts.
+- Set up **Apollo Client** with HTTP + WebSocket links, auth header injection, and GraphQL subscriptions for real-time notifications.
+- Built the **file upload pipeline** — Azure Blob Storage upload, Gemini File Search store creation, and metadata-tagged document indexing.
+- Implemented the **Composio OAuth flow** — popup-based OAuth with `postMessage` callback, connection status polling, and business-level toggle enforcement on agent-level integrations.
+
+### Backend (NestJS 11 + GraphQL)
+
+- Architected the **code-first GraphQL API** with Apollo Server 5, including queries, mutations, subscriptions, and file upload support.
+- Designed and implemented the **dual-database sync pattern** — Firestore as source of truth with atomic transactions, async MongoDB sync for the Python agent layer, with failure isolation.
+- Built the **agent module** end-to-end — CRUD operations, training data management, integration toggles, and fan-out propagation of shared resources across sibling agents via Firestore batch writes.
+- Implemented **Firebase Auth** integration with JWT strategy, token verification middleware, and role-based access control.
+- Built the **notification system** — internal event bus with EventEmitter2, real-time delivery via GraphQL subscriptions over WebSockets.
+- Developed the **knowledge base module** — business-level shared training items that can be linked/unlinked to individual agents without re-uploading.
+- Built the **customer session module** with OTP generation, verification, JWT issuance, and session persistence.
+- Implemented the **escalation module** — automatic escalation on complaint/issue intent, priority assignment, and status lifecycle tracking.
+- Integrated **Azure Blob Storage** for file uploads, **Deepgram** for speech-to-text transcription, and **Azure Communication Services** for email.
+
+## Challenges and Learnings
+
+The most significant challenge was designing a dual-database sync system where every write atomically hits Firestore first, then asynchronously syncs to MongoDB — with fan-out propagation (e.g., updating a Gemini File Search store name must atomically propagate to all sibling agents under the same business, chunked at Firestore's 500-operation batch limit). Managing real-time state across the frontend was another key challenge — coordinating Apollo Client cache, Redux global state, and local component state while keeping GraphQL subscriptions in sync for live notifications. The Composio OAuth lifecycle — initiating connections, handling popup redirects via `postMessage`, polling status, and enforcing business-level toggle dependencies on agent-level toggles — taught me a lot about building robust third-party integration flows.
+
+## Outcome
+
+ConversyAI is a fully functional multi-tenant SaaS platform deployed on Azure, capable of serving multiple businesses with isolated data, real-time AI-powered customer engagement, and a seamless no-code agent creation experience. The platform handles the full lifecycle from agent creation and training to deployment, customer interaction, escalation management, and customer intelligence — positioning it as both a production product and a research platform for multi-agent reinforcement learning applied to business automation.

@@ -49,7 +49,7 @@ const home = {
   headline: <>Full Stack Developer</>,
   subline: (
     <>
-      From <InlineCode>front-end</InlineCode>, <InlineCode>back-end</InlineCode> to the <InlineCode>cloud</InlineCode>, I've got it all covered.
+      From <InlineCode>front-end</InlineCode>, <InlineCode>back-end</InlineCode> to the <InlineCode>cloud</InlineCode>, I&apos;ve got it all covered.
       Oh, and did I mention? I speak <InlineCode>JavaScript</InlineCode>{" "}
       fluently.
     </>
@@ -77,7 +77,7 @@ const about = {
     nickName: "Ajay",
     description: (
       <>
-        I'm a Full Stack developer who does it all from designing sleek
+        I&apos;m a Full Stack developer who does it all from designing sleek
         front-end interfaces to building powerful back-end APIs, and even
         crafting cloud solutions. If it’s code, I can handle it. No challenge is
         too big, no stack too complex.
@@ -177,7 +177,7 @@ const about = {
       },
       {
         name: "Saranathan College of Engineering",
-        description: <>Bachelor's in Computer Science and Engineering</>,
+        description: <>Bachelor&apos;s in Computer Science and Engineering</>,
       },
     ],
   },

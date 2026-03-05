@@ -19,7 +19,7 @@ export default function FunFacts({ facts }: FunFactsProps) {
       style={{ borderTop: "1px solid var(--neutral-alpha-weak)" }}
     >
       {facts.map((fact, i) => (
-        <Flex key={i} gap="10" vertical="center">
+        <Flex key={i} gap="8" vertical="center">
           <Icon
             name={fact.icon}
             size="xs"

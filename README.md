@@ -1,89 +1,98 @@
-# **Build your portfolio with Once UI's Magic Portfolio**
+# Pradeep M - Full Stack Developer Portfolio
 
-View the [demo here](https://demo.magic-portfolio.com).
+My personal portfolio site built with **Next.js 14**, **TypeScript**, and **Once UI**. It showcases my development projects, design work, and professional experience.
 
-![Magic Portfolio](public/images/cover.png)
+**Live site**: [ajaypradeep.com](https://ajaypradeep.com)
 
+![Portfolio Preview](public/images/cover.png)
 
-# **Getting started**
+## About Me
 
-Magic Portfolio was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+Hey, I'm Pradeep (most people call me Ajay). I'm a Full Stack Developer based in Canada with 6+ years of experience building web applications from the ground up.
 
-**1. Clone the repository**
-```
-git clone https://github.com/once-ui-system/magic-portfolio.git
-```
+I work across the entire stack - designing UIs in Figma, building frontends with React/Next.js, writing backend APIs with NestJS and Node.js, and deploying everything to the cloud. I've worked with startups and small teams where wearing multiple hats is just how things go, and honestly that's the part I enjoy most.
 
-**2. Install dependencies**
-```
+When I'm not writing code, I dabble in 3D modelling and VFX (studied it at Humber College just for fun), and I occasionally build interactive simulators and AI-powered tools as side projects.
+
+### Tech I Work With
+
+**Frontend:** React, Next.js, TypeScript, Redux, Tailwind CSS, Figma
+
+**Backend:** Node.js, NestJS, Express, GraphQL (Apollo), REST APIs, WebSockets
+
+**Databases:** PostgreSQL, MySQL, Firebase/Firestore, MongoDB, Redis
+
+**Cloud & DevOps:** Docker, Kubernetes, Google Cloud, Azure, CI/CD (Jenkins, Bitbucket Pipelines)
+
+**Other:** Stripe, Elasticsearch, JWT/OAuth, TypeORM
+
+## Featured Projects
+
+### ConversyAI - AI Agent Platform
+A multi-tenant SaaS platform where businesses can deploy custom AI agents for customer engagement. Built with React 19, NestJS 11, GraphQL, Firebase/MongoDB, and Azure. Features a multi-agent AI system, real-time streaming chat, and a no-code agent creation wizard.
+
+### System Design Simulator
+An interactive browser-based learning tool with 42 simulation modules covering distributed systems concepts. Built with React 19, TypeScript, and Vite. Includes live simulation engines, an SVG mind map, 411 interview flashcards, and failure injection testing. Over 60,000 lines of code.
+
+### AI Interactive Story Generator
+A dynamic story generation app powered by DeepSeek3 and StableAI for AI-generated narratives with illustrations. Built with Next.js and NestJS, deployed on Firebase and Google Cloud Run.
+
+### Multi-Carrier Shipping System
+A logistics platform for comparing shipping rates across carriers like Sendle, Trexity, and Loomis. Built with ReactJS (CoreUI) and NestJS.
+
+## Getting Started
+
+Requires **Node.js v18.17+**.
+
+```bash
+# Clone the repo
+git clone https://github.com/ajaypradeep11/portfolio.git
+
+# Install dependencies
 npm install
-```
 
-**3. Run dev server**
-```
+# Start dev server
 npm run dev
 ```
 
-**4. Edit config**
+The site runs at `http://localhost:3000`.
+
+## Project Structure
+
 ```
-src/app/resources/config
+src/
+  app/
+    about/          # About page with CV and experience
+    blog/posts/     # Design project write-ups (MDX)
+    work/projects/  # Development project pages (MDX)
+    resources/      # Site config and content
+  components/       # Custom React components
+  once-ui/          # Once UI design system
+public/
+  images/           # Project screenshots and assets
 ```
 
-**5. Edit content**
-```
-src/app/resources/content
-```
+### Adding a New Project
 
-**6. Create blog posts / projects**
-```
-Add a new .mdx file to src/app/blog/posts or src/app/work/projects
-```
+Drop a new `.mdx` file in `src/app/work/projects/`. Check `_template.mdx` in that folder for the expected frontmatter format.
 
-# **Features**
+### Editing Content
 
-## **Once UI**
-- All tokens, components & features of [Once UI](https://once-ui.com)
+All personal info, work experience, and skills live in `src/app/resources/content.js`. Site-wide settings (theme, routes, effects) are in `src/app/resources/config.js`.
 
-## **SEO**
-- Automatic open-graph and X image generation with next/og
-- Automatic schema and metadata generation based on the content file
+## Built With
 
-## **Design**
-- Responsive layout optimized for all screen sizes
-- Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
+- [Next.js 14](https://nextjs.org) - React framework with SSR and static generation
+- [Once UI](https://once-ui.com) - Design system and component library
+- [MDX](https://mdxjs.com) - Markdown with JSX for content pages
+- [SASS](https://sass-lang.com) - Styling
+- [Sharp](https://sharp.pixelplumbing.com) - Image optimization
 
-## **Content**
-- Render sections conditionally based on the content file
-- Enable or disable pages for blog, work, gallery and about / CV
-- Generate and display social links automatically
-- Set up password protection for URLs
+## Connect
 
-## **Localization**
-- A localized version of Magic Portfolio is available with the next-intl library
-- To use localization, switch to the 'i18n' branch
+- [LinkedIn](https://www.linkedin.com/in/majaypradeep/)
+- [GitHub](https://github.com/ajaypradeep11)
 
-# **Authors**
+## License
 
-Connect with us on Threads or LinkedIn.
-
-Lorant Toth: [Threads](https://www.threads.net/@lorant.one), [LinkedIn](https://www.linkedin.com/in/tothlorant/)  
-Zsofia Komaromi: [Threads](https://www.threads.net/@zsofia_kom), [LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
-
-Localization added by [François Hernandez](https://github.com/francoishernandez)
-
-# **Get involved**
-
-- Join the [Design Engineers Club on Discord](https://discord.com/invite/5EyAQ4eNdS) and share your portfolio with us!
-- Report a [bug](https://github.com/once-ui-system/magic-portfolio/issues/new?labels=bug&template=bug_report.md).
-
-# **License**
-
-Distributed under the CC BY-NC 4.0 License.
-- Commercial usage is not allowed.
-- Attribution is required.
-
-See `LICENSE.txt` for more information.
-
-# **Deploy with Vercel**
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&project-name=portfolio&repository-name=portfolio&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&demo-title=Magic%20Portfolio&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-portfolio.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-portfolio%2Fmain%2Fpublic%2Fimages%2Fcover.png)
+CC BY-NC 4.0 - You can share and adapt this work for non-commercial purposes with attribution. See [LICENSE](LICENSE) for details.

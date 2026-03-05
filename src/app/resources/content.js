@@ -36,14 +36,9 @@ const social = [
     link: "https://www.linkedin.com/in/majaypradeep/",
   },
   {
-    name: "Youtube",
-    icon: "globe",
-    link: "https://www.linkedin.com/in/majaypradeep/",
-  },
-  {
     name: "Email",
     icon: "email",
-    link: "mailto:example@gmail.com",
+    link: "mailto:mpradeep11@gmail.com",
   },
 ];
 
@@ -76,12 +71,6 @@ const about = {
     display: true,
     link: "https://cal.com",
   },
-  funFacts: [
-    { icon: "music", color: "#facc15", text: '"Am I Dreaming" - Spider-Man' },
-    { icon: "heart", color: "#f87171", text: "2012 Hyundai Genesis" },
-    { icon: "code", color: "#4ade80", text: "Speaks JS & TS fluently" },
-    { icon: "sparkles", color: "#818cf8", text: "3D modelling for fun" },
-  ],
   intro: {
     display: true,
     title: "Introduction",

@@ -13,6 +13,7 @@ import {
 import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import FunFacts from "@/components/about/FunFacts";
+import NowPlaying from "@/components/about/NowPlaying";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
 
@@ -129,6 +130,7 @@ export default function About() {
                 ))}
               </Flex>
             )}
+            <NowPlaying song="Am I Dreaming - Metro Boomin" />
             {about.funFacts && about.funFacts.length > 0 && (
               <FunFacts facts={about.funFacts} />
             )}

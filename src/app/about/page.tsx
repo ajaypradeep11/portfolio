@@ -12,6 +12,7 @@ import {
 } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
+import FunFacts from "@/components/about/FunFacts";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
 
@@ -127,6 +128,9 @@ export default function About() {
                   </Tag>
                 ))}
               </Flex>
+            )}
+            {about.funFacts && about.funFacts.length > 0 && (
+              <FunFacts facts={about.funFacts} />
             )}
           </Column>
         )}

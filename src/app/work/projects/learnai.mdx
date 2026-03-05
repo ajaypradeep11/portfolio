@@ -1,0 +1,70 @@
+---
+title: 'LearnAI - Ontario K-12 Education Platform (Full-Stack Developer)'
+publishedAt: '2025-06-01'
+summary: 'An AI-powered educational platform for Ontario K-12 teachers that generates curriculum-aligned worksheets, quizzes, lesson plans, slides, and more with real-time streaming, multi-organization team management, and Stripe-powered subscriptions.'
+images:
+  - '/images/projects/learnai/dash.png'
+  - '/images/projects/learnai/dash1.png'
+  - '/images/projects/learnai/dash2.png'
+  - '/images/projects/learnai/dash3.png'
+  - '/images/projects/learnai/dash4.png'
+team:
+  - name: 'Pradeep'
+    role: 'Full-Stack Engineer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+ongoing: true
+---
+
+## Overview
+
+LearnAI is a full-stack educational platform built for Ontario K-12 teachers to generate AI-powered, curriculum-aligned educational content. Teachers select their grade, subject, and Ontario curriculum expectations, then generate worksheets, quizzes, lesson plans, slides, and six other content types all streamed in real-time via Server-Sent Events. The platform supports multi-organization team management with role-based access, a shared resource library, class and student management, Google Docs/Classroom integration, bilingual support (English/French), and Stripe-powered subscription billing across Free, Pro, and Enterprise tiers.
+
+## Key Features
+
+- **9 AI Content Generators**: Worksheets, quizzes, exit tickets, lesson plans, flashcards, assignments, rubrics, activity ideas, and interactive slide presentations each with type-specific settings (question count, difficulty, duration, rubric levels) and real-time token-by-token streaming via SSE.
+- **Ontario Curriculum Integration**: Licensed curriculum data (License C/N 0173/25/L) with a full expectation browser Grade 1-12 selector, dynamic subject loading via GraphQL, and a Strands > Overall > Specific expectations hierarchy with multi-select and keyword search.
+- **Interactive Slide Editor**: Full presentation builder with 7 layouts, 9 element types, drag-and-drop reordering via @dnd-kit, theme customization, interactive elements (discussion prompts, quick checks, activities), and export to PowerPoint (PPTX) and PDF.
+- **Multi-Organization Team Management**: Create personal or team organizations with Owner/Admin/Teacher/Viewer roles, email-based invitations, role management, organization switching, and shared resource visibility across team members.
+- **Google Workspace Integration**: One-click export to Google Docs and assignment to Google Classroom with OAuth popup flow, connection status management, and seamless content transfer.
+
+## Technologies Used
+
+- **Next.js 16 + React 19 + TypeScript**: Frontend with App Router, CSS Modules for scoped styling, Apollo Client 4 for GraphQL, Firebase Auth (email/password + Google OAuth), next-intl for bilingual EN/FR support, and next-themes for dark mode.
+- **NestJS 11 + GraphQL (Code-First) + Firebase Admin SDK**: Backend API with Apollo Server 5, Gemini 2.5 Flash Lite for AI content generation, Stripe for subscription billing, Nodemailer for email, and Firebase Admin for auth validation and Firestore operations.
+- **Firebase + Stripe**: Firebase for authentication and Firestore for classes, feature flags, and real-time data. Stripe for checkout sessions, subscription lifecycle management, and usage tracking across three billing tiers.
+
+## What I Built
+
+### Frontend (Next.js 16 + React 19)
+
+- Designed and built the **teacher dashboard** with persistent curriculum context selectors (grade, subject, expectation), quick action buttons, and a recent activity table showing generated resources with edit/download/delete actions.
+- Implemented the **Create Material modal** with a unified generator form supporting all 9 content types, each with type-specific settings, curriculum expectation selection, and custom instructions all feeding into a single SSE streaming pipeline.
+- Built the **GeneratorPreview component** with real-time markdown rendering (ReactMarkdown + rehype-raw), inline content editing with raw markdown editor, and an action bar for Print, PDF download, Google Docs export, Google Classroom assignment, and Save to Library.
+- Developed the **interactive slide editor** with 7 layout templates, drag-and-drop slide reordering using @dnd-kit, element-level editing, theme customization, presentation mode, and export to both PPTX (pptxgenjs) and PDF (html2pdf.js).
+- Built the **Ontario Curriculum Selector** a hierarchical browser with grade picker, dynamic subject loading via GraphQL queries, strand/overall/specific expectation navigation, multi-select with chips display, and keyword search across all expectations.
+- Implemented the **resource library** with tabbed views (My Resources / Organization Resources), type filtering across all 9 content types, grid layout with type icons and visibility badges, and edit/download/delete actions.
+- Built the **class management system** class creation with subject/grade selection, color-coded class cards, individual class detail pages with student management (manual entry + CSV import), active assignments section, and overview analytics cards.
+- Implemented **multi-organization support** organization switcher in sidebar, team member management page with role badges, email invitation modal with role assignment, role change/removal with confirmation dialogs, and organization-scoped data isolation.
+- Set up **Apollo Client 4** with auth header injection from Firebase tokens, GraphQL code generation from `.graphql` operation files, and cache management with refetch policies on mutations.
+- Built **bilingual support** with next-intl full EN/FR translations, language switcher in header, locale persistence to cookie, and translated content generation.
+- Implemented **skeleton loading states** for every route, each matching the actual page layout structure for seamless perceived performance.
+
+### Backend (NestJS 11 + GraphQL)
+
+- Architected the **code-first GraphQL API** with Apollo Server 5, organized into feature modules: worksheet, auth, subscription, organization, membership, resource, curriculum, and localization.
+- Built the **SSE streaming pipeline** for AI content generation `POST /worksheet/generate-stream` endpoint that calls Gemini 2.5 Flash Lite with `generateContentStream()`, streaming back `metadata > content chunks > done` events with per-content-type prompt engineering.
+- Implemented the **curriculum module** GraphQL resolvers serving licensed Ontario curriculum data with grade/subject/strand/expectation hierarchy, optimized for the frontend's cascading selector pattern.
+- Built the **resource module** full CRUD for generated content with type classification, difficulty tagging, curriculum expectation linking, organization-scoped visibility (Private/Organization), and owner-based access control.
+- Implemented **Firebase Auth integration** Admin SDK initialization with service account, JWT token verification on every request, user sync on first login, and custom claims for multi-organization `organizationId` storage.
+- Built the **organization and membership modules** organization creation (Personal/Team types), email-based invitations with Nodemailer, role-based access control (Owner/Admin/Teacher/Viewer), member management with role changes and removal.
+- Implemented the **Stripe subscription module** checkout session creation for Pro ($19/mo) and Enterprise ($99/mo) tiers, webhook handling for subscription lifecycle events, usage tracking against plan limits, and subscription status queries.
+- Built the **localization module** backend support for bilingual content generation, locale-aware prompt construction for Gemini AI, and translated response handling.
+
+## Challenges and Learnings
+
+The most significant challenge was designing the real-time SSE streaming architecture that needed to handle Gemini's `generateContentStream()` output, parse it into structured events (metadata, content chunks, completion), and deliver it reliably to the frontend where ReactMarkdown renders it progressively all while supporting 9 different content types, each with unique prompt engineering and output formatting requirements. Building the Ontario curriculum integration required careful handling of licensed government data expectations must be reproduced verbatim per the license agreement (C/N 0173/25/L), so the system needed to store, serve, and display curriculum text without any modification or summarization, while still making it searchable and selectable across a deep Grade > Subject > Strand > Overall > Specific hierarchy. The multi-organization architecture was another key challenge Firebase custom claims store the active `organizationId`, but switching organizations requires re-issuing tokens, updating Apollo headers, and ensuring all cached data is invalidated and refetched with the correct organization scope.
+
+## Outcome
+
+LearnAI is a fully functional multi-tenant SaaS platform serving Ontario K-12 teachers with AI-powered content generation across 9 educational content types. The platform handles the complete teacher workflow from curriculum-aligned content creation with real-time streaming, through resource management and team collaboration, to class management and Google Workspace integration all backed by a three-tier subscription model. The licensed Ontario curriculum integration positions LearnAI as a curriculum-compliant educational tool, while the multi-organization architecture supports both individual teachers and school/department teams with shared resources and role-based access control.

@@ -33,12 +33,12 @@ const social = [
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/majaypradeep",
+    link: "https://www.linkedin.com/in/majaypradeep/",
   },
   {
     name: "Youtube",
     icon: "globe",
-    link: "https://www.linkedin.com/majaypradeep",
+    link: "https://www.linkedin.com/in/majaypradeep/",
   },
   {
     name: "Email",

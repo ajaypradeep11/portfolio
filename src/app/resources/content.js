@@ -36,6 +36,11 @@ const social = [
     link: "https://www.linkedin.com/in/majaypradeep/",
   },
   {
+    name: "Upwork",
+    icon: "upwork",
+    link: "https://www.upwork.com/freelancers/~013fbad03345809719",
+  },
+  {
     name: "Email",
     icon: "email",
     link: "mailto:mpradeep11@gmail.com",

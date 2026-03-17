@@ -201,7 +201,7 @@ const about = {
           <li>Redux (State Management)</li>
           <li>TypeScript (Strongly Typed JavaScript)</li>
           <li>Next.js (Server-Side Rendering, Static Site Generation)</li>
-          <li>UI/UX Design (Basic knowledge in Figma)</li>
+          <li>UI/UX Design</li>
         </ul></>
         ),
         // optional: leave the array empty if you don't want to display images

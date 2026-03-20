@@ -282,6 +282,7 @@ const about = {
           <><ul>
           <li>Vite (For Testing and Build Automation)</li>
           <li>Jest (Unit Testing for JavaScript)</li>
+          <li>Playwright (End-to-End Testing for JavaScript)</li>
         </ul></>
         ),
         images: [],

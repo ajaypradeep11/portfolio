@@ -129,15 +129,29 @@ const about = {
         ],
       },
       {
+        company: "ConversyAI",
+        timeframe: "2025 - present",
+        role: "System Architect & Full Stack Developer",
+        achievements: [
+          <>
+            Architected an AI-based platform for AI agent creation with knowledge base ingestion, Gemini File Search integration, and Deepgram speech-to-text integration.
+          </>,
+          <>
+            Built tool execution pipelines, AI response streaming, and notification workflows.
+          </>,
+        ],
+        images: [],
+      },
+      {
         company: "The Local Ninja",
         timeframe: "2023 - 2024",
         role: "Lead Developer and Operating Manager",
         achievements: [
           <>
-            Developed a dashboard where I can ship orders, view invoices, integrate with Stripe, display customer details, and download invoices
+            Built NinjaLearn, an e-learning platform, and NinjaHR, an HR management system, as two core products for the company.
           </>,
           <>
-            Used React.js for the front-end with the CoreUI library and integrated Stripe for payment functionality.
+            Developed full-stack applications using Next.js for the front-end, NestJS for the back-end, and deployed on Google Cloud Platform (GCP).
           </>,
         ],
         images: [],

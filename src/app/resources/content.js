@@ -130,7 +130,7 @@ const about = {
       },
       {
         company: "ConversyAI",
-        timeframe: "2025 - present",
+        timeframe: "2025 - Present",
         role: "System Architect & Full Stack Developer",
         achievements: [
           <>
@@ -144,7 +144,7 @@ const about = {
       },
       {
         company: "The Local Ninja",
-        timeframe: "2023 - 2024",
+        timeframe: "2023 - Present",
         role: "Lead Developer and Operating Manager",
         achievements: [
           <>

@@ -1,39 +1,21 @@
 import { Column, Flex, Heading } from "@/once-ui/components";
 import { Mailchimp } from "@/components";
-import { baseURL } from "@/app/resources";
+import { absoluteUrl } from "@/app/resources";
 import { blog, person, newsletter } from "@/app/resources/content";
 import { Posts } from "@/components/blog/Posts";
+import { createMetadata, createOgImageUrl } from "@/app/utils/metadata";
 
 export async function generateMetadata() {
-  const title = blog.title;
-  const description = blog.description;
-  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      url: `https://${baseURL}/blog`,
-      images: [
-        {
-          url: ogImage,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return createMetadata({
+    title: blog.title,
+    description: blog.description,
+    path: "/blog",
+  });
 }
 
 export default function Blog() {
+  const ogImage = createOgImageUrl(blog.title);
+
   return (
     <Column maxWidth="l">
       <script
@@ -45,14 +27,14 @@ export default function Blog() {
             "@type": "Blog",
             headline: blog.title,
             description: blog.description,
-            url: `https://${baseURL}/blog`,
-            image: `${baseURL}/og?title=${encodeURIComponent(blog.title)}`,
+            url: absoluteUrl("/blog"),
+            image: ogImage,
             author: {
               "@type": "Person",
               name: person.name,
               image: {
                 "@type": "ImageObject",
-                url: `${baseURL}${person.avatar}`,
+                url: absoluteUrl(person.avatar),
               },
             },
           }),

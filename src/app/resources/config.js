@@ -1,11 +1,34 @@
-const baseURL = "demo.magic-portfolio.com";
+const defaultDomain = "ajaypradeep.com";
+
+function normalizeDomain(value) {
+  if (!value) {
+    return defaultDomain;
+  }
+
+  try {
+    const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
+    return url.host;
+  } catch {
+    return defaultDomain;
+  }
+}
+
+const baseURL = normalizeDomain(process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL);
+const siteOrigin = `https://${baseURL}`;
+
+const absoluteUrl = (path = "/") => {
+  const pathname =
+    !path || path === "/" ? "/" : path.startsWith("/") ? path : `/${path}`;
+
+  return new URL(pathname, siteOrigin).toString();
+};
 
 const routes = {
   "/": true,
   "/about": true,
   "/work": true,
   "/blog": true,
-  "/gallery": true,
+  "/gallery": false,
 };
 
 // Enable password protection on selected routes
@@ -106,4 +129,4 @@ const mailchimp = {
   },
 };
 
-export { routes, protectedRoutes, effects, style, display, mailchimp, baseURL };
+export { routes, protectedRoutes, effects, style, display, mailchimp, baseURL, siteOrigin, absoluteUrl };

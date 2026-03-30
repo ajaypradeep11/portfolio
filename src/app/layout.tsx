@@ -2,28 +2,63 @@ import "@/once-ui/styles/index.scss";
 import "@/once-ui/tokens/index.scss";
 
 import classNames from "classnames";
+import type { Metadata } from "next";
 
 import { Footer, Header, RouteGuard } from "@/components";
-import { baseURL, effects, style } from "@/app/resources";
+import { absoluteUrl, effects, siteOrigin, style } from "@/app/resources";
+import { createOgImageUrl } from "@/app/utils/metadata";
 
 import { Inter } from "next/font/google";
 import { Source_Code_Pro } from "next/font/google";
 
-import { person, home } from "@/app/resources/content";
+import { person, home, social } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
+  const ogImage = createOgImageUrl(home.title);
+  const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
+
   return {
-    metadataBase: new URL(`https://${baseURL}`),
+    metadataBase: new URL(siteOrigin),
     title: home.title,
     description: home.description,
+    applicationName: home.title,
+    alternates: {
+      canonical: "/",
+    },
+    authors: [
+      {
+        name: person.name,
+        url: absoluteUrl("/about"),
+      },
+    ],
+    creator: person.name,
+    publisher: person.name,
+    category: "technology",
+    manifest: "/manifest.webmanifest",
+    icons: {
+      icon: [{ url: "/favicon.ico" }],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
     openGraph: {
-      title: `${person.firstName}'s Portfolio`,
-      description: "Portfolio website showcasing my work.",
-      url: baseURL,
-      siteName: `${person.firstName}'s Portfolio`,
+      title: home.title,
+      description: home.description,
+      url: "/",
+      siteName: home.title,
       locale: "en_US",
       type: "website",
+      images: [
+        {
+          url: ogImage,
+          alt: home.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: home.title,
+      description: home.description,
+      images: [ogImage],
     },
     robots: {
       index: true,
@@ -36,6 +71,13 @@ export async function generateMetadata() {
         "max-snippet": -1,
       },
     },
+    ...(googleVerification
+      ? {
+          verification: {
+            google: googleVerification,
+          },
+        }
+      : {}),
   };
 }
 
@@ -72,6 +114,37 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  const sameAs = social
+    .filter((item) => item.link && !item.link.startsWith("mailto:"))
+    .map((item) => item.link);
+
+  const structuredData = JSON.stringify([
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: home.title,
+      url: siteOrigin,
+      description: home.description,
+      publisher: {
+        "@type": "Person",
+        name: person.name,
+        url: absoluteUrl("/about"),
+        image: absoluteUrl(person.avatar),
+        sameAs,
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: person.name,
+      url: absoluteUrl("/about"),
+      image: absoluteUrl(person.avatar),
+      jobTitle: person.role,
+      sameAs,
+      knowsLanguage: person.languages,
+    },
+  ]);
+
   return (
     <Flex
       as="html"
@@ -95,6 +168,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     >
       <ToastProvider>
         <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
+          <script
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: structuredData }}
+          />
           <Background
             mask={{
               cursor: effects.mask.cursor,
@@ -145,6 +223,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <Flex fillWidth minHeight="16"></Flex>
           <Header />
           <Flex
+            as="main"
             position="relative"
             zIndex={0}
             fillWidth

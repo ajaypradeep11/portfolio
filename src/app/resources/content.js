@@ -49,8 +49,9 @@ const social = [
 
 const home = {
   label: "Home",
-  title: `Ajay's Portfolio`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
+  title: "Ajay Pradeep Portfolio",
+  description:
+    "Portfolio of Ajay Pradeep, a full stack developer building Next.js, NestJS, AI, and cloud applications.",
   headline: <>Full Stack Developer</>,
   subline: (
     <>
@@ -63,8 +64,9 @@ const home = {
 
 const about = {
   label: "About",
-  title: "About me",
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  title: "About Ajay",
+  description:
+    "Experience, technical skills, and project background for Ajay, a full stack developer building web, AI, and cloud products.",
   tableOfContent: {
     display: true,
     subItems: false,
@@ -318,16 +320,17 @@ const about = {
 
 const blog = {
   label: "Design",
-  title: "Stuff I Made",
-  description: `Design projects by ${person.name}`,
+  title: "Design & 3D Work",
+  description: "3D design, modeling, rendering, and creative work by Ajay.",
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };
 
 const work = {
   label: "Development",
-  title: "My projects",
-  description: `Development projects by ${person.name}`,
+  title: "Software Projects",
+  description:
+    "Case studies and software projects by Ajay across Next.js, NestJS, AI, cloud, and system design.",
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };

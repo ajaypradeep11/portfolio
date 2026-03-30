@@ -10,40 +10,20 @@ import {
   Tag,
   Text,
 } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
+import { absoluteUrl } from "@/app/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import FunFacts from "@/components/about/FunFacts";
 import NowPlaying from "@/components/about/NowPlaying";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
+import { createMetadata } from "@/app/utils/metadata";
 
 export async function generateMetadata() {
-  const title = about.title;
-  const description = about.description;
-  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      url: `https://${baseURL}/about`,
-      images: [
-        {
-          url: ogImage,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return createMetadata({
+    title: about.title,
+    description: about.description,
+    path: "/about",
+  });
 }
 
 export default function About() {
@@ -81,8 +61,8 @@ export default function About() {
             name: person.name,
             jobTitle: person.role,
             description: about.intro.description,
-            url: `https://${baseURL}/about`,
-            image: `${baseURL}/images/${person.avatar}`,
+            url: absoluteUrl("/about"),
+            image: absoluteUrl(person.avatar),
             sameAs: social
               .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
               .map((item) => item.link),

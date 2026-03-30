@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
 import { AvatarGroup, Button, Column, Heading, Row, Text } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
-import { person } from "@/app/resources/content";
+import { absoluteUrl } from "@/app/resources";
+import { blog, person } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
+import { createMetadata, createOgImageUrl, toAbsoluteUrl } from "@/app/utils/metadata";
 
 interface BlogParams {
   params: {
@@ -27,38 +28,16 @@ export function generateMetadata({ params: { slug } }: BlogParams) {
     return;
   }
 
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    images,
-    image,
-    team,
-  } = post.metadata;
-  let ogImage = image ? `https://${baseURL}${image}` : `https://${baseURL}/og?title=${title}`;
+  const { title, publishedAt: publishedTime, summary: description, image, images } = post.metadata;
 
-  return {
+  return createMetadata({
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `https://${baseURL}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+    path: `/blog/${post.slug}`,
+    image: image || images[0],
+    type: "article",
+    publishedTime,
+  });
 }
 
 export default function Blog({ params }: BlogParams) {
@@ -72,6 +51,9 @@ export default function Blog({ params }: BlogParams) {
     post.metadata.team?.map((person) => ({
       src: person.avatar,
     })) || [];
+  const postImage =
+    toAbsoluteUrl(post.metadata.image || post.metadata.images[0]) ||
+    createOgImageUrl(post.metadata.title);
 
   return (
     <Column as="section" maxWidth="xs" gap="l">
@@ -79,22 +61,46 @@ export default function Blog({ params }: BlogParams) {
         type="application/ld+json"
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
-            description: post.metadata.summary,
-            image: post.metadata.image
-              ? `https://${baseURL}${post.metadata.image}`
-              : `https://${baseURL}/og?title=${post.metadata.title}`,
-            url: `https://${baseURL}/blog/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: person.name,
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post.metadata.title,
+              datePublished: post.metadata.publishedAt,
+              dateModified: post.metadata.publishedAt,
+              description: post.metadata.summary,
+              image: postImage,
+              url: absoluteUrl(`/blog/${post.slug}`),
+              author: {
+                "@type": "Person",
+                name: person.name,
+              },
             },
-          }),
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: absoluteUrl("/"),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: blog.title,
+                  item: absoluteUrl("/blog"),
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: post.metadata.title,
+                  item: absoluteUrl(`/blog/${post.slug}`),
+                },
+              ],
+            },
+          ]),
         }}
       />
       <Button href="/blog" weight="default" variant="tertiary" size="s" prefixIcon="chevronLeft">

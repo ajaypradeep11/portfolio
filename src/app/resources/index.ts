@@ -7,6 +7,8 @@ export {
   display,
   mailchimp,
   baseURL,
+  siteOrigin,
+  absoluteUrl,
 } from "@/app/resources/config";
 export {
   person,

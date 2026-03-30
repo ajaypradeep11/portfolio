@@ -3,17 +3,31 @@ import type { MetadataRoute } from "next";
 import { getPosts } from "@/app/utils/utils";
 import { absoluteUrl, routes as routesConfig } from "@/app/resources";
 
+function normalizeLastModified(value?: string) {
+  if (!value) {
+    return undefined;
+  }
+
+  const parsed = new Date(value);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return undefined;
+  }
+
+  return parsed.toISOString().split("T")[0];
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogs = getPosts(["src", "app", "blog", "posts"]).map((post) => ({
     url: absoluteUrl(`/blog/${post.slug}`),
-    lastModified: post.metadata.publishedAt,
+    lastModified: normalizeLastModified(post.metadata.publishedAt),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   const works = getPosts(["src", "app", "work", "projects"]).map((post) => ({
     url: absoluteUrl(`/work/${post.slug}`),
-    lastModified: post.metadata.publishedAt,
+    lastModified: normalizeLastModified(post.metadata.publishedAt),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

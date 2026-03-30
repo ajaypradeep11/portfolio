@@ -79,7 +79,6 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
             alt="Avatar"
             sizes={`${sizeMapping[size]}px`}
             className={styles.image}
-            unoptimized
           />
         );
       }

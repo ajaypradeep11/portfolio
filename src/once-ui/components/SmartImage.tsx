@@ -155,7 +155,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
             alt={alt}
             priority={priority}
             sizes={sizes}
-            unoptimized={true}
+            unoptimized={unoptimized}
             fill
             style={{
               objectFit: objectFit,
@@ -208,7 +208,7 @@ const SmartImage: React.FC<SmartImageProps> = ({
                 alt={alt}
                 fill
                 sizes="90vw"
-                unoptimized={true}
+                unoptimized={unoptimized}
                 style={{
                   objectFit: "contain",
                 }}

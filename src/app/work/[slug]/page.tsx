@@ -145,6 +145,8 @@ export default function Project({ params }: WorkParams) {
         <Carousel
           indicator="thumbnail"
           aspectRatio="16 / 9"
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 92vw, 1100px"
           images={post.metadata.images.map((src: string) => ({
             src,
             alt: post.metadata.title,

@@ -21,7 +21,7 @@ export function Projects({ range }: ProjectsProps) {
     <Column fillWidth gap="xl" marginBottom="40" paddingX="l">
       {displayedProjects.map((post, index) => (
         <ProjectCard
-          priority={index < 2}
+          priority={index === 0}
           key={post.slug}
           href={`/work/${post.slug}`}
           images={post.metadata.images}

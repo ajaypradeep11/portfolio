@@ -28,6 +28,8 @@ const routes = {
   "/about": true,
   "/work": true,
   "/blog": true,
+  "/canon": true,
+  "/tictactoe": true,
   "/gallery": false,
 };
 

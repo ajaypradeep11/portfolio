@@ -3,10 +3,12 @@ import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
 import { AvatarGroup, Button, Carousel, Column, Flex, Heading, Text } from "@/once-ui/components";
 import { absoluteUrl } from "@/app/resources";
+import { getLiveDemoByWorkSlug } from "@/app/resources/liveDemos";
 import { person, work } from "@/app/resources/content";
 import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 import { createMetadata, createOgImageUrl, toAbsoluteUrl } from "@/app/utils/metadata";
+import { LiveDemoFrame } from "@/components/work/LiveDemoFrame";
 
 interface WorkParams {
   params: {
@@ -51,6 +53,7 @@ export default function Project({ params }: WorkParams) {
     post.metadata.team?.map((person) => ({
       src: person.avatar,
     })) || [];
+  const liveDemo = getLiveDemoByWorkSlug(post.slug);
   const postImage =
     toAbsoluteUrl(post.metadata.image || post.metadata.images[0]) ||
     createOgImageUrl(post.metadata.title);
@@ -107,7 +110,7 @@ export default function Project({ params }: WorkParams) {
         <Button href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
           Projects
         </Button>
-        <Flex gap="m" vertical="center">
+        <Flex gap="m" vertical="center" wrap>
           <Heading variant="display-strong-s">{post.metadata.title}</Heading>
           {post.metadata.ongoing && (
             <Flex
@@ -141,7 +144,18 @@ export default function Project({ params }: WorkParams) {
           )}
         </Flex>
       </Column>
-      {post.metadata.images.length > 0 && (
+      {liveDemo ? (
+        <LiveDemoFrame
+          title={liveDemo.title}
+          description={liveDemo.description}
+          src={liveDemo.src}
+          standaloneHref={liveDemo.standalonePath}
+          frameHeight={liveDemo.frameHeight}
+          fallbackImage={post.metadata.image || post.metadata.images[0] || liveDemo.fallbackImage}
+          fallbackAlt={post.metadata.title}
+          fallbackPriority
+        />
+      ) : post.metadata.images.length > 0 && (
         <Carousel
           indicator="thumbnail"
           aspectRatio="16 / 9"

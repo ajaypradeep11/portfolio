@@ -26,9 +26,10 @@ const Carousel: React.FC<CarouselProps> = ({
   priority = false,
   ...rest
 }) => {
+  const shouldRevealOnLoad = priority || revealedByDefault;
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isTransitioning, setIsTransitioning] = useState(revealedByDefault);
-  const [initialTransition, setInitialTransition] = useState(revealedByDefault);
+  const [isTransitioning, setIsTransitioning] = useState(shouldRevealOnLoad);
+  const [initialTransition, setInitialTransition] = useState(shouldRevealOnLoad);
   const nextImageRef = useRef<HTMLImageElement | null>(null);
   const transitionTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -64,7 +65,7 @@ const Carousel: React.FC<CarouselProps> = ({
   };
 
   useEffect(() => {
-    if (!revealedByDefault && !initialTransition) {
+    if (!shouldRevealOnLoad && !initialTransition) {
       setIsTransitioning(true);
       setInitialTransition(true);
     }
@@ -73,7 +74,7 @@ const Carousel: React.FC<CarouselProps> = ({
         clearTimeout(transitionTimeoutRef.current);
       }
     };
-  }, [revealedByDefault, initialTransition]);
+  }, [shouldRevealOnLoad, initialTransition]);
 
   if (images.length === 0) {
     return null;
@@ -84,6 +85,7 @@ const Carousel: React.FC<CarouselProps> = ({
       <RevealFx
         onClick={handleImageClick}
         fillWidth
+        revealedByDefault={shouldRevealOnLoad}
         trigger={isTransitioning}
         translateY="16"
         aspectRatio={aspectRatio}

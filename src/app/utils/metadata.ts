@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isValidElement, type ReactNode } from "react";
 
 import { absoluteUrl } from "@/app/resources";
 
@@ -27,6 +28,30 @@ export function toAbsoluteUrl(path?: string) {
   }
 
   return isAbsoluteUrl(path) ? path : absoluteUrl(path);
+}
+
+export function toPlainText(value: ReactNode): string {
+  if (value == null || typeof value === "boolean") {
+    return "";
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => toPlainText(item))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  if (isValidElement<{ children?: ReactNode }>(value)) {
+    return toPlainText(value.props.children);
+  }
+
+  return "";
 }
 
 export function createOgImageUrl(title: string) {

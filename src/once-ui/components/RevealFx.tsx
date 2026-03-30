@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, forwardRef } from "react";
 import { SpacingToken } from "../types";
-import styles from "./RevealFx.module.scss";
 import { Flex } from ".";
 
 interface RevealFxProps extends React.ComponentProps<typeof Flex> {
@@ -34,18 +33,22 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(
     const [isRevealed, setIsRevealed] = useState(revealedByDefault);
 
     useEffect(() => {
+      if (trigger !== undefined) {
+        setIsRevealed(trigger);
+        return;
+      }
+
+      if (revealedByDefault) {
+        setIsRevealed(true);
+        return;
+      }
+
       const timer = setTimeout(() => {
         setIsRevealed(true);
       }, delay * 1000);
 
       return () => clearTimeout(timer);
-    }, [delay]);
-
-    useEffect(() => {
-      if (trigger !== undefined) {
-        setIsRevealed(trigger);
-      }
-    }, [trigger]);
+    }, [delay, revealedByDefault, trigger]);
 
     const getSpeedDuration = () => {
       switch (speed) {
@@ -70,10 +73,21 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(
     };
 
     const translateValue = getTranslateYValue();
+    const transform = translateValue
+      ? isRevealed
+        ? "translateY(0)"
+        : `translateY(${translateValue})`
+      : undefined;
 
     const revealStyle: React.CSSProperties = {
+      maskImage: "linear-gradient(to right, black 0%, black 25%, transparent 50%)",
+      maskSize: "300% 100%",
+      maskPosition: isRevealed ? "0 0" : "100% 0",
+      filter: isRevealed ? "blur(0)" : "blur(0.5rem)",
+      transitionProperty: "mask-position, filter, transform",
       transitionDuration: getSpeedDuration(),
-      transform: isRevealed ? "translateY(0)" : `translateY(${translateValue})`,
+      transitionTimingFunction: "ease-in-out",
+      transform,
       ...style,
     };
 
@@ -84,7 +98,7 @@ const RevealFx = forwardRef<HTMLDivElement, RevealFxProps>(
         horizontal="center"
         ref={ref}
         style={revealStyle}
-        className={`${styles.revealFx} ${isRevealed ? styles.revealed : styles.hidden} ${className || ""}`}
+        className={className}
         {...rest}
       >
         {children}

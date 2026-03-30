@@ -16,7 +16,7 @@ import FunFacts from "@/components/about/FunFacts";
 import NowPlaying from "@/components/about/NowPlaying";
 import styles from "@/components/about/about.module.scss";
 import { person, about, social } from "@/app/resources/content";
-import { createMetadata } from "@/app/utils/metadata";
+import { createMetadata, toPlainText } from "@/app/utils/metadata";
 
 export async function generateMetadata() {
   return createMetadata({
@@ -27,6 +27,12 @@ export async function generateMetadata() {
 }
 
 export default function About() {
+  const sameAs = social
+    .filter((item) => item.link && !item.link.startsWith("mailto:"))
+    .map((item) => item.link);
+  const introDescription = toPlainText(about.intro.description) || about.description;
+  const currentEmployer = about.work.experiences[0]?.company;
+
   const structure = [
     {
       title: about.intro.title,
@@ -57,18 +63,29 @@ export default function About() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Person",
-            name: person.name,
-            jobTitle: person.role,
-            description: about.intro.description,
+            "@type": "AboutPage",
+            name: about.title,
+            description: introDescription,
             url: absoluteUrl("/about"),
-            image: absoluteUrl(person.avatar),
-            sameAs: social
-              .filter((item) => item.link && !item.link.startsWith("mailto:")) // Filter out empty links and email links
-              .map((item) => item.link),
-            worksFor: {
-              "@type": "Organization",
-              name: about.work.experiences[0].company || "",
+            mainEntity: {
+              "@type": "Person",
+              name: person.name,
+              givenName: person.firstName,
+              familyName: person.lastName,
+              jobTitle: person.role,
+              description: introDescription,
+              url: absoluteUrl("/about"),
+              image: absoluteUrl(person.avatar),
+              sameAs,
+              knowsLanguage: person.languages,
+              ...(currentEmployer
+                ? {
+                    worksFor: {
+                      "@type": "Organization",
+                      name: currentEmployer,
+                    },
+                  }
+                : {}),
             },
           }),
         }}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { CSSProperties, forwardRef, useEffect, useRef, useState } from "react";
+import React, { CSSProperties, forwardRef, useEffect, useRef } from "react";
 import { SpacingToken } from "../types";
 import { Flex } from "./Flex";
 import { DisplayProps } from "../interfaces";
@@ -84,67 +84,103 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
     forwardedRef,
   ) => {
     const dotsColor = dots.color ?? "brand-on-background-weak";
-    const dotsSize = "var(--static-space-" + (dots.size ?? "24") + ")";
-
-    const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-    const [smoothPosition, setSmoothPosition] = useState({ x: 0, y: 0 });
+    const dotsSize = `var(--static-space-${dots.size ?? "24"})`;
+    const hasMask = mask.cursor || (mask.x != null && mask.y != null);
     const backgroundRef = useRef<HTMLDivElement>(null);
+    const targetPositionRef = useRef({ x: 0, y: 0 });
+    const smoothPositionRef = useRef({ x: 0, y: 0 });
+    const animationFrameRef = useRef<number>();
 
     useEffect(() => {
       setRef(forwardedRef, backgroundRef.current);
     }, [forwardedRef]);
 
     useEffect(() => {
-      const handleMouseMove = (event: MouseEvent) => {
-        if (backgroundRef.current) {
-          const rect = backgroundRef.current.getBoundingClientRect();
-          setCursorPosition({
-            x: event.clientX - rect.left,
-            y: event.clientY - rect.top,
-          });
+      if (!mask.cursor || !backgroundRef.current) {
+        return;
+      }
+
+      const element = backgroundRef.current;
+      const isViewportBound = position === "fixed";
+
+      const setMaskPosition = (x: number, y: number) => {
+        element.style.setProperty("--mask-position-x", `${Math.round(x)}px`);
+        element.style.setProperty("--mask-position-y", `${Math.round(y)}px`);
+      };
+
+      const initialPosition = {
+        x: isViewportBound ? window.innerWidth / 2 : element.clientWidth / 2,
+        y: isViewportBound ? window.innerHeight / 2 : element.clientHeight / 2,
+      };
+
+      targetPositionRef.current = initialPosition;
+      smoothPositionRef.current = initialPosition;
+      setMaskPosition(initialPosition.x, initialPosition.y);
+
+      const updateSmoothPosition = () => {
+        const previous = smoothPositionRef.current;
+        const deltaX = targetPositionRef.current.x - previous.x;
+        const deltaY = targetPositionRef.current.y - previous.y;
+        const easingFactor = 0.05;
+
+        if (Math.abs(deltaX) < 0.5 && Math.abs(deltaY) < 0.5) {
+          smoothPositionRef.current = targetPositionRef.current;
+          setMaskPosition(targetPositionRef.current.x, targetPositionRef.current.y);
+          animationFrameRef.current = undefined;
+          return;
+        }
+
+        const nextPosition = {
+          x: previous.x + deltaX * easingFactor,
+          y: previous.y + deltaY * easingFactor,
+        };
+
+        smoothPositionRef.current = nextPosition;
+        setMaskPosition(nextPosition.x, nextPosition.y);
+        animationFrameRef.current = requestAnimationFrame(updateSmoothPosition);
+      };
+
+      const startAnimation = () => {
+        if (animationFrameRef.current == null) {
+          animationFrameRef.current = requestAnimationFrame(updateSmoothPosition);
         }
       };
 
-      document.addEventListener("mousemove", handleMouseMove);
+      const handleMouseMove = (event: MouseEvent) => {
+        if (isViewportBound) {
+          targetPositionRef.current = {
+            x: event.clientX,
+            y: event.clientY,
+          };
+          startAnimation();
+          return;
+        }
+
+        const rect = element.getBoundingClientRect();
+        targetPositionRef.current = {
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+        };
+        startAnimation();
+      };
+
+      document.addEventListener("mousemove", handleMouseMove, { passive: true });
 
       return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
         document.removeEventListener("mousemove", handleMouseMove);
       };
-    }, []);
-
-    useEffect(() => {
-      let animationFrameId: number;
-
-      const updateSmoothPosition = () => {
-        setSmoothPosition((prev) => {
-          const dx = cursorPosition.x - prev.x;
-          const dy = cursorPosition.y - prev.y;
-          const easingFactor = 0.05;
-
-          return {
-            x: Math.round(prev.x + dx * easingFactor),
-            y: Math.round(prev.y + dy * easingFactor),
-          };
-        });
-        animationFrameId = requestAnimationFrame(updateSmoothPosition);
-      };
-
-      if (mask.cursor) {
-        animationFrameId = requestAnimationFrame(updateSmoothPosition);
-      }
-
-      return () => {
-        cancelAnimationFrame(animationFrameId);
-      };
-    }, [cursorPosition, mask]);
+    }, [mask.cursor, position]);
 
     const maskStyle = (): CSSProperties => {
       if (!mask) return {};
 
       if (mask.cursor) {
         return {
-          "--mask-position-x": `${smoothPosition.x}px`,
-          "--mask-position-y": `${smoothPosition.y}px`,
+          "--mask-position-x": "50%",
+          "--mask-position-y": "50%",
           "--mask-radius": `${mask.radius || 50}vh`,
         } as CSSProperties;
       }
@@ -172,18 +208,28 @@ const Background = forwardRef<HTMLDivElement, BackgroundProps>(
 
     const adjustedX = gradient.x != null ? remap(gradient.x, 0, 100, 37.5, 62.5) : 50;
     const adjustedY = gradient.y != null ? remap(gradient.y, 0, 100, 37.5, 62.5) : 50;
+    const fixedViewportStyle =
+      position === "fixed"
+        ? ({
+            position: "fixed",
+            inset: 0,
+            width: "100vw",
+            height: "100vh",
+          } satisfies CSSProperties)
+        : undefined;
 
     return (
       <Flex
         ref={backgroundRef}
         fill
         position={position}
-        className={classNames(mask && styles.mask, className)}
+        className={classNames(hasMask && styles.mask, className)}
         top="0"
         left="0"
         zIndex={0}
         overflow="hidden"
         style={{
+          ...fixedViewportStyle,
           ...maskStyle(),
           ...style,
         }}

@@ -25,7 +25,7 @@ export default function Blog() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Blog",
-            headline: blog.title,
+            name: blog.title,
             description: blog.description,
             url: absoluteUrl("/blog"),
             image: ogImage,

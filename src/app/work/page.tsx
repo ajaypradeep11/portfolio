@@ -16,6 +16,12 @@ export async function generateMetadata() {
 export default function Work() {
   let allProjects = getPosts(["src", "app", "work", "projects"]);
   const ogImage = createOgImageUrl(work.title);
+  const itemListElement = allProjects.map((project, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: absoluteUrl(`/work/${project.slug}`),
+    name: project.metadata.title,
+  }));
 
   return (
     <Column maxWidth="m">
@@ -26,7 +32,7 @@ export default function Work() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            headline: work.title,
+            name: work.title,
             description: work.description,
             url: absoluteUrl("/work"),
             image: ogImage,
@@ -34,8 +40,13 @@ export default function Work() {
               "@type": "Person",
               name: person.name,
             },
+            mainEntity: {
+              "@type": "ItemList",
+              itemListElement,
+            },
             hasPart: allProjects.map((project) => ({
               "@type": "CreativeWork",
+              name: project.metadata.title,
               headline: project.metadata.title,
               description: project.metadata.summary,
               url: absoluteUrl(`/work/${project.slug}`),
@@ -46,7 +57,7 @@ export default function Work() {
           }),
         }}
       />
-      <Projects />
+      <Projects priorityFirst />
     </Column>
   );
 }

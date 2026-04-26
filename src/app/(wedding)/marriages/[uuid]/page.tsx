@@ -83,61 +83,57 @@ export default async function MarriagePage({ params }: PageProps) {
           <p className={styles.subtagline}>Invite you to join them</p>
           <p className={styles.heroDate}>{shortDate(wedding.dateISO)}</p>
           <p className={styles.heroFamily}>For the {invite.familyName}</p>
+
+          <div className={styles.divider} aria-hidden="true">
+            <span />
+            <em>Details</em>
+            <span />
+          </div>
+
+          <dl className={styles.detailList}>
+            <div className={styles.detailRow}>
+              <dt>Date</dt>
+              <dd>{wedding.dateDisplay}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Time</dt>
+              <dd>{wedding.time}</dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Venue</dt>
+              <dd>
+                {wedding.venue.name}
+                <br />
+                {wedding.venue.address}
+                <br />
+                <Link href={wedding.venue.mapUrl} target="_blank" rel="noopener noreferrer">
+                  View on map →
+                </Link>
+              </dd>
+            </div>
+            <div className={styles.detailRow}>
+              <dt>Dress code</dt>
+              <dd>{wedding.dressCode}</dd>
+            </div>
+          </dl>
+
+          <div className={styles.divider} aria-hidden="true">
+            <span />
+            <em>RSVP</em>
+            <span />
+          </div>
+
+          <p className={styles.deadline}>
+            Kindly respond by {formatDeadline(wedding.rsvpDeadlineISO)}
+          </p>
+
+          <RsvpForm
+            uuid={params.uuid}
+            maxCount={invite.maxCount}
+            initialCount={invite.attendingCount}
+            locked={locked}
+          />
         </div>
-      </section>
-
-      <section className={styles.details}>
-        <div className={styles.divider} aria-hidden="true">
-          <span />
-          <em>Details</em>
-          <span />
-        </div>
-
-        <dl className={styles.detailList}>
-          <div className={styles.detailRow}>
-            <dt>Date</dt>
-            <dd>{wedding.dateDisplay}</dd>
-          </div>
-          <div className={styles.detailRow}>
-            <dt>Time</dt>
-            <dd>{wedding.time}</dd>
-          </div>
-          <div className={styles.detailRow}>
-            <dt>Venue</dt>
-            <dd>
-              {wedding.venue.name}
-              <br />
-              {wedding.venue.address}
-              <br />
-              <Link href={wedding.venue.mapUrl} target="_blank" rel="noopener noreferrer">
-                View on map →
-              </Link>
-            </dd>
-          </div>
-          <div className={styles.detailRow}>
-            <dt>Dress code</dt>
-            <dd>{wedding.dressCode}</dd>
-          </div>
-        </dl>
-      </section>
-
-      <section className={styles.rsvp}>
-        <div className={styles.divider} aria-hidden="true">
-          <span />
-          <em>RSVP</em>
-          <span />
-        </div>
-
-        <p className={styles.deadline}>
-          Kindly respond by {formatDeadline(wedding.rsvpDeadlineISO)}
-        </p>
-
-        <RsvpForm
-          uuid={params.uuid}
-          maxCount={invite.maxCount}
-          initialCount={invite.attendingCount}
-          locked={locked}
-        />
       </section>
     </main>
   );

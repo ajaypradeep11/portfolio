@@ -1,0 +1,335 @@
+/* ---------- Admin shell ---------- */
+
+.adminShell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem clamp(1rem, 4vw, 3rem) 5rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--wedding-fg);
+}
+
+.adminHeader {
+  margin-bottom: 2.5rem;
+}
+
+.adminEyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--wedding-accent);
+  margin: 0 0 0.5rem;
+}
+
+.adminTitle {
+  font-family: var(--font-wedding-serif), Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ---------- Stats / header row ---------- */
+
+.adminHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 280px;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--wedding-soft);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--wedding-accent);
+}
+
+.statValue {
+  margin-top: 0.25rem;
+  font-family: var(--font-wedding-serif), Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+/* ---------- Create row ---------- */
+
+.createRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px dashed var(--wedding-soft);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Inputs and buttons ---------- */
+
+.input {
+  flex: 1 1 180px;
+  min-width: 0;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--wedding-soft);
+  background: #fff;
+  color: var(--wedding-fg);
+  font: inherit;
+  border-radius: 8px;
+
+  &:focus {
+    outline: 2px solid var(--wedding-accent);
+    outline-offset: 1px;
+    border-color: var(--wedding-accent);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    background: rgba(0, 0, 0, 0.03);
+  }
+}
+
+.inputNumber {
+  flex: 0 0 100px;
+}
+
+.primaryBtn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--wedding-fg);
+  background: var(--wedding-fg);
+  color: var(--wedding-bg);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.secondaryBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--wedding-fg);
+  background: transparent;
+  color: var(--wedding-fg);
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--wedding-soft);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.dangerBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #9c2a2a;
+  background: transparent;
+  color: #9c2a2a;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #9c2a2a;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.linkBtn {
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid var(--wedding-soft);
+  background: transparent;
+  color: var(--wedding-fg);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--wedding-soft);
+  }
+}
+
+.errorText {
+  margin: 0.5rem 0 0;
+  color: #9c2a2a;
+  font-size: 0.9rem;
+}
+
+.errorInline {
+  display: block;
+  color: #9c2a2a;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+/* ---------- Table ---------- */
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+
+  th,
+  td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--wedding-soft);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wedding-accent);
+    font-weight: 500;
+  }
+
+  tbody tr:hover {
+    background: rgba(176, 137, 104, 0.05);
+  }
+}
+
+.numCell {
+  font-variant-numeric: tabular-nums;
+}
+
+.dateCell {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.linkCell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.inlineCode {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.actionsCell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.emptyRow {
+  text-align: center;
+  padding: 2rem !important;
+  color: var(--wedding-accent);
+  font-style: italic;
+}
+
+/* ---------- Login ---------- */
+
+.loginShell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--wedding-soft);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loginHeading {
+  font-family: var(--font-wedding-serif), Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.loginNote {
+  font-size: 0.9rem;
+  margin: 0;
+  color: var(--wedding-accent);
+}
+
+.loginLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--wedding-accent);
+
+  input {
+    text-transform: none;
+    letter-spacing: normal;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--wedding-soft);
+    background: #fff;
+    color: var(--wedding-fg);
+    font: inherit;
+    font-size: 1rem;
+    border-radius: 8px;
+
+    &:focus {
+      outline: 2px solid var(--wedding-accent);
+      outline-offset: 1px;
+      border-color: var(--wedding-accent);
+    }
+  }
+}

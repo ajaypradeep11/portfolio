@@ -1,8 +1,8 @@
 // src/app/resources/wedding.ts
 export const wedding = {
   couple: {
-    primary: "Pradeep",
-    partner: "Partner Name",
+    primary: "Ajay",
+    partner: "Aleena",
   },
   dateISO: "2026-12-31",
   dateDisplay: "December 31, 2026",

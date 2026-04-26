@@ -1,4 +1,4 @@
-import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Pinyon_Script } from "next/font/google";
 
 import styles from "./layout.module.scss";
 
@@ -7,6 +7,13 @@ const serif = Cormorant_Garamond({
   weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-wedding-serif",
+});
+
+const script = Pinyon_Script({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  variable: "--font-wedding-script",
 });
 
 export const metadata = {
@@ -22,6 +29,8 @@ export default function WeddingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`${serif.variable} ${styles.weddingRoot}`}>{children}</div>
+    <div className={`${serif.variable} ${script.variable} ${styles.weddingRoot}`}>
+      {children}
+    </div>
   );
 }

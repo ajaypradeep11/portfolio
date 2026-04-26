@@ -84,7 +84,7 @@ export function RsvpForm({ uuid, maxCount, initialCount, locked }: RsvpFormProps
           disabled={selected === null || pending}
           onClick={handleSave}
         >
-          {pending ? "Saving…" : "Save RSVP"}
+          {pending ? "Saving&hellip;" : "Save RSVP"}
         </button>
       )}
 
@@ -96,7 +96,7 @@ export function RsvpForm({ uuid, maxCount, initialCount, locked }: RsvpFormProps
       )}
       {locked && initialCount !== null && (
         <p className={styles.lockedNote}>
-          You RSVP'd: {initialCount} attending.
+          You RSVP&rsquo;d: {initialCount} attending.
         </p>
       )}
       {locked && initialCount === null && (

@@ -66,7 +66,7 @@ export default async function MarriagePage({ params }: PageProps) {
 
       <section className={styles.content}>
         <p className={styles.familyName}>{invite.familyName}</p>
-        <h1 className={styles.headline}>You're invited to our wedding</h1>
+        <h1 className={styles.headline}>You&rsquo;re invited to our wedding</h1>
         <p className={styles.couple}>
           {wedding.couple.primary} &amp; {wedding.couple.partner}
         </p>

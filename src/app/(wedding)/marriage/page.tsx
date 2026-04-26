@@ -10,36 +10,45 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
+function formatDeadline(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export default function MarriageLanding() {
   const loveStorySrc = wedding.loveStoryImage || wedding.heroImage;
+  const deadlineDisplay = formatDeadline(wedding.rsvpDeadlineISO);
 
   return (
     <main className={styles.page}>
-      {/* ──────────────  CINEMATIC HERO  ────────────── */}
-      <section className={styles.cinematicHero}>
-        <Image
-          src={wedding.heroImage}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className={styles.cinematicImage}
-        />
-        <div className={styles.cinematicOverlay} />
-
-        <h1 className={styles.cinematicNames}>
-          <span>{wedding.couple.primary}</span>
-          <span className={styles.cinematicAmp}>&amp;</span>
-          <span>{wedding.couple.partner}</span>
+      {/* ──────────────  HERO  ────────────── */}
+      <section className={styles.hero}>
+        <h1 className={styles.heroNames}>
+          {wedding.couple.primary} and {wedding.couple.partner}
         </h1>
 
-        <div className={styles.cinematicFooter}>
-          <span>{wedding.dateDisplay}</span>
-          {wedding.hashtag ? (
-            <span className={styles.cinematicHashtag}>{wedding.hashtag}</span>
-          ) : (
-            <span />
-          )}
+        <div className={styles.heroPhotoWrap}>
+          <Image
+            src={wedding.heroImage}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 720px) 90vw, 560px"
+            className={styles.heroPhoto}
+          />
+        </div>
+
+        <div className={styles.heroFooter}>
+          <span className={styles.heroFooterLeft}>{wedding.dateDisplay}</span>
+          <span className={styles.heroFooterCenter}>
+            Please RSVP on or before {deadlineDisplay}.
+          </span>
+          <span className={styles.heroFooterRight}>{wedding.location}</span>
         </div>
       </section>
 

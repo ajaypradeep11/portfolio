@@ -17,6 +17,7 @@ export const wedding = {
   heroImage: "/images/wedding/hero.jpg",
   loveStoryImage: "/images/wedding/love-story.jpg",
   hashtag: "#AjayAleena2026",
+  location: "Thornhill, Ontario",
   rsvpDeadlineISO: "2026-05-17",
   loveStory: [
     "Write a paragraph here that tells your story as a couple — how you met, your journey together, and what makes your relationship special.",

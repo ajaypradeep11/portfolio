@@ -1,0 +1,14 @@
+.weddingRoot {
+  --wedding-bg: #f9f4ee;
+  --wedding-fg: #3a2e26;
+  --wedding-accent: #b08968;
+  --wedding-soft: #e8d5c4;
+
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--wedding-bg);
+  color: var(--wedding-fg);
+  font-family: var(--font-wedding-serif), Georgia, serif;
+  z-index: 100;
+}

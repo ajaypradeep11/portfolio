@@ -32,12 +32,23 @@ export default function MarriageLanding() {
           {wedding.couple.primary} and {wedding.couple.partner}
         </h1>
 
-        <div className={styles.heroPhotoWrap}>
-          <HeroSlideshow
-            images={wedding.coupleImages}
-            className={styles.heroSlideshow}
-            imageClassName={styles.heroPhoto}
-          />
+        <div className={styles.heroPhotoRow}>
+          <div className={styles.heroPhotoFrame}>
+            <HeroSlideshow
+              images={wedding.coupleImages}
+              startIndex={0}
+              className={styles.heroSlideshow}
+              imageClassName={styles.heroPhoto}
+            />
+          </div>
+          <div className={styles.heroPhotoFrame}>
+            <HeroSlideshow
+              images={wedding.coupleImages}
+              startIndex={Math.floor(wedding.coupleImages.length / 2)}
+              className={styles.heroSlideshow}
+              imageClassName={styles.heroPhoto}
+            />
+          </div>
         </div>
 
         <div className={styles.heroFooter}>

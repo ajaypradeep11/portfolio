@@ -38,11 +38,28 @@
   white-space: nowrap;
 }
 
-.heroPhotoWrap {
-  position: relative;
+.heroPhotoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
   width: min(960px, 92%);
-  aspect-ratio: 5 / 3;
   margin: clamp(1rem, 3vw, 2rem) auto;
+}
+
+.heroPhotoFrame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 520px) {
+  .heroPhotoRow {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: min(420px, 92%);
+  }
+  .heroPhotoFrame {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 .heroSlideshow {

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 interface HeroSlideshowProps {
   images: readonly string[];
   intervalMs?: number;
+  startIndex?: number;
   className?: string;
   imageClassName?: string;
 }
@@ -13,10 +14,12 @@ interface HeroSlideshowProps {
 export function HeroSlideshow({
   images,
   intervalMs = 4500,
+  startIndex = 0,
   className,
   imageClassName,
 }: HeroSlideshowProps) {
-  const [index, setIndex] = useState(0);
+  const safeStart = images.length > 0 ? startIndex % images.length : 0;
+  const [index, setIndex] = useState(safeStart);
 
   useEffect(() => {
     if (images.length <= 1) return;

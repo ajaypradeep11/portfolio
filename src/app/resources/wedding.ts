@@ -19,6 +19,8 @@ export const wedding = {
   hashtag: "#AjayAleena2026",
   location: "Thornhill, Ontario",
   rsvpDeadlineISO: "2026-05-17",
+  loveStoryTitleLines: ["The Walk to", "Warehouse"],
+  loveStorySinceYear: 2022,
   loveStory: [
     "Write a paragraph here that tells your story as a couple — how you met, your journey together, and what makes your relationship special.",
     "This is the spot to share your personality and connect with your guests — a glimpse into your love story and what this day means to you.",

@@ -97,75 +97,89 @@
   }
 }
 
-/* ---------- Section 2: Love Story ---------- */
+/* ---------- Section 2: Our Story (centered, illustration row) ---------- */
 
 .loveStory {
   background: var(--wedding-bg);
   padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 3rem);
-  display: grid;
-  grid-template-columns: minmax(160px, 1fr) minmax(280px, 1.4fr) minmax(220px, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem);
-  align-items: center;
-  max-width: 1200px;
+  text-align: center;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .loveStoryTitle {
-  margin: 0;
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
   font-family: var(--font-wedding-serif), Georgia, serif;
-  font-size: clamp(2rem, 5vw, 3.6rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   font-weight: 400;
   color: var(--wedding-fg);
-  display: flex;
-  flex-direction: column;
-  gap: 0.1em;
 }
 
 .loveStoryTitle span {
   display: block;
 }
 
-.loveStoryPhotoWrap {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
+.loveStorySinceRow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  max-width: 760px;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
 }
 
-.loveStoryPhoto {
-  position: absolute;
-  inset: 0;
-  object-fit: cover;
-  filter: grayscale(100%);
+.loveStorySinceLabel {
+  text-align: right;
+  font-size: 0.85rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--wedding-fg);
+  opacity: 0.8;
+}
+
+.loveStorySinceYear {
+  text-align: left;
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  color: var(--wedding-fg);
+  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+
+.loveStoryIllustration {
+  width: clamp(80px, 9vw, 130px);
+  height: clamp(70px, 8vw, 110px);
+  color: var(--wedding-fg);
+  opacity: 0.92;
 }
 
 .loveStoryText {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.85em;
   font-family: var(--font-wedding-serif), Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 1.02rem;
+  line-height: 1.65;
   color: var(--wedding-fg);
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .loveStoryText p {
   margin: 0;
 }
 
-@media (max-width: 880px) {
-  .loveStory {
+@media (max-width: 720px) {
+  .loveStorySinceRow {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .loveStorySinceLabel,
+  .loveStorySinceYear {
     text-align: center;
-  }
-  .loveStoryTitle {
-    align-items: center;
-    font-size: clamp(2.2rem, 8vw, 3rem);
-  }
-  .loveStoryText {
-    text-align: left;
   }
 }
 

@@ -21,7 +21,6 @@ function formatDeadline(iso: string): string {
 }
 
 export default function MarriageLanding() {
-  const loveStorySrc = wedding.loveStoryImage || wedding.heroImage;
   const deadlineDisplay = formatDeadline(wedding.rsvpDeadlineISO);
 
   return (
@@ -52,22 +51,20 @@ export default function MarriageLanding() {
         </div>
       </section>
 
-      {/* ──────────────  OUR LOVE STORY  ────────────── */}
+      {/* ──────────────  OUR STORY  ────────────── */}
       <section className={styles.loveStory}>
         <h2 className={styles.loveStoryTitle}>
-          <span>Our</span>
-          <span>Love</span>
-          <span>Story</span>
+          {wedding.loveStoryTitleLines.map((line, i) => (
+            <span key={i}>{line}</span>
+          ))}
         </h2>
 
-        <div className={styles.loveStoryPhotoWrap}>
-          <Image
-            src={loveStorySrc}
-            alt=""
-            fill
-            sizes="(max-width: 880px) 100vw, 40vw"
-            className={styles.loveStoryPhoto}
-          />
+        <div className={styles.loveStorySinceRow}>
+          <span className={styles.loveStorySinceLabel}>Since</span>
+          <CoupleIllustration className={styles.loveStoryIllustration} />
+          <span className={styles.loveStorySinceYear}>
+            {wedding.loveStorySinceYear}
+          </span>
         </div>
 
         <div className={styles.loveStoryText}>
@@ -145,6 +142,31 @@ export default function MarriageLanding() {
 
       <p className={styles.invitationNote}>By invitation only</p>
     </main>
+  );
+}
+
+/* ----------- Couple silhouette illustration ----------- */
+
+function CoupleIllustration({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 120 100"
+      className={className}
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      {/* Left figure (suit) */}
+      <circle cx="46" cy="20" r="6.5" />
+      <path d="M40 28 Q40 26 46 26 Q52 26 52 28 L54 50 Q54 52 52 52 L48 52 L48 70 L52 92 L46 92 L43 75 L40 92 L34 92 L38 68 L38 52 L34 52 Q32 52 32 50 L36 33 Z" />
+      {/* Right figure (dress) */}
+      <circle cx="74" cy="22" r="6" />
+      <path d="M68 30 Q68 28 74 28 Q80 28 80 30 L82 46 L96 80 L70 80 L78 46 Z" />
+      {/* Right figure legs from under skirt */}
+      <path d="M76 80 L74 92 L70 92 L72 80 Z" />
+      <path d="M82 80 L86 92 L82 92 L78 80 Z" />
+      {/* Joined hands between them */}
+      <path d="M52 38 Q60 42 68 38" stroke="currentColor" strokeWidth="2" fill="none" />
+    </svg>
   );
 }
 

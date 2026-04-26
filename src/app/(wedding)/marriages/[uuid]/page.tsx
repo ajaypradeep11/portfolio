@@ -133,6 +133,8 @@ export default async function MarriagePage({ params }: PageProps) {
             initialCount={invite.attendingCount}
             locked={locked}
           />
+
+          <p className={styles.bottomFamily}>{invite.familyName} and Family</p>
         </div>
       </section>
     </main>

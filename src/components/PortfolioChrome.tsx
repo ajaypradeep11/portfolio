@@ -13,7 +13,7 @@ interface PortfolioChromeProps {
 export function PortfolioChrome({ children }: PortfolioChromeProps) {
   const pathname = usePathname() ?? "";
 
-  if (pathname.startsWith("/marriages")) {
+  if (pathname === "/marriage" || pathname.startsWith("/marriages") || pathname.startsWith("/marriage/")) {
     return <>{children}</>;
   }
 

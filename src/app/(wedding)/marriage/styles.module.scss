@@ -45,9 +45,12 @@
   margin: clamp(1rem, 3vw, 2rem) auto;
 }
 
-.heroPhoto {
+.heroSlideshow {
   position: absolute;
   inset: 0;
+}
+
+.heroPhoto {
   object-fit: cover;
   filter: grayscale(100%);
 }

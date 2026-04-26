@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { wedding } from "@/app/resources/wedding";
 
+import { HeroSlideshow } from "./HeroSlideshow";
 import styles from "./styles.module.scss";
 
 export const metadata = {
@@ -32,13 +33,10 @@ export default function MarriageLanding() {
         </h1>
 
         <div className={styles.heroPhotoWrap}>
-          <Image
-            src={wedding.heroImage}
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 720px) 90vw, 560px"
-            className={styles.heroPhoto}
+          <HeroSlideshow
+            images={wedding.coupleImages}
+            className={styles.heroSlideshow}
+            imageClassName={styles.heroPhoto}
           />
         </div>
 

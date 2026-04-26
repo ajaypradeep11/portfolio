@@ -22,6 +22,30 @@ export const wedding = {
     "Write a paragraph here that tells your story as a couple — how you met, your journey together, and what makes your relationship special.",
     "This is the spot to share your personality and connect with your guests — a glimpse into your love story and what this day means to you.",
   ],
+  program: [
+    { time: "5:00 PM", event: "Welcome Photos & Cocktails" },
+    { time: "6:00 PM", event: "Dinner Program" },
+    { time: "7:00 PM", event: "Toasts & Speeches" },
+    { time: "8:00 PM", event: "Official Picture Taking" },
+    { time: "9:00 PM", event: "Open Bar & Dancing" },
+  ],
+  reception: [
+    {
+      heading: "Reception Venue",
+      body:
+        "Our reception will take place at Heintzman House — a heritage venue with garden grounds. Expect indoor seating with a flowing outdoor space.",
+    },
+    {
+      heading: "Dress Code",
+      body:
+        "Traditional. Comfortable shoes recommended — the venue includes outdoor pathways.",
+    },
+    {
+      heading: "Parking & Directions",
+      body:
+        "Free on-site parking is available. If you need accessible parking or a drop-off closer to the entrance, just let us know.",
+    },
+  ],
 } as const;
 
 export type WeddingConfig = typeof wedding;

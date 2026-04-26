@@ -105,6 +105,35 @@ export default function MarriageLanding() {
         </div>
       </section>
 
+      {/* ──────────────  PROGRAM & RECEPTION  ────────────── */}
+      <section className={styles.programReception}>
+        <div className={styles.programReceptionInner}>
+          <div>
+            <h2 className={styles.prSectionTitle}>Program</h2>
+            <ul className={styles.programList}>
+              {wedding.program.map((item, i) => (
+                <li key={i} className={styles.programItem}>
+                  <span className={styles.programTime}>{item.time}</span>
+                  <span className={styles.programEvent}>{item.event}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className={styles.prSectionTitle}>Reception</h2>
+            <div className={styles.receptionList}>
+              {wedding.reception.map((item, i) => (
+                <div key={i} className={styles.receptionItem}>
+                  <h3 className={styles.receptionHeading}>{item.heading}</h3>
+                  <p className={styles.receptionBody}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <p className={styles.invitationNote}>By invitation only</p>
     </main>
   );

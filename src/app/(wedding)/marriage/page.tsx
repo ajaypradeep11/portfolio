@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { wedding } from "@/app/resources/wedding";
@@ -27,14 +26,18 @@ export default function MarriageLanding() {
     <main className={styles.page}>
       {/* ──────────────  HERO  ────────────── */}
       <section className={styles.hero}>
-        <Image
-          src="/images/couple/main.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className={styles.heroImage}
-        />
+        <video
+          className={styles.heroVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/images/couple/main.jpg"
+        >
+          <source src="/images/us.mp4" type="video/mp4" />
+          <source src="/images/us.MOV" type="video/quicktime" />
+        </video>
         <div className={styles.heroVignette} aria-hidden="true" />
 
         <h1 className={styles.heroNames}>

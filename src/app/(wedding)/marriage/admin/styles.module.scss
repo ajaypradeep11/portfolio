@@ -155,15 +155,15 @@
 .dangerBtn {
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  border: 1px solid #9c2a2a;
+  border: 1px solid var(--wedding-danger);
   background: transparent;
-  color: #9c2a2a;
+  color: var(--wedding-danger);
   font: inherit;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: #9c2a2a;
+    background: var(--wedding-danger);
     color: #fff;
   }
 
@@ -190,13 +190,13 @@
 
 .errorText {
   margin: 0.5rem 0 0;
-  color: #9c2a2a;
+  color: var(--wedding-danger);
   font-size: 0.9rem;
 }
 
 .errorInline {
   display: block;
-  color: #9c2a2a;
+  color: var(--wedding-danger);
   font-size: 0.85rem;
   margin-top: 0.35rem;
 }

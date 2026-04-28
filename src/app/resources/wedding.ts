@@ -13,7 +13,7 @@ export const wedding = {
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Heintzman+House+135+Bay+Thorn+Dr+Thornhill+ON",
   },
-  dressCode: "Traditional",
+  dressCode: "Floral & pastel — wear something that makes you feel beautiful",
   heroImage: "/images/wedding/hero.jpg",
   loveStoryImage: "/images/wedding/love-story.jpg",
   coupleImages: [
@@ -28,6 +28,13 @@ export const wedding = {
     "/images/couple/9.jpg",
     "/images/couple/10.jpg",
     "/images/couple/11.jpg",
+    "/images/couple/12.jpg",
+    "/images/couple/13.jpg",
+    "/images/couple/14.jpg",
+    "/images/couple/15.jpg",
+    "/images/couple/16.jpg",
+    "/images/couple/17.jpg",
+    "/images/couple/18.jpg",
   ],
   hashtag: "#AjayAleena2026",
   location: "Thornhill, Ontario",
@@ -35,15 +42,17 @@ export const wedding = {
   loveStoryTitleLines: ["The Walk to", "Warehouse"],
   loveStorySinceYear: 2022,
   loveStory: [
-    "Write a paragraph here that tells your story as a couple — how you met, your journey together, and what makes your relationship special.",
-    "This is the spot to share your personality and connect with your guests — a glimpse into your love story and what this day means to you.",
+    "She was waiting for the bus to the Warehouse — literally a 500-metre walk away. When I crossed paths with her, I asked why she'd stand around when she could just walk it. She said, 'Too much energy will be wasted.' So we started walking together.",
+    "She asked what kind of TV shows I watch, and without flinching I said anime. She pulled a Saitama figure out of her bag — and that's where the love story began. We talked Jujutsu Kaisen the whole way, and here we are.",
   ],
   program: [
-    { time: "5:00 PM", event: "Welcome Photos & Cocktails" },
-    { time: "6:00 PM", event: "Dinner Program" },
-    { time: "7:00 PM", event: "Toasts & Speeches" },
-    { time: "8:00 PM", event: "Official Picture Taking" },
-    { time: "9:00 PM", event: "Open Bar & Dancing" },
+    { time: "3:00 PM", event: "Ceremony" },
+    { time: "4:30 PM", event: "Cocktail Hour" },
+    { time: "5:00 PM", event: "Reception" },
+    { time: "5:30 PM", event: "Dinner" },
+    { time: "6:00 PM", event: "Cake Cutting & Toasts" },
+    { time: "6:30 PM", event: "Games" },
+    { time: "7:00 PM", event: "DJ & Dancing" },
   ],
   reception: [
     {

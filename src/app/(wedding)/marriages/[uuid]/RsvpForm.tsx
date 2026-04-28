@@ -55,7 +55,7 @@ export function RsvpForm({ uuid, maxCount, initialCount, locked }: RsvpFormProps
 
   return (
     <div className={styles.form}>
-      <p className={styles.formPrompt}>How many will attend?</p>
+      <p className={styles.formPrompt}>How many people will attend?</p>
 
       <div className={styles.choices} role="radiogroup" aria-label="Attendee count">
         {choices.map((n) => (

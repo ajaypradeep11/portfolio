@@ -123,6 +123,8 @@ export default async function MarriagePage({ params }: PageProps) {
             <span />
           </div>
 
+          <p className={styles.bigFamily}>{invite.familyName} and Family</p>
+
           <p className={styles.deadline}>
             Kindly respond by {formatDeadline(wedding.rsvpDeadlineISO)}
           </p>
@@ -133,8 +135,6 @@ export default async function MarriagePage({ params }: PageProps) {
             initialCount={invite.attendingCount}
             locked={locked}
           />
-
-          <p className={styles.bottomFamily}>{invite.familyName} and Family</p>
         </div>
       </section>
     </main>

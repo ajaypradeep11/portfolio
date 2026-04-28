@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { wedding } from "@/app/resources/wedding";
 
-import { HeroSlideshow } from "./HeroSlideshow";
 import styles from "./styles.module.scss";
 
 export const metadata = {
@@ -28,28 +27,21 @@ export default function MarriageLanding() {
     <main className={styles.page}>
       {/* ──────────────  HERO  ────────────── */}
       <section className={styles.hero}>
-        <h1 className={styles.heroNames}>
-          {wedding.couple.primary} and {wedding.couple.partner}
-        </h1>
+        <Image
+          src="/images/couple/main.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className={styles.heroImage}
+        />
+        <div className={styles.heroVignette} aria-hidden="true" />
 
-        <div className={styles.heroPhotoRow}>
-          <div className={styles.heroPhotoFrame}>
-            <HeroSlideshow
-              images={wedding.coupleImages}
-              startIndex={0}
-              className={styles.heroSlideshow}
-              imageClassName={styles.heroPhoto}
-            />
-          </div>
-          <div className={styles.heroPhotoFrame}>
-            <HeroSlideshow
-              images={wedding.coupleImages}
-              startIndex={Math.floor(wedding.coupleImages.length / 2)}
-              className={styles.heroSlideshow}
-              imageClassName={styles.heroPhoto}
-            />
-          </div>
-        </div>
+        <h1 className={styles.heroNames}>
+          <span className={styles.heroName}>{wedding.couple.primary.toUpperCase()}</span>
+          <span className={styles.heroAmp}>&amp;</span>
+          <span className={styles.heroName}>{wedding.couple.partner.toUpperCase()}</span>
+        </h1>
 
         <div className={styles.heroFooter}>
           <span className={styles.heroFooterLeft}>{wedding.dateDisplay}</span>
@@ -149,7 +141,9 @@ export default function MarriageLanding() {
         </div>
       </section>
 
-      <p className={styles.invitationNote}>By invitation only</p>
+      <footer className={styles.weddingFooter}>
+        <p className={styles.invitationNote}>By invitation only</p>
+      </footer>
     </main>
   );
 }

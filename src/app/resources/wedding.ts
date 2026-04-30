@@ -38,12 +38,11 @@ export const wedding = {
   ],
   hashtag: "#AjayAleena2026",
   location: "Thornhill, Ontario",
-  rsvpDeadlineISO: "2026-05-17",
+  rsvpDeadlineISO: "2026-05-10",
   loveStoryTitleLines: ["The Walk to", "Warehouse"],
   loveStorySinceYear: 2022,
   loveStory: [
-    "She was waiting for the bus to the Warehouse — literally a 500-metre walk away. When I crossed paths with her, I asked why she'd stand around when she could just walk it. She said, 'Too much energy will be wasted.' So we started walking together.",
-    "She asked what kind of TV shows I watch, and without flinching I said anime. She pulled a Saitama figure out of her bag — and that's where the love story began. We talked Jujutsu Kaisen the whole way, and here we are.",
+    "She was waiting for the bus to the Warehouse — literally a 500-metre walk away. When I crossed paths with her, I asked why she'd stand around when she could just walk it. She said, 'Too much energy will be wasted.' So we started walking together and here we are",
   ],
   program: [
     { time: "3:00 PM", event: "Ceremony" },

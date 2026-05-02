@@ -436,3 +436,111 @@
   text-transform: uppercase;
   color: var(--wedding-fg);
 }
+
+/* ======================================================
+   Animations
+   ====================================================== */
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.018);
+  }
+}
+
+/* ---------- Scroll reveal items (inside <Reveal>) ---------- */
+
+.revealItem {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+[data-revealed="true"] .revealItem,
+[data-revealed="true"].revealItem {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.revealItemDelay1 {
+  transition-delay: 120ms;
+}
+.revealItemDelay2 {
+  transition-delay: 240ms;
+}
+
+/* ---------- Floral icons: stroke draw + breathe ---------- */
+
+.ceremonyIcon {
+  transform-origin: center;
+}
+
+.ceremonyIcon path,
+.ceremonyIcon circle {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-revealed="true"] .ceremonyIcon path,
+[data-revealed="true"] .ceremonyIcon circle {
+  stroke-dashoffset: 0;
+}
+
+[data-revealed="true"] .ceremonyIcon {
+  animation: breathe 6s ease-in-out 1.5s infinite;
+}
+
+/* ---------- Couple silhouette: settle ---------- */
+
+.coupleSettle {
+  opacity: 0;
+  transform: scale(0.92);
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms,
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1) 200ms;
+  will-change: opacity, transform;
+}
+
+[data-revealed="true"] .coupleSettle {
+  opacity: 0.92;
+  transform: scale(1);
+}
+
+/* ---------- Reduced motion: skip everything ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .revealItem,
+  [data-revealed="true"] .revealItem,
+  [data-revealed="true"].revealItem {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ceremonyIcon path,
+  .ceremonyIcon circle,
+  [data-revealed="true"] .ceremonyIcon path,
+  [data-revealed="true"] .ceremonyIcon circle {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+
+  [data-revealed="true"] .ceremonyIcon {
+    animation: none;
+  }
+
+  .coupleSettle,
+  [data-revealed="true"] .coupleSettle {
+    opacity: 0.92;
+    transform: none;
+    transition: none;
+  }
+}

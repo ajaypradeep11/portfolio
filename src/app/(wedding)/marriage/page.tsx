@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { wedding } from "@/app/resources/wedding";
 
+import { Reveal } from "./Reveal";
 import styles from "./styles.module.scss";
 
 export const metadata = {
@@ -53,34 +54,45 @@ export default function MarriageLanding() {
       </section>
 
       {/* ──────────────  OUR STORY  ────────────── */}
-      <section className={styles.loveStory}>
-        <h2 className={styles.loveStoryTitle}>
+      <Reveal as="section" className={styles.loveStory}>
+        <h2 className={`${styles.loveStoryTitle} ${styles.revealItem}`}>
           {wedding.loveStoryTitleLines.map((line, i) => (
             <span key={i}>{line}</span>
           ))}
         </h2>
 
-        <div className={styles.loveStorySinceRow}>
+        <div
+          className={`${styles.loveStorySinceRow} ${styles.revealItem} ${styles.revealItemDelay1}`}
+        >
           <span className={styles.loveStorySinceLabel}>Since</span>
-          <CoupleIllustration className={styles.loveStoryIllustration} />
+          <CoupleIllustration
+            className={`${styles.loveStoryIllustration} ${styles.coupleSettle}`}
+          />
           <span className={styles.loveStorySinceYear}>
             {wedding.loveStorySinceYear}
           </span>
         </div>
 
-        <div className={styles.loveStoryText}>
+        <div
+          className={`${styles.loveStoryText} ${styles.revealItem} ${styles.revealItemDelay2}`}
+        >
           {wedding.loveStory.map((para, i) => (
             <p key={i}>{para}</p>
           ))}
         </div>
-      </section>
+      </Reveal>
 
       {/* ──────────────  THE CEREMONY  ────────────── */}
-      <section className={styles.ceremony}>
-        <h2 className={styles.ceremonyTitle}>The Ceremony</h2>
+      <Reveal as="section" className={styles.ceremony}>
+        <h2 className={`${styles.ceremonyTitle} ${styles.revealItem}`}>
+          The Ceremony
+        </h2>
 
         <div className={styles.ceremonyGrid}>
-          <article className={styles.ceremonyCard}>
+          <Reveal
+            as="article"
+            className={`${styles.ceremonyCard} ${styles.revealItem}`}
+          >
             <FloralIcon variant="rose" className={styles.ceremonyIcon} />
             <h3 className={styles.ceremonyHeading}>Ceremony Venue</h3>
             <p className={styles.ceremonyBody}>
@@ -92,15 +104,23 @@ export default function MarriageLanding() {
                 View on map →
               </Link>
             </p>
-          </article>
+          </Reveal>
 
-          <article className={styles.ceremonyCard}>
+          <Reveal
+            as="article"
+            className={`${styles.ceremonyCard} ${styles.revealItem}`}
+            delayMs={120}
+          >
             <FloralIcon variant="wildflower" className={styles.ceremonyIcon} />
             <h3 className={styles.ceremonyHeading}>Dress Code</h3>
             <p className={styles.ceremonyBody}>{wedding.dressCode}</p>
-          </article>
+          </Reveal>
 
-          <article className={styles.ceremonyCard}>
+          <Reveal
+            as="article"
+            className={`${styles.ceremonyCard} ${styles.revealItem}`}
+            delayMs={240}
+          >
             <FloralIcon variant="tulip" className={styles.ceremonyIcon} />
             <h3 className={styles.ceremonyHeading}>When</h3>
             <p className={styles.ceremonyBody}>
@@ -108,38 +128,51 @@ export default function MarriageLanding() {
               <br />
               {wedding.time}
             </p>
-          </article>
+          </Reveal>
         </div>
-      </section>
+      </Reveal>
 
       {/* ──────────────  PROGRAM & RECEPTION  ────────────── */}
-      <section className={styles.programReception}>
+      <Reveal as="section" className={styles.programReception}>
         <div className={styles.programReceptionInner}>
           <div>
-            <h2 className={styles.prSectionTitle}>Program</h2>
+            <h2 className={`${styles.prSectionTitle} ${styles.revealItem}`}>
+              Program
+            </h2>
             <ul className={styles.programList}>
               {wedding.program.map((item, i) => (
-                <li key={i} className={styles.programItem}>
+                <Reveal
+                  key={i}
+                  as="li"
+                  className={`${styles.programItem} ${styles.revealItem}`}
+                  delayMs={i * 80}
+                >
                   <span className={styles.programTime}>{item.time}</span>
                   <span className={styles.programEvent}>{item.event}</span>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>
 
           <div>
-            <h2 className={styles.prSectionTitle}>Reception</h2>
+            <h2 className={`${styles.prSectionTitle} ${styles.revealItem}`}>
+              Reception
+            </h2>
             <div className={styles.receptionList}>
               {wedding.reception.map((item, i) => (
-                <div key={i} className={styles.receptionItem}>
+                <Reveal
+                  key={i}
+                  className={`${styles.receptionItem} ${styles.revealItem}`}
+                  delayMs={i * 100}
+                >
                   <h3 className={styles.receptionHeading}>{item.heading}</h3>
                   <p className={styles.receptionBody}>{item.body}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </Reveal>
 
       <footer className={styles.weddingFooter}>
         <p className={styles.invitationNote}>By invitation only</p>
@@ -194,17 +227,17 @@ function FloralIcon({
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        <path d="M50 28c-7 0-12 5-12 11 0 7 5 12 12 12s12-5 12-12c0-6-5-11-12-11z" />
-        <path d="M44 36c0-3 3-5 6-5s6 2 6 5-3 5-6 5-6-2-6-5z" />
-        <path d="M46 38c1-1 3-1 4 0" />
-        <path d="M50 50c0 18-6 36-18 42" />
-        <path d="M50 50c0 18 6 36 18 42" />
-        <path d="M40 60c-7-2-14 2-18 8 6 0 12-2 16-6" />
-        <path d="M60 60c7-2 14 2 18 8-6 0-12-2-16-6" />
-        <path d="M44 75c-6 0-11 4-13 10 5 0 10-3 13-7" />
-        <path d="M56 75c6 0 11 4 13 10-5 0-10-3-13-7" />
-        <path d="M50 50c-2-2-3-4-3-7" />
-        <path d="M50 50c2-2 3-4 3-7" />
+        <path pathLength={1} d="M50 28c-7 0-12 5-12 11 0 7 5 12 12 12s12-5 12-12c0-6-5-11-12-11z" />
+        <path pathLength={1} d="M44 36c0-3 3-5 6-5s6 2 6 5-3 5-6 5-6-2-6-5z" />
+        <path pathLength={1} d="M46 38c1-1 3-1 4 0" />
+        <path pathLength={1} d="M50 50c0 18-6 36-18 42" />
+        <path pathLength={1} d="M50 50c0 18 6 36 18 42" />
+        <path pathLength={1} d="M40 60c-7-2-14 2-18 8 6 0 12-2 16-6" />
+        <path pathLength={1} d="M60 60c7-2 14 2 18 8-6 0-12-2-16-6" />
+        <path pathLength={1} d="M44 75c-6 0-11 4-13 10 5 0 10-3 13-7" />
+        <path pathLength={1} d="M56 75c6 0 11 4 13 10-5 0-10-3-13-7" />
+        <path pathLength={1} d="M50 50c-2-2-3-4-3-7" />
+        <path pathLength={1} d="M50 50c2-2 3-4 3-7" />
       </svg>
     );
   }
@@ -222,25 +255,25 @@ function FloralIcon({
         aria-hidden="true"
       >
         {/* central stem */}
-        <path d="M50 92 Q49 70 51 50 Q52 35 50 22" />
+        <path pathLength={1} d="M50 92 Q49 70 51 50 Q52 35 50 22" />
         {/* small bloom top */}
-        <circle cx="50" cy="20" r="4" />
-        <path d="M46 17 Q50 13 54 17" />
-        <path d="M46 23 Q50 27 54 23" />
+        <circle pathLength={1} cx="50" cy="20" r="4" />
+        <path pathLength={1} d="M46 17 Q50 13 54 17" />
+        <path pathLength={1} d="M46 23 Q50 27 54 23" />
         {/* side bloom upper-right */}
-        <path d="M62 35 Q70 28 72 22 Q66 24 62 30" />
-        <circle cx="64" cy="30" r="2.5" />
+        <path pathLength={1} d="M62 35 Q70 28 72 22 Q66 24 62 30" />
+        <circle pathLength={1} cx="64" cy="30" r="2.5" />
         {/* side bloom upper-left */}
-        <path d="M38 38 Q30 34 28 28 Q34 30 38 36" />
-        <circle cx="36" cy="34" r="2.5" />
+        <path pathLength={1} d="M38 38 Q30 34 28 28 Q34 30 38 36" />
+        <circle pathLength={1} cx="36" cy="34" r="2.5" />
         {/* mid bloom right */}
-        <path d="M58 50 Q66 50 70 56" />
-        <circle cx="62" cy="50" r="3" />
-        <path d="M59 47 Q62 44 65 47" />
+        <path pathLength={1} d="M58 50 Q66 50 70 56" />
+        <circle pathLength={1} cx="62" cy="50" r="3" />
+        <path pathLength={1} d="M59 47 Q62 44 65 47" />
         {/* leaf left mid */}
-        <path d="M50 60 Q42 60 38 66 Q44 68 50 64 Z" />
+        <path pathLength={1} d="M50 60 Q42 60 38 66 Q44 68 50 64 Z" />
         {/* leaf right lower */}
-        <path d="M50 75 Q58 75 62 82 Q56 84 50 80 Z" />
+        <path pathLength={1} d="M50 75 Q58 75 62 82 Q56 84 50 80 Z" />
       </svg>
     );
   }
@@ -258,16 +291,16 @@ function FloralIcon({
       aria-hidden="true"
     >
       {/* tulip cup */}
-      <path d="M40 28 Q42 18 50 16 Q58 18 60 28 L60 44 Q55 48 50 48 Q45 48 40 44 Z" />
-      <path d="M50 16 Q50 30 50 48" />
-      <path d="M40 32 Q44 36 48 32" />
-      <path d="M52 32 Q56 36 60 32" />
+      <path pathLength={1} d="M40 28 Q42 18 50 16 Q58 18 60 28 L60 44 Q55 48 50 48 Q45 48 40 44 Z" />
+      <path pathLength={1} d="M50 16 Q50 30 50 48" />
+      <path pathLength={1} d="M40 32 Q44 36 48 32" />
+      <path pathLength={1} d="M52 32 Q56 36 60 32" />
       {/* stem */}
-      <path d="M50 48 Q49 70 50 92" />
+      <path pathLength={1} d="M50 48 Q49 70 50 92" />
       {/* leaf left */}
-      <path d="M50 70 Q40 68 32 78 Q42 78 50 74" />
+      <path pathLength={1} d="M50 70 Q40 68 32 78 Q42 78 50 74" />
       {/* leaf right */}
-      <path d="M50 60 Q60 58 68 66 Q60 70 52 65" />
+      <path pathLength={1} d="M50 60 Q60 58 68 66 Q60 70 52 65" />
     </svg>
   );
 }

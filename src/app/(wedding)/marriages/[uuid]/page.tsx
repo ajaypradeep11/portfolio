@@ -12,6 +12,7 @@ interface InviteDoc {
   maxCount: number;
   attendingCount: number | null;
   respondedAt: FirebaseFirestore.Timestamp | null;
+  includeFamilySuffix: boolean;
 }
 
 export const dynamic = "force-dynamic";
@@ -29,7 +30,14 @@ async function loadInvite(uuid: string): Promise<InviteDoc | null> {
     attendingCount:
       typeof data.attendingCount === "number" ? data.attendingCount : null,
     respondedAt: data.respondedAt ?? null,
+    includeFamilySuffix: data.includeFamilySuffix === true,
   };
+}
+
+function familyDisplay(invite: InviteDoc): string {
+  return invite.includeFamilySuffix
+    ? `${invite.familyName} and Family`
+    : invite.familyName;
 }
 
 function isPastDeadline(): boolean {
@@ -82,7 +90,7 @@ export default async function MarriagePage({ params }: PageProps) {
           </h1>
           <p className={styles.subtagline}>Invite you to join them</p>
           <p className={styles.heroDate}>{shortDate(wedding.dateISO)}</p>
-          <p className={styles.heroFamily}>{invite.familyName} and Family</p>
+          <p className={styles.heroFamily}>{familyDisplay(invite)}</p>
 
           <div className={styles.divider} aria-hidden="true">
             <span />
@@ -123,7 +131,7 @@ export default async function MarriagePage({ params }: PageProps) {
             <span />
           </div>
 
-          <p className={styles.bigFamily}>{invite.familyName} and Family</p>
+          <p className={styles.bigFamily}>{familyDisplay(invite)}</p>
 
           <p className={styles.deadline}>
             Kindly respond by {formatDeadline(wedding.rsvpDeadlineISO)}

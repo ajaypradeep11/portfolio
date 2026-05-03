@@ -17,6 +17,7 @@ interface RawInvite {
   maxCount?: unknown;
   attendingCount?: unknown;
   respondedAt?: { toDate?: () => Date } | null | unknown;
+  includeFamilySuffix?: unknown;
 }
 
 async function loadAllInvites(): Promise<InviteRow[]> {
@@ -31,6 +32,7 @@ async function loadAllInvites(): Promise<InviteRow[]> {
       attendingCount:
         typeof data.attendingCount === "number" ? data.attendingCount : null,
       respondedAtISO: extractDateISO(data.respondedAt),
+      includeFamilySuffix: data.includeFamilySuffix === true,
     });
   });
   rows.sort((a, b) => a.familyName.localeCompare(b.familyName));

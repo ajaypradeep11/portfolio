@@ -263,6 +263,39 @@
   gap: 0.5rem;
 }
 
+.toggleCell {
+  text-align: center;
+  vertical-align: middle;
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--wedding-accent, #b08968);
+  }
+
+  input[type="checkbox"]:disabled {
+    cursor: progress;
+    opacity: 0.55;
+  }
+}
+
+.suffixToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--wedding-accent, #b08968);
+  user-select: none;
+
+  input[type="checkbox"] {
+    cursor: pointer;
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--wedding-accent, #b08968);
+  }
+}
+
 .emptyRow {
   text-align: center;
   padding: 2rem !important;

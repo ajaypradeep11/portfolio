@@ -69,11 +69,13 @@ function requireAdmin(): boolean {
 export async function createInvite(input: {
   familyName: string;
   maxCount: number;
+  includeFamilySuffix?: boolean;
 }): Promise<AdminMutationResult> {
   if (!requireAdmin()) return { ok: false, error: "unauthorized" };
 
   const familyName = (input?.familyName ?? "").trim();
   const maxCount = Number(input?.maxCount);
+  const includeFamilySuffix = input?.includeFamilySuffix === true;
 
   if (familyName.length === 0 || familyName.length > 80) {
     return { ok: false, error: "invalid" };
@@ -86,6 +88,7 @@ export async function createInvite(input: {
     const ref = await getDb().collection("invites").add({
       familyName,
       maxCount,
+      includeFamilySuffix,
       attendingCount: null,
       respondedAt: null,
       createdAt: FieldValue.serverTimestamp(),
@@ -100,7 +103,11 @@ export async function createInvite(input: {
 
 export async function updateInvite(
   uuid: string,
-  patch: { familyName?: string; maxCount?: number },
+  patch: {
+    familyName?: string;
+    maxCount?: number;
+    includeFamilySuffix?: boolean;
+  },
 ): Promise<AdminMutationResult> {
   if (!requireAdmin()) return { ok: false, error: "unauthorized" };
 
@@ -120,6 +127,13 @@ export async function updateInvite(
       return { ok: false, error: "invalid" };
     }
     updates.maxCount = n;
+  }
+
+  if (patch.includeFamilySuffix !== undefined) {
+    if (typeof patch.includeFamilySuffix !== "boolean") {
+      return { ok: false, error: "invalid" };
+    }
+    updates.includeFamilySuffix = patch.includeFamilySuffix;
   }
 
   if (Object.keys(updates).length === 0) {

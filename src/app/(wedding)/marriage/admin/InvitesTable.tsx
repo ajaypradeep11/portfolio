@@ -16,6 +16,7 @@ export interface InviteRow {
   maxCount: number;
   attendingCount: number | null;
   respondedAtISO: string | null;
+  includeFamilySuffix: boolean;
 }
 
 interface InvitesTableProps {
@@ -55,6 +56,9 @@ export function InvitesTable({ rows }: InvitesTableProps) {
         <thead>
           <tr>
             <th>Family</th>
+            <th title={'Append "and Family" to the invite display'}>
+              + Family
+            </th>
             <th>Max</th>
             <th>Attending</th>
             <th>Responded</th>
@@ -65,7 +69,7 @@ export function InvitesTable({ rows }: InvitesTableProps) {
         <tbody>
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={6} className={styles.emptyRow}>
+              <td colSpan={7} className={styles.emptyRow}>
                 No invites yet — add one above.
               </td>
             </tr>
@@ -111,12 +115,14 @@ function SignOutButton() {
 function CreateInviteRow() {
   const [familyName, setFamilyName] = useState("");
   const [maxCount, setMaxCount] = useState("4");
+  const [includeFamilySuffix, setIncludeFamilySuffix] = useState(false);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
   function reset() {
     setFamilyName("");
     setMaxCount("4");
+    setIncludeFamilySuffix(false);
   }
 
   function onAdd() {
@@ -131,7 +137,11 @@ function CreateInviteRow() {
       return;
     }
     startTransition(async () => {
-      const res = await createInvite({ familyName: familyName.trim(), maxCount: count });
+      const res = await createInvite({
+        familyName: familyName.trim(),
+        maxCount: count,
+        includeFamilySuffix,
+      });
       if (res.ok) {
         reset();
         // Server revalidates the path; refresh to pull new data.
@@ -166,6 +176,15 @@ function CreateInviteRow() {
         onChange={(e) => setMaxCount(e.target.value)}
         disabled={pending}
       />
+      <label className={styles.suffixToggle}>
+        <input
+          type="checkbox"
+          checked={includeFamilySuffix}
+          onChange={(e) => setIncludeFamilySuffix(e.target.checked)}
+          disabled={pending}
+        />
+        <span>Append &ldquo;and Family&rdquo;</span>
+      </label>
       <button
         type="button"
         className={styles.primaryBtn}
@@ -183,6 +202,8 @@ function InviteTableRow({ row, origin }: { row: InviteRow; origin: string }) {
   const [editing, setEditing] = useState(false);
   const [familyName, setFamilyName] = useState(row.familyName);
   const [maxCount, setMaxCount] = useState(String(row.maxCount));
+  const [suffixOn, setSuffixOn] = useState(row.includeFamilySuffix);
+  const [suffixPending, setSuffixPending] = useState(false);
   const [pending, startTransition] = useTransition();
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -244,6 +265,21 @@ function InviteTableRow({ row, origin }: { row: InviteRow; origin: string }) {
     });
   }
 
+  async function toggleSuffix(next: boolean) {
+    setError(null);
+    const previous = suffixOn;
+    setSuffixOn(next);
+    setSuffixPending(true);
+    const res = await updateInvite(row.id, { includeFamilySuffix: next });
+    setSuffixPending(false);
+    if (!res.ok) {
+      setSuffixOn(previous);
+      setError(
+        res.error === "unauthorized" ? "Session expired." : "Couldn’t save.",
+      );
+    }
+  }
+
   return (
     <tr>
       <td>
@@ -258,6 +294,15 @@ function InviteTableRow({ row, origin }: { row: InviteRow; origin: string }) {
         ) : (
           row.familyName
         )}
+      </td>
+      <td className={styles.toggleCell}>
+        <input
+          type="checkbox"
+          checked={suffixOn}
+          onChange={(e) => toggleSuffix(e.target.checked)}
+          disabled={suffixPending}
+          aria-label={`Append "and Family" for ${row.familyName}`}
+        />
       </td>
       <td className={styles.numCell}>
         {editing ? (

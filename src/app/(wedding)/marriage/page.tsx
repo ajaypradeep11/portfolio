@@ -1,10 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { wedding } from "@/app/resources/wedding";
 
+import { HeroSlideshow } from "./HeroSlideshow";
 import { Reveal } from "./Reveal";
 import styles from "./styles.module.scss";
+
+const HERO_IMAGES = [
+  "/images/couple/1.JPG",
+  "/images/couple/2.JPG",
+  "/images/couple/3.JPG",
+  "/images/couple/4.JPG",
+] as const;
 
 export const metadata = {
   title: `${wedding.couple.primary} & ${wedding.couple.partner}`,
@@ -28,13 +35,11 @@ export default function MarriageLanding() {
     <main className={styles.page}>
       {/* ──────────────  HERO  ────────────── */}
       <section className={styles.hero}>
-        <Image
-          src="/images/couple/main.jpg"
-          alt=""
-          fill
-          priority
+        <HeroSlideshow
+          images={HERO_IMAGES}
+          className={styles.heroSlideshow}
+          imageClassName={styles.heroImage}
           sizes="100vw"
-          className={styles.heroImage}
         />
         <div className={styles.heroVignette} aria-hidden="true" />
 

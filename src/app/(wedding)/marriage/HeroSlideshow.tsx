@@ -9,6 +9,7 @@ interface HeroSlideshowProps {
   startIndex?: number;
   className?: string;
   imageClassName?: string;
+  sizes?: string;
 }
 
 export function HeroSlideshow({
@@ -17,6 +18,7 @@ export function HeroSlideshow({
   startIndex = 0,
   className,
   imageClassName,
+  sizes = "(max-width: 720px) 90vw, 560px",
 }: HeroSlideshowProps) {
   const safeStart = images.length > 0 ? startIndex % images.length : 0;
   const [index, setIndex] = useState(safeStart);
@@ -47,7 +49,7 @@ export function HeroSlideshow({
             alt=""
             fill
             priority={i === 0}
-            sizes="(max-width: 720px) 90vw, 560px"
+            sizes={sizes}
             className={imageClassName}
           />
         </div>

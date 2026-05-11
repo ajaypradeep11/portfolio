@@ -29,6 +29,12 @@
   isolation: isolate;
 }
 
+.heroSlideshow {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
 .heroImage {
   position: absolute;
   inset: 0;

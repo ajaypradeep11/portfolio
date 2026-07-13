@@ -6,7 +6,7 @@ const person = {
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
-  role: "Full Stack Developer",
+  role: "Senior Full-Stack & AI Engineer",
   avatar: "/images/avatar.png",
   location: "Canada/Eastern", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["English", "Tamil"], // optional: Leave the array empty if you don't want to display languages
@@ -51,22 +51,22 @@ const home = {
   label: "Home",
   title: "Ajay Pradeep Portfolio",
   description:
-    "Portfolio of Ajay Pradeep, a full stack developer building Next.js, NestJS, AI, and cloud applications.",
-  headline: <>Full Stack Developer</>,
+    "Portfolio of Ajay Pradeep, a senior full-stack and AI engineer building production SaaS, intelligent applications, and cloud platforms.",
+  headline: <>Senior Full-Stack & AI Engineer</>,
   subline: (
     <>
-      From <InlineCode>front-end</InlineCode>, <InlineCode>back-end</InlineCode> to the <InlineCode>cloud</InlineCode>, I&apos;ve got it all covered.
-      Oh, and did I mention? I speak <InlineCode>JavaScript</InlineCode>{" "}
-      fluently.
+      I build products end to end: from <InlineCode>front-end</InlineCode> and
+      <InlineCode> back-end</InlineCode> architecture to <InlineCode>AI systems</InlineCode>
+      and <InlineCode>cloud</InlineCode> deployment.
     </>
   ),
 };
 
 const about = {
   label: "About",
-  title: "About Ajay",
+  title: "About me",
   description:
-    "Experience, technical skills, and project background for Ajay, a full stack developer building web, AI, and cloud products.",
+    "Experience, technical skills, and project background for Ajay, a senior full-stack and AI engineer building SaaS, intelligent applications, and cloud platforms.",
   tableOfContent: {
     display: true,
     subItems: false,
@@ -84,10 +84,11 @@ const about = {
     nickName: "Ajay",
     description: (
       <>
-        I&apos;m a Full Stack developer who does it all from designing sleek
-        front-end interfaces to building powerful back-end APIs, and even
-        crafting cloud solutions. If it’s code, I can handle it. No challenge is
-        too big, no stack too complex.
+        I&apos;m a Senior Full-Stack and AI Engineer with 7+ years of experience
+        building production SaaS platforms, intelligent applications, APIs,
+        payment systems, and cloud infrastructure. I specialize in turning
+        complex business requirements and AI capabilities into secure,
+        maintainable products that work end to end.
       </>
     ),
   },
@@ -101,17 +102,17 @@ const about = {
         role: "Full Stack Developer",
         achievements: [
           <>
-            Utilized Elasticsearch to optimize dashboard speed and efficiency,
-            improving data retrieval performance by implementing advanced
-            querying techniques such as filters, bool queries, wildcards, match
-            queries, and scripts_fields to enhance search accuracy and speed.
+            Improved dashboard search performance and accuracy with advanced
+            Elasticsearch filters, boolean queries, wildcards, match queries,
+            and script fields for complex operational data.
           </>,
           <>
-            Integrated Stripe for secure and seamless multi-payment
-            functionality, adhering to industry standards.
+            Integrated Stripe payment workflows and built scalable backend
+            services with Node.js, NestJS, and tRPC.
           </>,
           <>
-            Implemented backend solutions with Node.js, NestJS, and TRPC, ensuring scalability and reliability.
+            Delivered full-stack product features across frontend interfaces,
+            APIs, data access, and production support in a collaborative team.
           </>,
         ],
         images: [
@@ -133,13 +134,21 @@ const about = {
       {
         company: "ConversyAI",
         timeframe: "2025 - Present",
-        role: "System Architect & Full Stack Developer",
+        role: "Head of Technology | AI & Full-Stack Engineer",
         achievements: [
           <>
-            Architected an AI-based platform for AI agent creation with knowledge base ingestion, Gemini File Search integration, and Deepgram speech-to-text integration.
+            Architected a multi-tenant SaaS platform that enables businesses to
+            create, train, and deploy customer-facing AI agents without code.
           </>,
           <>
-            Built tool execution pipelines, AI response streaming, and notification workflows.
+            Built multi-agent orchestration, Gemini File Search knowledge bases,
+            Firecrawl ingestion, Deepgram transcription, tool execution, and
+            token-streaming conversation workflows.
+          </>,
+          <>
+            Delivered the React and NestJS GraphQL platform across Firebase,
+            MongoDB, and Azure, including customer intelligence, escalations,
+            OAuth integrations, notifications, and embeddable chat experiences.
           </>,
         ],
         images: [],
@@ -147,13 +156,20 @@ const about = {
       {
         company: "The Local Ninja",
         timeframe: "2023 - Present",
-        role: "Lead Developer and Operating Manager",
+        role: "Founder | Software Architect & Full-Stack Engineer",
         achievements: [
           <>
-            Built NinjaLearn, an e-learning platform, and NinjaHR, an HR management system, as two core products for the company.
+            Founded and engineered a product portfolio spanning NinjaHR,
+            NinjaCommerce, NinjaLearn, and the LocalNinja company platform.
           </>,
           <>
-            Developed full-stack applications using Next.js for the front-end, NestJS for the back-end, and deployed on Google Cloud Platform (GCP).
+            Built multi-tenant SaaS products with Next.js, React, NestJS,
+            PostgreSQL, Firebase, Stripe, DDD, and CQRS, covering HR operations,
+            ecommerce, and interactive software-engineering education.
+          </>,
+          <>
+            Designed production cloud deployments using Firebase App Hosting,
+            Google Cloud Run, Cloud SQL, Supabase, and automated CI/CD pipelines.
           </>,
         ],
         images: [],
@@ -206,6 +222,22 @@ const about = {
     display: true, // set to false to hide this section
     title: "Technical skills",
     skills: [
+      {
+        title: "AI Engineering",
+        description: (
+          <><ul>
+          <li>Multi-Agent Systems and Intent-Based Orchestration</li>
+          <li>Gemini Models and Gemini File Search</li>
+          <li>RAG and Knowledge-Base Ingestion</li>
+          <li>AI Tool Execution and OAuth Integrations</li>
+          <li>Token Streaming with Server-Sent Events</li>
+          <li>Firecrawl Website Ingestion</li>
+          <li>Deepgram Speech-to-Text</li>
+          <li>Prompt Design, Guardrails, and Escalation Workflows</li>
+        </ul></>
+        ),
+        images: [],
+      },
       {
         title: "Front-End Development",
         description: (

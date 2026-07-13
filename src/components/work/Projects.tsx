@@ -10,8 +10,23 @@ interface ProjectsProps {
 export function Projects({ range, priorityFirst = false }: ProjectsProps) {
   let allProjects = getPosts(["src", "app", "work", "projects"]);
 
-  const sortedProjects = allProjects.sort((a, b) => {
+  const dateSortedProjects = allProjects.sort((a, b) => {
     return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+  });
+
+  const positionedProjects = dateSortedProjects
+    .filter((project) => project.metadata.featuredPosition !== undefined)
+    .sort((a, b) => a.metadata.featuredPosition! - b.metadata.featuredPosition!);
+  const sortedProjects = dateSortedProjects.filter(
+    (project) => project.metadata.featuredPosition === undefined,
+  );
+
+  positionedProjects.forEach((project) => {
+    const index = Math.max(
+      0,
+      Math.min(project.metadata.featuredPosition! - 1, sortedProjects.length),
+    );
+    sortedProjects.splice(index, 0, project);
   });
 
   const displayedProjects = range

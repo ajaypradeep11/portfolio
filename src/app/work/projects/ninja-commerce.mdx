@@ -1,0 +1,63 @@
+---
+title: 'NinjaCommerce - Next.js, NestJS & Stripe (Co-Founder & Full-Stack Engineer)'
+publishedAt: '2026-07-13'
+summary: 'A white-label commerce platform from LocalNinja: a Next.js storefront, React admin portal, and NestJS/Stripe backend with six switchable themes, now deployed as a live anime LED-lamp store with inventory, verified reviews, accounts, cart, and checkout.'
+images:
+  - '/images/projects/ninja-commerce/live-home.png'
+  - '/images/projects/ninja-commerce/live-products.png'
+  - '/images/projects/ninja-commerce/live-product-detail.png'
+  - '/images/projects/ninja-commerce/live-about.png'
+team:
+  - name: 'Pradeep'
+    role: 'Co-Founder and Full-Stack Engineer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+link: 'https://shop.localninja.ca'
+ongoing: true
+---
+
+## Overview
+
+NinjaCommerce is LocalNinja's commerce product: a complete, production-grade ecommerce platform - customer storefront, admin portal, and backend API - built to be sold as a service rather than as a one-off project. The pitch to a client is simple: pick your theme and fonts, hand us your catalog, and we deliver a fully branded online store with payments, inventory, reviews, order management, and hosting already wired up. Anything they need later - new features, integrations, content changes - is delivered as an ongoing service.
+
+That business model drove the architecture. Instead of a template that gets forked and diverges, NinjaCommerce is one codebase engineered for re-branding: the store's entire identity (name, wordmark, logo, colors, typography) is concentrated in a handful of files, and six professionally designed themes ship out of the box with guardrails that make adding a seventh a small, safe change. The flagship deployment is live at [shop.localninja.ca](https://shop.localninja.ca), now running as an anime LED-lamp store in the "ninja" theme. Its current catalog includes 18 products across two paginated result pages, live low-stock and sold-out states, verified-buyer reviews, related products, and customer account and cart flows. The platform remains under active development, with the source at [github.com/ajaypradeep11/ninja-commerce](https://github.com/ajaypradeep11/ninja-commerce).
+
+## Key Features
+
+- **Live anime-lamp storefront**: A focused landing page, 18-product catalog, anime-lamp category, URL-driven search, sorting and pagination, plus clear low-stock and out-of-stock merchandising.
+- **Product discovery and purchase flow**: Product pages include multi-image galleries, live quantity controls, stock-aware add-to-cart behavior, related products, shipping and returns details, and Stripe-hosted checkout with a success page that polls the API until the paid order appears.
+- **Admin portal**: A separate React SPA where the store owner manages the business - a dashboard with orders-today and low-stock stats, category CRUD with drag-and-drop reordering, product management with direct image upload to Firebase Storage, and an orders console with status transitions and one-click refunds.
+- **White-label theming**: Six switchable themes (from dark luxury "noir" to streetwear "arcade" to the yellow-on-black "ninja"), each a CSS block plus a typed registry entry. Color tokens use semantic roles (surface/ink/brand/highlight/subtle), and automated tests enforce registry-CSS sync and WCAG AA contrast on every theme pair - so a new client theme can't ship inaccessible.
+- **Single-file font system**: All typography routes through one `fonts.ts` edit point covering twelve `next/font` loaders, with a source-parsing test that fails the build if the font config and theme CSS drift apart. Re-fonting a client's store is a one-file change.
+- **Real commerce guarantees**: Checkout creates a pending order with line-item price snapshots before redirecting to Stripe; webhooks are idempotent and decrement stock atomically; reviews are purchase-gated so only verified buyers can rate products.
+- **Accounts and verified reviews**: Firebase-authenticated customer accounts with saved addresses and order history, public aggregate ratings, and purchase-gated review submission. The live Guts lamp page demonstrates the full state with a five-star verified-buyer review and low-stock messaging.
+
+## Technologies Used
+
+- **Next.js 15 + React 19 (storefront)**: App Router with server-side rendering for the catalog so product pages are fast and indexable, TypeScript strict mode throughout, Tailwind CSS v4 with shadcn/ui primitives re-pointed at the semantic theme tokens.
+- **NestJS 11 + Prisma 6 + Postgres (API)**: A typed REST API documented with Swagger/OpenAPI, running on Cloud Run against a Supabase Postgres database in production and Docker Postgres locally.
+- **React 19 + Vite (admin)**: A single-page app with React Router 7, TanStack Query 5 for server state, and React Hook Form + zod for validated forms.
+- **Generated API clients**: The API emits an OpenAPI spec and both frontends consume typed clients generated by @hey-api/openapi-ts, so a backend contract change surfaces as a compile error in the storefront and admin rather than a runtime bug.
+- **Stripe hosted Checkout**: Payments never touch the platform's servers - the API creates a Checkout session and verifies signed webhooks, with discount codes managed in the Stripe dashboard.
+- **Firebase**: Auth (with an `admin` custom claim gating the portal), Storage for product images, and App Hosting serving the storefront; local development runs against the Firebase emulator suite.
+- **Testing**: ~270 unit tests across the three apps plus Playwright end-to-end suites, all green as a merge requirement for every phase.
+
+## What I Built
+
+- **Designed and built all three applications** end to end across phased milestones - API first, then the admin portal, then the storefront - each phase spec'd, planned, and reviewed before merging.
+- **Built the checkout and order pipeline**: pending orders with price snapshots, Stripe session creation, idempotent webhook processing with atomic stock decrement, refund triggers, and the success-page polling contract that keeps the customer informed while the webhook settles.
+- **Engineered the theming system** that makes the white-label model real: semantic color tokens, per-theme CSS blocks with a typed registry, a pre-paint initialization script to prevent theme flash, and sync + contrast tests that turn brand mistakes into failing builds.
+- **Consolidated typography into a single edit point** with a hardened source-parsing test, so only the active theme's fonts preload and a client font swap can't silently break another theme.
+- **Set up the production deployment**: the storefront on Firebase App Hosting deploying from GitHub, the API as a Dockerized Cloud Run service with locked-down CORS, and the database on Supabase - then rebranded and launched the NinjaCommerce flagship at shop.localninja.ca.
+- **Repositioned the flagship storefront for anime collectibles** with a new LED-lamp hero, product imagery, catalog taxonomy, inventory messaging, product recommendations, and store-specific fulfillment promises.
+- **Hardened the edges**: a sandboxed redirect guard against URL smuggling on auth pages, 401 auto-signout interceptors, purchase-gated review enforcement, and stock-aware cart rows that block checkout on zero-stock items.
+
+## Challenges and Learnings
+
+The central design problem was making one codebase serve many brands without forking. The first theming attempt used color names like `primary` and `muted` - which collided with shadcn/ui's own token layer and produced subtle visual bugs. The fix was renaming everything to semantic roles the UI library doesn't claim, then re-pointing shadcn's variables at those roles through `var()` and `color-mix()`. The deeper lesson: in a white-label product, the theme layer is an API, and it needs the same discipline as one - typed registries, sync tests, and accessibility checks that run in CI rather than in a reviewer's head.
+
+Payments taught a similar lesson about failure modes. An early bug surfaced Stripe session-creation failures as 401s, which made the storefront sign the customer out mid-purchase - the worst possible response to a payment hiccup. Tracing that to the API's error mapping and returning an honest 502 instead was a reminder that error semantics are part of the product, not plumbing. Deploying to Firebase App Hosting had its own edges: the console provisioned the backend with the wrong root directory and a decommissioned Node runtime, both of which had to be patched through the REST API - hosting configuration is part of shipping, not an afterthought.
+
+## Outcome
+
+NinjaCommerce is live at [shop.localninja.ca](https://shop.localninja.ca) as LocalNinja's anime LED-lamp store and the working demo of the platform: storefront on Firebase App Hosting, API on Cloud Run, database on Supabase, deploying automatically from GitHub. The white-label mechanics work as designed, while the live flagship now proves the platform with a populated catalog, inventory states, product search, pagination, accounts, cart, recommendations, and verified reviews. Development is ongoing around checkout operations, catalog growth, and streamlined onboarding for future client storefronts.

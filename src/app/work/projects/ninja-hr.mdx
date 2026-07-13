@@ -1,0 +1,70 @@
+---
+title: 'NinjaHR - Next.js, NestJS & DDD/CQRS (Founder & Full-Stack Engineer)'
+publishedAt: '2026-07-12'
+summary: 'An agentic HR platform for Canadian teams, in development at LocalNinja: a multi-tenant SaaS covering the full employee lifecycle - recruitment ATS, onboarding, time off, performance, documents, and offboarding - with an AI copilot on every screen and Canadian compliance (Bill 149, Law 25, provincial ESA rules) built into the domain model.'
+images:
+  - '/images/projects/ninja-hr/live-home.png'
+  - '/images/projects/ninja-hr/app-dashboard.png'
+  - '/images/projects/ninja-hr/app-employee.png'
+  - '/images/projects/ninja-hr/app-recruitment.png'
+  - '/images/projects/ninja-hr/app-leave.png'
+  - '/images/projects/ninja-hr/live-units.png'
+  - '/images/projects/ninja-hr/live-help.png'
+team:
+  - name: 'Pradeep'
+    role: 'Founder and Full-Stack Engineer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+link: 'https://hr.localninja.ca'
+ongoing: true
+featuredPosition: 2
+---
+
+## Overview
+
+NinjaHR is LocalNinja's people-operations product: an agentic HR platform for Canadian small and mid-sized businesses that runs the entire employee journey - "from first job posting to final payout" - in one system. Companies sign up, get their own isolated workspace with a public careers site, and manage hiring, onboarding, time off, performance, documents, training, and offboarding from a single admin console, with an AI copilot available on every screen.
+
+The product's sharpest edge is compliance as a feature. Canadian HR is a minefield of province-specific rules - Ontario's Bill 149 mandates salary ranges and AI-disclosure on job postings, Quebec's Law 25 governs employee data privacy, and each province has its own Employment Standards Act for leave and termination. NinjaHR encodes those rules into the platform itself: postings are validated before publish, leave policies are checked against provincial ESA rules, document access is permission-gated, and offboarding computes what the law requires. The platform is live at [hr.localninja.ca](https://hr.localninja.ca) and under active development, split across two repos: [ninja-hr-frontend](https://github.com/ajaypradeep11/ninja-hr-frontend) and [ninja-hr-backend](https://github.com/ajaypradeep11/ninja-hr-backend).
+
+## Key Features
+
+- **Recruitment (full ATS)**: Requisitions with AI-generated, Bill 149-compliant job descriptions (salary ranges enforced, inclusive-language checks), a per-company public careers site, a Kanban candidate pipeline with AI screening where only humans can reject, interview scorecards and panel debriefs, and personal tracking links so candidates follow their application without an account.
+- **Onboarding**: HR sends one invite link and the paperwork does itself - a guided four-step wizard collects TD1 tax forms, direct deposit, and handbook acknowledgment, backed by a shared HR/Finance/IT checklist with blocking tasks and a document-verification gate before the employee is activated.
+- **Time off & overtime**: Leave balances, a click-and-drag calendar, manager approval queues with HR override, and a provincial policy validator that knows ESA rules per province.
+- **Performance**: Review cycles from self-evaluation through calibration, goal tracking with guardrails, 360 feedback, and structured performance improvement plans.
+- **Documents & training**: Auto-routed uploads with Law 25-grade access control, a read-only employee vault that can be exported at any time, and a course studio for company training.
+- **Offboarding**: Role-based separation workflows with a manager/IT/payroll task matrix, a blocking-task gate before termination, and an access kill switch across integrations.
+- **AI toolbox**: An HR copilot reachable with Cmd+K anywhere in the app ("How many vacation days do I have left?"), Letter Lab templates filled from live HRIS data, and an IF/THEN calculator engine for timesheets and bonuses.
+- **Three surfaces, one system**: An Admin Console for HR, an Employee Portal that adapts by role (managers see team approvals and requisitions; interview panelists see their interviews), and the public careers/tracking pages for candidates.
+
+## Technologies Used
+
+- **Next.js 15 + React 19 (frontend)**: App Router with TypeScript strict mode, Tailwind CSS with a custom brand token set, recharts for analytics. The frontend is a pure presentation layer - it owns no database and every read and write goes through the backend's API.
+- **NestJS with DDD + CQRS (backend)**: The domain is organized into eight bounded contexts - identity, people, recruitment, onboarding, offboarding, performance, timeoff, and workplace - each with its own commands, queries, and domain services, plus a shared kernel for cross-cutting concepts like provinces.
+- **Prisma 7 + PostgreSQL**: The backend owns the schema and migrations; multi-tenancy is enforced at the data layer with a `companyId` on every tenant-owned table (~40 models) and automatic scoping, so a query physically cannot leak across tenants.
+- **Backend-for-frontend architecture**: Server Components and Server Actions call the NestJS API server-to-server with a typed `openapi-fetch` client generated from the backend's Swagger spec. The browser never talks to the backend - no CORS, no secrets in the client - and binary routes proxy resume and document downloads so the internal API key never leaves the server.
+- **Firebase Auth**: Real email/password and Google sign-in, with invite-token onboarding at `/welcome/<token>` where new hires set their own password. Local development runs the full stack - Postgres, Firebase Auth emulator, backend, frontend - under one `docker compose up`, with the emulator seeded to match the demo data.
+- **Testing**: Playwright end-to-end suites covering the marketing site, admin console, employee portal, auth, public careers flow, and the user switcher, plus backend unit tests and a per-context HTTP e2e suite.
+- **Deployment**: Frontend on Firebase App Hosting, backend on Cloud Run with Cloud SQL for PostgreSQL, secrets in Secret Manager - live at hr.localninja.ca.
+
+## What I Built
+
+- **Designed and built the product end to end** across both repos - from the initial full-stack Next.js prototype through the extraction of a standalone NestJS backend, executed incrementally so the app stayed working at every phase.
+- **Architected the DDD/CQRS backend**: carved the HR domain into eight bounded contexts with commands, queries, and domain events, keeping business rules (ESA validation, blocking-task gates, statutory leave locks) in domain services rather than controllers.
+- **Made the platform multi-tenant**: introduced a `Company` tenant root, denormalized `companyId` across every tenant-owned model with automatic enforcement, per-company careers slugs for the public site, and a one-email-one-company identity rule aligned with Firebase's account model.
+- **Built the typed contract between the repos**: the backend publishes Swagger, the frontend generates its client from it, so a DTO change on one side is a compile error on the other rather than a runtime surprise.
+- **Implemented real authentication**: Firebase Auth with an emulator-backed local stack, invite-token acceptance flow for new hires, actor-persona headers for the demo user switcher, and middleware-guarded admin/employee route groups.
+- **Built the recruitment pipeline UI**: requisition creation and editing, the Kanban ATS board, candidate profiles with resume streaming through binary proxies, interview guides, scorecards, and recruitment analytics.
+- **Shipped the marketing site and help center** - the "Silent. Swift. Effective." landing page with its seven-unit platform tour and a searchable, role-tagged step-by-step guide for every workflow in the product.
+
+## Challenges and Learnings
+
+The defining engineering decision was extracting the backend out of a working full-stack Next.js app into a separate NestJS service without ever breaking the product. The migration was designed so that view components didn't change at all - only the internals of the data layer were rewritten from Prisma calls into HTTP calls, phase by phase, with the app deployable at every step. That discipline paid for itself: the frontend became a pure presentation layer that could be reasoned about independently, and the domain logic finally had a home where it could be unit-tested without a browser.
+
+Multi-tenancy was the other deep problem. Retrofitting tenant isolation onto ~40 models is exactly the kind of change where one missed `where` clause becomes a data breach, so instead of trusting every query author, isolation is enforced automatically - `companyId` is denormalized onto every tenant-owned table, including child tables, precisely so the enforcement layer can scope any model directly without joins. Deciding that `Employee.email` stays globally unique (one email = one company) was a good example of letting an external constraint - Firebase's one-account-per-email model - simplify the domain rather than fighting it.
+
+Building for Canadian compliance taught me that regulations are requirements documents in disguise: Bill 149's salary-range mandate, Law 25's access controls, and provincial ESA differences each became concrete validators and gates in the domain model, which is a far stronger selling point than a generic feature list.
+
+## Outcome
+
+NinjaHR is live at [hr.localninja.ca](https://hr.localninja.ca) - frontend on Firebase App Hosting, the DDD/CQRS backend on Cloud Run with Cloud SQL - with the seven-unit platform (recruitment, onboarding, time off, performance, documents, offboarding, and the AI toolbox) working end to end across the admin console, employee portal, and public careers surfaces. Development is ongoing as the product moves toward its first client companies, following LocalNinja's model: a fixed price to set up and deploy a company's workspace, with further services and customization available as they grow.

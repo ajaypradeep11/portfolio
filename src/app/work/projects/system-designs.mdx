@@ -1,22 +1,21 @@
 ---
 # Required: Project title displayed on the /work page and project detail page
-title: 'System Design Simulator - React + TypeScript (Full-Stack Developer)'
+title: 'NinjaLearn - React + TypeScript (Full-Stack Developer)'
 
 # Required: Date used for sorting projects (YYYY-MM-DD)
 publishedAt: '2026-02-15'
 
 # Required: Short description shown on the /work listing page
-summary: 'An interactive browser-based simulator with 42 modules covering distributed systems concepts   from caching and load balancing to CAP theorem and architecture patterns   all with live engines, failure injection, and interview prep flashcards.'
+summary: 'A live learning platform (learn.localninja.ca) with 6 hubs and 122 interactive modules: a 42-module system design simulator with failure injection, step-through DSA visualizers, all 23 GoF design patterns, a sandboxed JS/TS code runner, and 850+ interview flashcards.'
 
 # Required: Array of image paths (relative to /public). First image is the hero.
 images:
-  - '/images/projects/system-design-simulator/dash.png'
-  - '/images/projects/system-design-simulator/dash1.png'
-  - '/images/projects/system-design-simulator/dash2.png'
-  - '/images/projects/system-design-simulator/dash3.png'
-  - '/images/projects/system-design-simulator/dash4.png'
-  - '/images/projects/system-design-simulator/dash5.png'
-  - '/images/projects/system-design-simulator/dash6.png'
+  - '/images/projects/system-design-simulator/live-home.png'
+  - '/images/projects/system-design-simulator/live-systemdesign.png'
+  - '/images/projects/system-design-simulator/live-module-caching.png'
+  - '/images/projects/system-design-simulator/live-dsa.png'
+  - '/images/projects/system-design-simulator/live-devden.png'
+  - '/images/projects/system-design-simulator/live-hubs.png'
 
 # Required: At least one team member
 team:
@@ -24,35 +23,48 @@ team:
     role: 'Full-Stack Developer'
     avatar: '/images/avatar.png'
     linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+
 # Optional: External link to live project or repo
-# link: "https://github.com/username/system-design-simulator"
+link: 'https://learn.localninja.ca'
 ongoing: true
 ---
 
 ## Overview
 
-System Design Simulator is a fully client-side interactive learning platform for mastering distributed systems and system design concepts. Instead of reading static diagrams or textbooks, users run live simulation engines directly in the browser injecting failures, toggling algorithms, sending traffic, and watching systems respond in real time. The app covers 42 modules across 13 categories, each with its own pure TypeScript engine, visual output, event logging, guided scenarios, and interview prep flashcards.
+NinjaLearn is a live, browser-based learning platform for mastering software engineering by doing instead of reading. Every system design resource is a wall of text, a static diagram, or a video; NinjaLearn replaces all of that with running simulations. Users crash servers, inject network partitions, flood rate limiters, race two pointers across an array, and watch the systems and algorithms respond in real time. What started as a system design simulator grew into a full platform with six hubs and 122 interactive modules: System Design, DSA Patterns, Programming Languages, Design Patterns, Software Architecture, and Developers Den. Everything is deployed at learn.localninja.ca, and every simulation runs client-side on pure TypeScript engines with zero runtime dependencies.
 
 ## Key Features
 
-- **42 Live Simulation Modules**: Each module has a dedicated simulation engine written in pure TypeScript. Users interact with controls to send requests, trigger failures, switch algorithms, and observe behavior through real-time visualizers and timestamped event logs.
-- **Interactive Mind Map Navigation**: The home page features a pannable, zoomable SVG mind map showing all 42 topics as nodes connected by 46 prerequisite edges. Hovering highlights related topics; clicking navigates directly to a module.
-- **Interview Prep Flashcards**: Every module includes a deck of flashcards (411 total across all modules) with difficulty filtering, shuffle, keyboard navigation, and 3D CSS flip animations turning the simulator into a complete study tool.
-- **Failure Injection & Auto Traffic**: Every module supports auto-traffic mode that fires random operations on a timer, plus dedicated failure injection buttons (crash servers, inject partitions, simulate floods) to stress-test running simulations.
-- **Guided Scenarios & Help**: A shared right panel on every module provides scenario cards (happy-path, edge-case, failure, comparison) and accordion help sections with contextual concept explanations.
-- **Fuzzy Search**: A global Cmd+K search bar provides instant fuzzy filtering across all 42 modules by name, description, and category.
+- **System Design Hub (42 modules, 13 categories)**: 41 live simulators plus real-world case studies, covering caching, load balancing, replication, sharding, CAP theorem, circuit breakers, rate limiting, API gateways, deployment strategies, and classic designs like URL shorteners, chat systems, and news feeds. Every module supports failure injection and an auto-traffic mode, with a pannable, zoomable SVG mind map connecting all topics through 52 prerequisite edges.
+- **DSA Patterns Hub (34 modules)**: Step-through visualizers for data structures (dynamic arrays, linked lists, heaps, BSTs, AVL and red-black trees, graphs) and coding patterns (sliding window, two pointers, monotonic stack, BFS/DFS, topological sort, backtracking, dynamic programming). A shared step player syncs each animation frame to the exact highlighted line of real TypeScript source code.
+- **Programming Languages Hub (18 modules)**: JavaScript/TypeScript deep dives (closures, the event loop, prototypes, promises, generics, narrowing) with a live code editor that executes user code in a sandboxed Web Worker and renders console output next to concept-specific visualizations.
+- **Design Patterns & Architecture Hubs (26 modules)**: All 23 Gang of Four design patterns as interactive visualizations with working engine implementations, plus Domain-Driven Design, CQRS, and Event Sourcing modules.
+- **Interview Prep at Scale**: 850+ flashcards with difficulty filtering, shuffle, keyboard navigation, and 3D flip animations, wired into every module through typed registries that make a missing question set a compile error.
+- **Live Engagement Layer**: Firestore-backed star ratings, written reviews with a live review marquee on the landing page, and a visitor counter, plus a global Cmd+K search that fuzzy-filters across all six hubs.
 
 ## Technologies Used
 
-- **React 19 + TypeScript 5.9**: Chosen for its component model and type safety. All 42 modules are code-split via `React.lazy` and `Suspense` for fast initial load. Navigation is managed with pure React state no router library needed.
-- **Vite 7**: Used as the build tool for near-instant HMR during development and optimized production builds with automatic code splitting.
-- **Tailwind CSS 3 + Radix UI**: Tailwind provides utility-first styling with full light/dark theme support via CSS custom properties. Radix UI supplies accessible, unstyled headless primitives (accordion, tabs, select, scroll area) styled with Tailwind.
-- **Pure TypeScript Simulation Engines**: Every module has a framework-agnostic engine class with zero React imports. Engines like `LRUCache` (doubly-linked list + hash map), `ReplicationEngine` (leader-follower with failover, 714 lines), and `CircuitBreakerEngine` (state machine) implement real algorithms, not mock data.
+- **React 19 + TypeScript 5.9**: All 122 modules are lazy-loaded through per-hub import maps with `React.lazy` and `Suspense`, so the initial bundle stays small. Navigation is hash-based with plain React state, so there is no router dependency at all.
+- **Vite 7 + Tailwind CSS 3 + Radix UI**: Vite provides instant HMR and automatic code splitting at each dynamic import. Tailwind drives a full light/dark theme via CSS custom properties, and Radix supplies accessible headless primitives (accordion, tabs, select, dialog, scroll area).
+- **Pure TypeScript Simulation Engines**: 93 engine files with zero React imports implement the real algorithms: an `LRUCache` built on a doubly-linked list plus hash map, a 711-line `ReplicationEngine` with leader election and failover, a circuit breaker state machine, consistent hashing rings, and token bucket rate limiters.
+- **Firebase (Firestore + Hosting)**: Firestore powers ratings with atomic `increment` aggregation, a reviews subcollection, and visitor tracking; the SPA deploys to Firebase Hosting with rewrite rules, configured entirely through environment variables.
+- **Web Worker Sandbox**: The Programming Languages hub runs user-submitted code inside an isolated Web Worker with a custom console shim, safe value stringification (cycles, symbols, BigInt), and a hard execution timeout.
+
+## What I Built
+
+- Designed the **module architecture** that made 122 modules maintainable: every simulation follows the same contract of engine (pure logic), visualizer (rendering), control panel (input), event log (audit trail), and help/scenario panel (education), registered in typed per-hub registries.
+- Built **41 system design simulation engines** from scratch, faithfully modeling behaviors like exponential backoff with jitter, ACID isolation anomalies (dirty and phantom reads), deadlock detection, fan-out-on-write vs fan-out-on-read feeds, and canary releases with auto-rollback.
+- Built the **interactive SVG mind map** with cursor-anchored wheel zoom, drag panning, hover highlighting of prerequisite chains, and click-through navigation to any module.
+- Created the **DSA module shell**: a reusable step player (`useStepPlayer`) that records every mutation an instrumented data structure makes, then replays it as an animation synced line-by-line to the displayed source code.
+- Created the **PL module shell** with an editable code panel, the Web Worker execution pipeline, console output rendering, and per-concept visualizers like event loop task queues and prototype chains.
+- Shipped **Developers Den**: a coding typing test, a keyboard shortcut trainer, and a regex playground.
+- Integrated **Firestore engagement features** (ratings, reviews, review marquee, visitor counts) and the global Cmd+K fuzzy search spanning all six hub registries.
+- Authored **850+ interview flashcards** and the flashcard system itself, with difficulty levels and per-module decks.
 
 ## Challenges and Learnings
 
-Building 42 self-contained simulation modules required establishing a consistent architecture early each module follows an identical pattern (engine, control panel, visualizer, event log, scenarios, help content) which kept the ~60,000-line codebase maintainable. The biggest challenge was writing accurate simulation engines that faithfully model real distributed system behaviors (e.g., consistent hashing rings, exponential backoff with jitter, ACID isolation levels) while keeping them performant in the browser. Refactoring from per-module help sidebars to a shared `RightPanel` component was a key architectural lesson in balancing initial speed with long-term maintainability.
+The hardest problem was keeping a ~134,000-line, 910-file TypeScript codebase coherent while it grew from one hub to six. The answer was ruthless consistency: exhaustive typed registries (adding a module ID without its flashcard deck fails compilation), shared module shells per hub, and one identical folder pattern everywhere, which made the 100th module as cheap to add as the 10th. Writing simulation engines that are honest about distributed systems behavior, such as making a replication engine actually lose acknowledged-but-unsynced writes during async failover, forced a much deeper understanding than reading about the concepts ever did. Sandboxing arbitrary user code for the Programming Languages hub taught me practical browser security: Web Worker isolation, output serialization edge cases, and timeout-based termination. Refactoring per-module help sidebars into a shared right panel was a lasting lesson in when to extract shared components: after the third copy, not the tenth.
 
 ## Outcome
 
-Delivered a comprehensive, zero-backend learning platform with 42 interactive modules, 411 interview flashcards, and an SVG mind map connecting all topics. The project serves as both a hands-on study tool for system design interviews and a reference implementation demonstrating patterns like pure simulation engines, code splitting, and component architecture at scale.
+NinjaLearn is live at learn.localninja.ca with six hubs, 122 interactive modules, 850+ interview flashcards, and real visitor ratings and reviews flowing through Firestore. It has become both a daily study tool for system design and DSA interview preparation and a portfolio-scale demonstration of frontend architecture: pure simulation engines, typed registries, aggressive code splitting, and a component system that held up across 134,000 lines of TypeScript. Development is ongoing, with new data structure modules and case studies shipping regularly.

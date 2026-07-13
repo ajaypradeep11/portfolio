@@ -1,6 +1,6 @@
 ---
-title: 'ConversyAI - Agent Platform (Full-Stack Developer)'
-publishedAt: '2025-06-01'
+title: 'ConversyAI - Multi-Tenant SaaS Platform (Head of Technology)'
+publishedAt: '2026-07-13'
 summary: 'A multi-tenant SaaS platform that lets SMBs deploy customized AI agents for customer engagement   handling bookings, billing, Q&A, and escalations through an embeddable chat widget with streaming responses.'
 images:
   - '/images/projects/conversyai/dash.png'
@@ -10,7 +10,7 @@ images:
   - '/images/projects/conversyai/dash5.png'
 team:
   - name: 'Pradeep'
-    role: 'Full-Stack Engineer'
+    role: 'Head of Technology'
     avatar: '/images/avatar.png'
     linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
 # link: "https://conversyai.com"
@@ -20,6 +20,8 @@ ongoing: true
 ## Overview
 
 ConversyAI is a no-code AI agent platform designed for small and medium-sized businesses. It enables non-technical business owners to deploy customized, customer-facing AI agents that handle bookings, billing inquiries, product Q&A, and support escalations all through a shareable link or embeddable chat widget. The platform replaces rigid rule-based chatbots with a multi-agent AI system where specialized agents coordinate under an orchestrator to handle complex, multi-intent customer interactions in real time.
+
+Architecturally, ConversyAI is a multi-tenant SaaS in the most deliberate sense: one deployment serves every customer, with tenancy modeled as a **workspace → business → agent** hierarchy in Firestore (`workspace/{id}/businesses/{id}/agents/{id}`) and every query and mutation scoped by those IDs. The system is shaped as a conventional two-repo monolith - a React SPA and a NestJS GraphQL API sharing that Firestore - which keeps the operational surface small while the tenant hierarchy does the isolation work. Per-tenant resources hang off the hierarchy: each business gets its own Gemini File Search store shared by its agents, its own integration toggles, and its own customer sessions.
 
 ## Key Features
 
@@ -32,8 +34,9 @@ ConversyAI is a no-code AI agent platform designed for small and medium-sized bu
 ## Technologies Used
 
 - **React 19 + TypeScript + Vite**: Frontend SPA with Apollo Client for GraphQL data fetching/subscriptions, Redux Toolkit for global state, and Tailwind CSS for styling. GraphQL Code Generator keeps frontend types in sync with the backend schema.
-- **NestJS 11 + GraphQL (Code-First) + Firebase/MongoDB**: Backend API with a dual-database pattern Firestore as the source of truth with atomic transactions, MongoDB as a synced read layer. Real-time notifications via GraphQL subscriptions over WebSockets.
-- **Azure Cloud (Blob Storage, Static Web Apps, Communication Services)**: File storage, frontend hosting, and email services. Firebase for auth and primary DB, MongoDB Atlas as secondary storage.
+- **NestJS 11 + GraphQL (Code-First) + Firebase/MongoDB**: Backend API with a dual-database pattern Firestore as the source of truth with atomic transactions, MongoDB as a synced read layer for the Python agent runtime. The multi-tenant hierarchy (workspace → business → agent) lives in Firestore, and every module follows the same resolver/service/model/dto structure. Real-time notifications via GraphQL subscriptions over WebSockets.
+- **Azure Cloud (Blob Storage, Static Web Apps, App Service, Communication Services)**: The SPA ships to Azure Static Web Apps; the API is containerized and deployed through Azure Container Registry to App Service with GitHub Actions CI/CD. Blob Storage holds uploaded training files, Communication Services sends email. Firebase provides auth and the primary DB, MongoDB Atlas the secondary store.
+- **AI pipeline (Gemini + Firecrawl + Deepgram)**: Gemini 2.5 Pro orchestration with Gemini Flash specialists, one Gemini File Search store per business for retrieval, Firecrawl website crawls split into per-page documents before indexing, and Deepgram transcription for voice training material.
 
 ## What I Built
 
@@ -67,4 +70,4 @@ The most significant challenge was designing a dual-database sync system where e
 
 ## Outcome
 
-ConversyAI is a fully functional multi-tenant SaaS platform deployed on Azure, capable of serving multiple businesses with isolated data, real-time AI-powered customer engagement, and a seamless no-code agent creation experience. The platform handles the full lifecycle from agent creation and training to deployment, customer interaction, escalation management, and customer intelligence positioning it as both a production product and a research platform for multi-agent reinforcement learning applied to business automation.
+ConversyAI is a fully functional multi-tenant SaaS platform deployed on Azure - one deployment serving every tenant, with data isolated by the workspace → business → agent hierarchy - delivering real-time AI-powered customer engagement and a seamless no-code agent creation experience. The platform handles the full lifecycle from agent creation and training to deployment, customer interaction, escalation management, and customer intelligence positioning it as both a production product and a research platform for multi-agent reinforcement learning applied to business automation.

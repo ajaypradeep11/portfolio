@@ -3,12 +3,14 @@ import { InlineCode } from "@/once-ui/components";
 const person = {
   firstName: "Pradeep",
   lastName: "M",
+  legalName: "Pradeep Muthamil Selvam",
   get name() {
     return `${this.firstName} ${this.lastName}`;
   },
   role: "Senior Full-Stack & AI Engineer",
   avatar: "/images/avatar.png",
   location: "Canada/Eastern", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  city: "Ottawa, Ontario, Canada",
   languages: ["English", "Tamil"], // optional: Leave the array empty if you don't want to display languages
 };
 
@@ -82,6 +84,7 @@ const about = {
     display: true,
     title: "Introduction",
     nickName: "Ajay",
+    preferredName: "AJ",
     description: (
       <>
         I&apos;m a Senior Full-Stack and AI Engineer with 7+ years of experience
@@ -156,10 +159,10 @@ const about = {
       {
         company: "The Local Ninja",
         timeframe: "2023 - Present",
-        role: "Founder | Software Architect & Full-Stack Engineer",
+        role: "Co-Founder | Software Architect & Full-Stack Engineer",
         achievements: [
           <>
-            Founded and engineered a product portfolio spanning NinjaHR,
+            Co-founded and engineered a product portfolio spanning NinjaHR,
             NinjaCommerce, NinjaLearn, and the LocalNinja company platform.
           </>,
           <>
@@ -170,20 +173,6 @@ const about = {
           <>
             Designed production cloud deployments using Firebase App Hosting,
             Google Cloud Run, Cloud SQL, Supabase, and automated CI/CD pipelines.
-          </>,
-        ],
-        images: [],
-      },
-      {
-        company: "Inlustro Learning Private Limited",
-        timeframe: "2021 - 2022",
-        role: "Developer",
-        achievements: [
-          <>
-            Achieved an increase in student enrolment within the first six months by developing and launching the E-Learning Platform using WordPress and Tutor LMS.
-          </>,
-          <>
-            Utilized React.js and its concepts (Virtual DOM, JSX, and React Native) to develop study materials for the E-Learning Platform.
           </>,
         ],
         images: [],

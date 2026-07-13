@@ -114,19 +114,39 @@ export default function About() {
             horizontal="center"
           >
             <Avatar src={person.avatar} size="xl" />
-            <Flex gap="8" vertical="center">
-              <Icon onBackground="brand-weak" name="globe" />
-              {person.location}
-            </Flex>
-            {person.languages.length > 0 && (
-              <Flex wrap gap="8">
-                {person.languages.map((language, index) => (
-                  <Tag key={index} size="l">
-                    {language}
-                  </Tag>
-                ))}
-              </Flex>
-            )}
+            <Column gap="12" horizontal="center">
+              <Column gap="4" horizontal="center">
+                <Text
+                  className={styles.textAlign}
+                  variant="label-default-m"
+                  onBackground="neutral-strong"
+                  style={{
+                    maxWidth: "13rem",
+                    textAlign: "center",
+                    lineHeight: 1.35,
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  {person.legalName}
+                </Text>
+                <Text
+                  className={styles.textAlign}
+                  variant="body-default-s"
+                  onBackground="neutral-weak"
+                >
+                  {person.city}
+                </Text>
+              </Column>
+              {person.languages.length > 0 && (
+                <Flex wrap gap="8">
+                  {person.languages.map((language, index) => (
+                    <Tag key={index} size="l">
+                      {language}
+                    </Tag>
+                  ))}
+                </Flex>
+              )}
+            </Column>
             <NowPlaying song="Am I Dreaming - Metro Boomin" />
             {about.funFacts && about.funFacts.length > 0 && (
               <FunFacts facts={about.funFacts} />
@@ -172,20 +192,14 @@ export default function About() {
               </Flex>
             )}
             <Heading className={styles.textAlign} variant="display-strong-xl">
-              {person.name}
-              <Text
-                className={styles.textAlign}
-                onBackground="neutral-weak"
-                variant="label-default-s"
-              >
-                 {" "}({about.intro.nickName})
-              </Text>
+              Hi, I&apos;m Ajay!
             </Heading>
 
             <Text
               className={styles.textAlign}
               variant="display-default-xs"
               onBackground="neutral-weak"
+              style={{ marginTop: "0.75rem" }}
             >
               {person.role}
             </Text>

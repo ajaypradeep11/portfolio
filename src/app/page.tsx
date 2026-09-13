@@ -80,7 +80,7 @@ export default function Home() {
         </Column>
       </Column>
       <RevealFx translateY="16" delay={0.6} revealedByDefault>
-        <Projects range={[1, 4]} priorityFirst />
+        <Projects range={[1, 4]} priorityFirst homepagePreview />
       </RevealFx>
       {routes["/blog"] && (
         <Flex fillWidth gap="24" mobileDirection="column">
@@ -94,7 +94,7 @@ export default function Home() {
           </Flex>
         </Flex>
       )}
-      <Projects range={[5]} />
+      <Projects range={[5]} homepagePreview />
       {newsletter.display && <Mailchimp newsletter={newsletter} />}
     </Column>
   );

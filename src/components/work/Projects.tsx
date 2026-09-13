@@ -5,9 +5,10 @@ import { ProjectCard } from "@/components";
 interface ProjectsProps {
   range?: [number, number?];
   priorityFirst?: boolean;
+  homepagePreview?: boolean;
 }
 
-export function Projects({ range, priorityFirst = false }: ProjectsProps) {
+export function Projects({ range, priorityFirst = false, homepagePreview = false }: ProjectsProps) {
   let allProjects = getPosts(["src", "app", "work", "projects"]);
 
   const dateSortedProjects = allProjects.sort((a, b) => {
@@ -40,7 +41,11 @@ export function Projects({ range, priorityFirst = false }: ProjectsProps) {
           priority={priorityFirst && index === 0}
           key={post.slug}
           href={`/work/${post.slug}`}
-          images={post.metadata.images}
+          images={
+            homepagePreview && post.metadata.homepageImages?.length
+              ? post.metadata.homepageImages
+              : post.metadata.images
+          }
           title={post.metadata.title}
           description={post.metadata.summary}
           content={post.content}

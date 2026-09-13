@@ -1,69 +1,69 @@
 ---
-title: 'LocalNinja - Vite, Vanilla JS & Firebase Hosting (Founder & Full-Stack Engineer)'
-publishedAt: '2026-07-09'
-summary: 'The company site for LocalNinja, a Canadian product studio - a zero-framework, single-page marketing hub built with Vite and vanilla JS, hand-written CSS, and continuous deploys to Firebase Hosting, introducing the NinjaCommerce, NinjaBusiness, and NinjaLearn ecosystem.'
+title: 'LocalNinja - Anime Ecommerce Store'
+publishedAt: '2026-09-11'
+summary: "A live Canadian anime-merch store on Shopify, redesigned from LocalNinja's former studio site into a complete shopping experience for apparel, lamps, collectibles, cosplay gear, and accessories."
 images:
-  - '/images/projects/localninja/home.png'
-  - '/images/projects/localninja/products.png'
-  - '/images/projects/localninja/services.png'
-  - '/images/projects/localninja/team.png'
+  - '/images/projects/localninja-store/home.png'
+  - '/images/projects/localninja-store/catalog.png'
+  - '/images/projects/localninja-store/product.png'
 team:
   - name: 'Pradeep'
-    role: 'Founder and Full-Stack Engineer'
+    role: 'Co-Founder & Ecommerce Lead'
     avatar: '/images/avatar.png'
     linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
   - name: 'Aleena'
     role: 'Owner'
     avatar: '/images/aleena.png'
     linkedIn: 'https://www.linkedin.com/in/aleenaannieabraham/'
-link: 'https://localninja.ca'
+link: 'https://localninja.ca/'
+ongoing: true
+featuredPosition: 2
 ---
 
 ## Overview
 
-LocalNinja is a Canadian product studio I run with Aleena, and [localninja.ca](https://localninja.ca) is its home on the web. The site is a single-page marketing hub that introduces the studio and its three products under one roof: **NinjaCommerce**, an anime ecommerce store; **NinjaBusiness**, a people-operations and HR platform; and **NinjaLearn**, a hands-on platform for learning software engineering. The hero leads with the studio's promise - "We build ninjas for" - and rotates through the three domains it serves: anime, business, and learning.
+[LocalNinja](https://localninja.ca/) is now a full ecommerce store for anime fans across Canada. I helped move the brand from its earlier product-studio landing page to a focused retail experience selling anime apparel, desk lamps, collectibles, headwear, cosplay gear, keychains, and accessories.
 
-The problem this site solves is a business one, not a technical one. LocalNinja needed a single, credible front door that presents the whole ecosystem, routes visitors to the live products (NinjaBusiness and NinjaLearn each live on their own subdomain), and does it fast enough that the page never feels like it is loading. I deliberately built it as a zero-framework static site: for a marketing page with no accounts, no data, and no backend, a full JavaScript framework would have added weight and complexity without buying anything. Instead the whole experience is hand-written HTML, CSS, and a small module of vanilla JavaScript, bundled by Vite and served from Firebase Hosting's global CDN.
+The storefront is designed around the real operating needs of a growing catalogue: clear category discovery, strong merchandising, Canadian pricing, inventory-aware product pages, secure checkout, and fulfillment messaging that distinguishes nationwide shipping from fast local delivery in Ottawa.
+
+The launch also marks a practical product decision. I previously engineered a custom white-label commerce platform under the NinjaCommerce name; the live LocalNinja store now runs on Shopify so the team can focus day-to-day effort on catalogue operations, merchandising, customers, and fulfillment while retaining a highly customized brand experience.
 
 ## Key Features
 
-- **Rotating hero headline**: The headline "We build ninjas for" cycles through the studio's three domains (anime, business, learning) on a timed interval, with each word carrying its own product accent color. The rotation pauses while the browser tab is hidden so the word never visibly jumps when a visitor returns.
-- **Animated inline-SVG mascot**: The ninja logo is recreated as inline SVG rather than a flat image, so its eyes can blink and glance side to side, and the badge gently bobs. Because it is SVG, it stays razor-sharp at any size with zero image payload.
-- **Game-style "character select" product cards**: The three products are presented like units on a character-select screen - beveled, clip-path cards that tilt in 3D toward the cursor, flood with their accent color on hover, and lock on targeting brackets. Each product ninja even has its own eyes (wide-eyed for Commerce, smiling arcs for Business, round scholar's glasses for Learn).
-- **Scroll-reveal choreography**: Sections and cards fade and rise into view as they enter the viewport, with a slight stagger across grid items, driven by an IntersectionObserver rather than scroll listeners.
-- **Responsive, accessible navigation**: A sticky, blurred header collapses into an animated hamburger dropdown on mobile, with proper `aria-expanded` state and keyboard-visible focus rings throughout.
-- **Motion that respects the user**: Every animation - rotation, tilt, bob, blink, reveal - is gated behind `prefers-reduced-motion`, and the cursor tilt is disabled entirely on touch/coarse pointers where it makes no sense.
+- **Merchandising-led homepage**: A campaign carousel, category rail, best-seller collection, and sale sections move visitors from discovery to products quickly.
+- **Broad anime catalogue**: Products are organized across apparel, lamps, collectibles, cosplay gear, headwear, keychains, and seasonal collections.
+- **Powerful catalogue filtering**: Shoppers can filter by availability, price, product category, and anime franchise, then sort by relevance, sales, price, name, or recency.
+- **Detailed product pages**: Multi-image galleries, size variants, quantity controls, sale pricing, size charts, fulfillment notes, shipping and returns, recommendations, and customer reviews support confident purchase decisions.
+- **Commerce essentials**: Search, customer accounts, cart, localized CAD pricing, secure checkout, and accepted-payment support are available throughout the store.
+- **Canadian fulfillment messaging**: The experience clearly communicates free nationwide shipping above the current threshold and 1-2 day local delivery in Ottawa.
+- **Responsive storefront**: Navigation, product grids, filters, galleries, and purchase controls adapt for mobile shopping without losing the brand's bold visual character.
 
 ## Technologies Used
 
-- **Vite 6**: Chosen as the build tool and dev server for its instant hot-reload during development and its lean production build - it bundles the site into a static `dist/` folder with hashed, cache-friendly assets and nothing else. It is the project's only dependency.
-- **Vanilla JavaScript (ES modules)**: All interactivity lives in a single ~140-line `main.js` with no runtime libraries. I kept a strict contract - JavaScript only toggles CSS classes or sets an inline transform, and CSS owns every transition - which keeps the behavior easy to reason about and the payload tiny.
-- **Hand-written CSS**: A single stylesheet (~1,250 lines) built on CSS custom-property design tokens for surfaces, text, brand accents, type, and rhythm. It leans on modern CSS - `clip-path` for the beveled cards, `color-mix()` for accent washes, `backdrop-filter` for the frosted header, and CSS `@keyframes` for the mascot's life - with no preprocessor or utility framework.
-- **Firebase Hosting**: Serves the static build over a global CDN with a custom domain and product subdomains, plus a long-lived immutable cache header on hashed assets in `/assets/**`. It is inexpensive to run and made the multi-subdomain setup straightforward.
-- **GitHub Actions**: Two auto-generated Firebase workflows wire up continuous deployment - a merge to the main branch builds with Node 22 (`npm ci` + `npm run build`) and deploys to the live channel, while pull requests get their own preview channel.
-- **Google Fonts (Sora + Inter)**: Sora for display headings and Inter for body text, preconnected and loaded in the document head to pair a distinctive display face with a highly readable body face.
+- **Shopify** for products, collections, inventory, customer accounts, cart, checkout, discounts, payments, and order operations.
+- **Shopify theme templates and sections** for flexible homepage merchandising, collection layouts, product detail content, and reusable storefront components.
+- **Custom CSS and JavaScript** for the LocalNinja visual system, responsive behavior, campaign carousel, announcement rail, navigation, and interactive product media.
+- **Shopify Search & Discovery patterns** for catalogue search, faceted filtering, sorting, recommendations, and collection navigation.
+- **Shopify CDN and responsive images** for globally cached storefront assets and device-appropriate product media.
 
 ## What I Built
 
-I built the entire site end to end - design, markup, styling, interactions, and deployment.
-
-- **Scaffolded the project** from a design spec I wrote first: a Vite + vanilla setup with `index.html` at the root, `src/style.css`, `src/main.js`, and the logo in `public/`, plus a repo-local "verify" skill to build and visually check the site.
-- **Authored the full single-page markup** - sticky header and nav, the hero, an "About" section framing how the studio operates, the three-product grid, a team section, and the footer - all as semantic HTML with accessibility attributes.
-- **Designed and hand-wrote the dark theme**: a black-dominant premium look with a brand-yellow accent drawn from the logo, expressed through a token system so surfaces, colors, and spacing stay consistent.
-- **Wrote the interaction layer** in vanilla JS as four small, self-contained modules: the hero word rotator, the requestAnimationFrame-throttled 3D card tilt, the IntersectionObserver scroll reveal, and the mobile nav toggle.
-- **Recreated the logo as an animated inline SVG** for the hero mascot and gave each product card its own ninja face, so the brand character is literally alive on the page.
-- **Redesigned the products section** from plain cards into the game-style character-select treatment, with beveled clip-path frames, accent flood, stage rings, and targeting brackets.
-- **Set up Firebase Hosting and the GitHub Actions deploy pipeline**, then repointed hosting from the initial `localninja-test` project onto the dedicated `localninja` site and linked the NinjaBusiness and NinjaLearn cards out to their live subdomains.
-- **Iterated on the messaging** over successive commits - reordering the story to lead with anime products, then business/HR, then learning, and renaming products (NinjaHR became NinjaBusiness) as the studio's positioning firmed up.
+- Led the transition of `localninja.ca` from a company presentation site into the brand's primary sales channel.
+- Shaped the information architecture around real shopping behavior: campaigns, best sellers, sale items, categories, anime franchises, search, and filters.
+- Customized the storefront's yellow, black, and editorial campaign treatment so LocalNinja remains recognizable while supporting a much larger product catalogue.
+- Configured collections, product taxonomy, availability, price and franchise filters, related products, and operational shipping messages.
+- Built the product-detail experience around variant selection, quantity, cart conversion, sizing guidance, shipping information, reviews, and recommendations.
+- Connected the customer journey across account, cart, checkout, payments, order processing, and fulfillment operations.
+- Replaced the retired `shop.localninja.ca` deployment with one canonical storefront at `localninja.ca`, removing a split brand and a stale customer path.
 
 ## Challenges and Learnings
 
-The most interesting engineering constraint was the boundary between JavaScript and CSS on the product cards. The cards tilt in 3D from cursor position, which means JavaScript writes an inline `transform` on every pointer move - but they also change appearance on hover. If CSS tried to set `transform` on `:hover` too, the two would fight and the tilt would stutter. I solved it with an explicit contract: JavaScript owns the card's `transform` and nothing else, while all hover styling is expressed through borders, glows, and inner elements. Getting the tilt to feel smooth also meant throttling pointer events through `requestAnimationFrame` so I only recompute the transform once per frame, and reading layout with `getBoundingClientRect` at the moment of use.
+The main challenge was balancing a highly visual fandom brand with the clarity required for ecommerce. Campaign imagery and expressive typography create excitement, but products, prices, variants, shipping terms, and purchase actions still need to be immediately understandable. The final system uses bold campaign moments at the top of the funnel and disciplined catalogue/product layouts where decisions happen.
 
-The beveled card look pushed me into some modern-CSS corners as well. Because the cards are cut with `clip-path`, an ordinary `box-shadow` would draw a rectangle around the invisible bounding box instead of following the bevel - so the hover shadow uses `filter: drop-shadow()`, which does trace the clipped silhouette. Layering the 1px accent frame, the inner panel, and the hover accent wash all inside the same clip path took a few passes to get right.
+Catalogue growth introduced a second challenge. Once the store expanded across many product types and franchises, navigation alone was not enough. A consistent taxonomy now powers category pages and faceted filters, letting a visitor move from a broad interest such as apparel to a specific product type, franchise, availability state, or price range.
 
-Accessibility and performance were treated as first-class from the start rather than bolted on. Every motion effect is gated behind `prefers-reduced-motion`, the tilt is skipped on coarse pointers, the reveal uses an observer instead of scroll handlers, and the hero rotator pauses on tab-hidden to avoid wasted work. Finally, moving deployment from the throwaway `localninja-test` Firebase project onto the real `localninja` site - while keeping the GitHub Actions pipeline green - was a good reminder that hosting and CI configuration are part of "shipping," not an afterthought.
+The platform decision was equally valuable. Building custom commerce taught me the architecture of catalogues, checkout, inventory, accounts, and payments; operating a retail brand reinforced when a managed platform is the better business tool. Shopify reduces operational surface area while custom theme work preserves the customer experience that makes LocalNinja distinct.
 
 ## Outcome
 
-LocalNinja's company site is live at [localninja.ca](https://localninja.ca), deploying automatically on every merge through GitHub Actions to Firebase Hosting. It gives the studio a fast, distinctive front door that presents all three products at once and hands visitors off to NinjaBusiness and NinjaLearn on their own subdomains. By staying framework-free, the site loads near-instantly, costs almost nothing to host, and remains simple enough that copy, products, and team can be swapped with trivial edits - exactly the low-friction footing a small, fast-moving studio wants. NinjaLearn (LearnAI) is documented in depth as its own portfolio entry; here it rounds out the ecosystem the site was built to showcase.
+LocalNinja is live at [localninja.ca](https://localninja.ca/) as a complete Canadian anime-merch storefront. The current store supports a multi-category catalogue, campaign merchandising, collection filters, detailed product pages, reviews, accounts, cart and checkout, CAD pricing, and both nationwide and Ottawa-local fulfillment. It is now the single canonical home for the brand and continues to evolve as inventory and campaigns grow.

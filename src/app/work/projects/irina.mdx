@@ -1,8 +1,9 @@
 ---
-title: 'IRINA - Next.js, NestJS & Parametric Apparel Engineering (Full-Stack Developer)'
-publishedAt: '2026-07-13'
-summary: 'An AI-native apparel engineering workspace in development that turns garment references or manual technical flats into editable, validated pattern geometry and production files, with a Next.js studio, NestJS geometry services, and Gerber CutWorks handoff.'
+title: 'Tech Pack OS - Evidence-Led Apparel Specifications'
+publishedAt: '2026-09-12'
+summary: 'A private apparel-specification workspace, evolved from IRINA, that turns garment evidence into reviewable technical flats, structured construction decisions, validated pattern geometry, and production-ready handoff files.'
 images:
+  - '/images/projects/tech-pack-os/login.png'
   - '/images/projects/irina/dashboard.png'
   - '/images/projects/irina/upload-reference.png'
   - '/images/projects/irina/pattern-studio.png'
@@ -10,56 +11,59 @@ images:
   - '/images/projects/irina/manual-shirt-editor.png'
 team:
   - name: 'Pradeep'
-    role: 'Full-Stack Developer'
+    role: 'Full-Stack & AI Engineer'
     avatar: '/images/avatar.png'
     linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+link: 'https://irina-web--irina-eeb4a.us-east4.hosted.app/new'
 ongoing: true
+featuredPosition: 1
 ---
 
 ## Overview
 
-IRINA is an apparel engineering workspace for moving from a garment idea to production geometry. A user can begin with a reference image or open a blank technical-flat canvas, assemble a garment from parametric foundations and construction components, adjust measurements and fit, validate the result, and export files for pattern review and cutter preparation. The product is being built as a single monolith with a Next.js frontend and a NestJS API so the interactive editor and the deterministic geometry engine can evolve together behind clear contracts.
+**Tech Pack OS** is the next evolution of IRINA: a private studio workspace for converting garment references into technical specifications that a human operator can inspect, correct, and move toward production. The product now leads with an evidence-first principle - every construction claim is visibly marked as confirmed, proposed, awaiting review, or awaiting operator input.
 
-The central design decision is that an uploaded image is **evidence, not production geometry**. Image understanding can propose a silhouette, landmarks, and construction components, but it should never send guessed pixels directly to a cutting machine. IRINA rebuilds the result from normalized measurements, formula-driven components, seam relationships, notches, grainlines, and manufacturing rules. The current implementation therefore focuses on the trustworthy part of the pipeline: validated image intake, editable parametric flats, deterministic shirt and pocket drafting, physical-size SVG/PDF output, layered DXF, and a guarded Gerber handoff.
+That distinction matters in apparel engineering. A photograph can reveal a silhouette, seam, pocket, or collar, but it cannot reliably prove hidden construction, exact measurements, material behavior, or machine settings. Tech Pack OS keeps AI useful at the interpretation layer while deterministic geometry, explicit measurements, validation rules, and operator approval remain the authority for production output.
+
+The workspace supports image-led and manual creation flows. A user can begin with garment evidence, review extracted construction details, edit a technical flat, resolve unanswered questions, validate pattern relationships, and prepare vector or cutter-oriented files without losing the reasoning behind each decision.
 
 ## Key Features
 
-- **Two creation flows**: Start from a garment reference through a guided image-upload experience, or begin from an empty manual canvas and add a complete shirt foundation or standalone construction components.
-- **Parametric technical-flat editor**: Front and back shirt views are assembled from editable scene layers for panels, collars, yokes, sleeves, cuffs, plackets, buttons, pockets, measurement guides, and construction skeletons.
-- **PCCE component model**: Components such as patch pockets keep a stable identity, revision, parameters, placement, validation state, and pattern output. Changing width, height, radius, pleat, flap, stitch style, or position immediately updates the flat and downstream manufacturing data.
-- **Measurement-driven shirt foundations**: Classic, workwear, and overshirt blocks respond to chest, waist, body length, shoulder width, and fit allowances while reconciling linked construction relationships such as collar-to-neckline, sleeve-cap-to-armscye, cuff-to-sleeve, and yoke-to-back.
-- **Deterministic pattern drafting**: The NestJS service generates millimetre-based `PatternSet` documents containing semantic pieces, cut quantities, internal lines, notches, grainlines, seam allowances, and validation results without relying on AI inference.
-- **Production exports**: Patterns can be delivered as physical-size SVG, calibrated plotter PDF, layered Standard DXF with CUT/NOTCH/DRILL layers, a named Gerber C200/CutWorks G71 legacy profile, or an `IRINA-CUT/1.0` diagnostic plan.
-- **Safety-first cutter handoff**: The UI explains that DXF must be imported into CutWorks, mapped to the installed tools, scanned for errors, simulated, and converted for the exact controller. Legacy NC output explicitly discloses omitted notch operations and quantity limitations instead of presenting itself as universal machine code.
-- **Validated image references**: JPG, PNG, and WebP uploads are checked by actual binary signatures, dimensions, and size limits before being stored through a cloud-neutral persistence interface.
+- **Evidence status system**: Separates source-confirmed details from proposals, open review items, and questions that require operator input, so generated claims never silently become production facts.
+- **Image-to-specification workflow**: Guides a reference through intake, interpretation, technical-flat review, pattern development, and export while preserving the original evidence.
+- **Parametric technical flats**: Front and back garment views are built from editable panels, collars, yokes, sleeves, cuffs, plackets, pockets, stitch lines, and measurement guides.
+- **Reusable construction components**: Components keep stable identities, parameters, placement, revision history, validation state, and downstream pattern output.
+- **Deterministic geometry engine**: Measurement-driven formulas generate semantic pattern pieces with seam allowances, notches, grainlines, internal lines, and linked construction checks.
+- **Production handoff**: Supports physical-size SVG and PDF output, layered DXF, and guarded cutter-oriented exports with clear operator review and simulation requirements.
+- **Private studio access**: Authentication keeps customer references and specifications inside a studio workspace while supporting resumable project work.
 
 ## Technologies Used
 
-- **Next.js 16 + React 19 + TypeScript**: The frontend provides the project dashboard, upload workflow, AI-studio concept, flat-sketch editor, component library, inspectors, pattern preview, and export flows. The UI uses native React state and SVG geometry so technical drawings remain sharp and directly interactive.
-- **NestJS 11 + TypeScript**: A modular REST API owns image-reference intake, PCCE component commands, shirt-document evaluation, pattern drafting, validation, and export endpoints.
-- **Parametric geometry engine**: Formula evaluation, component definitions, domain commands, validators, and event buses keep construction data separate from rendering. The same design document can drive the screen preview, pattern pieces, measurements, grading consumers, marker logic, and exports.
-- **SVG + PDFKit**: Technical flats and pattern pieces are represented as vector geometry. SVG supports browser preview and physical-size downloads, while PDFKit creates custom plotter pages with a 100 mm calibration square.
-- **DXF and Gerber-oriented export services**: The backend emits broadly importable Standard DXF layers for CutWorks and a carefully scoped G71 legacy NC candidate based on documented C200/CutWorks semantics.
-- **Jest + Supertest**: Unit and end-to-end suites cover formula evaluation, component commands, image inspection and storage, shirt and pocket drafting, API behavior, SVG/PDF/DXF generation, CNC plans, and Gerber profile rules.
+- **Next.js, React, and TypeScript** for the authenticated studio, evidence workflow, technical-flat editor, inspectors, and export surfaces.
+- **NestJS and TypeScript** for reference intake, component commands, document evaluation, pattern drafting, validation, and file-generation APIs.
+- **SVG-based geometry** for crisp, directly editable technical drawings and shared browser/export primitives.
+- **Firebase Authentication and App Hosting** for private access and deployment, with backend services running on Google Cloud Run.
+- **PDF and DXF generation** for calibrated production documents and downstream CAD/CutWorks workflows.
+- **Automated unit and API testing** around formulas, validation, image inspection, component commands, pattern documents, and exporters.
 
 ## What I Built
 
-- Designed and implemented the full product experience: the IRINA dashboard, reference-upload modal, workflow progress, pattern canvas, PCCE flat-sketch studio, manual editor, component library, layer tree, parametric inspectors, and production-export surfaces.
-- Built an empty-first scene model where a document contains nothing until the user adds a garment foundation or loose component. Every addition becomes a selectable layer with visibility, locking, grouping, z-order, side ownership, and a stable scene identity.
-- Developed formula-driven shirt geometry for front and back views, including measurement and fit controls, construction anchors, plackets, collars, yokes, sleeve/cuff relationships, pockets, seam and fold lines, and reconciliation checks.
-- Implemented the patch-pocket vertical slice end to end: backend component definition and command handling, formula evaluation, validation, event publication, frontend editing, live SVG geometry, and synchronized pocket pattern output.
-- Created deterministic shirt and pocket pattern drafters that return typed pattern documents in millimetres, then built exporters for SVG, calibrated PDF, Standard DXF, Gerber legacy NC, and the diagnostic IRINA-CUT format.
-- Added defense-in-depth image validation. The browser checks file type, size, and dimensions for immediate feedback; the API independently reads the binary header and rejects files that merely claim to be an image.
-- Researched the practical Gerber workflow and encoded its boundaries into both the software and documentation, including layer-to-tool mapping, CutWorks simulation, controller-specific postprocessing, dry-run gates, and explicit format limitations.
+- Evolved the original IRINA product into the Tech Pack OS identity and reframed the workflow around reviewable evidence rather than opaque AI generation.
+- Designed and implemented the private studio experience, including authentication, project entry points, reference intake, workflow state, and production-file progression.
+- Built the technical-flat editing model with selectable layers, visibility and lock state, front/back ownership, stable component identity, and parametric inspectors.
+- Developed measurement-driven shirt and pocket geometry with linked construction rules and immediate visual feedback.
+- Implemented the end-to-end component pipeline: typed parameters, commands, formula evaluation, validation, events, live SVG rendering, and synchronized pattern output.
+- Created exporters for physical-size SVG/PDF, layered DXF, and carefully scoped cutter-oriented formats with explicit safety boundaries.
+- Added defense-in-depth image validation in both the browser and API before references enter the workspace.
 
 ## Challenges and Learnings
 
-The hardest problem is preserving a trustworthy boundary between generative interpretation and manufacturing output. Fashion images are ambiguous: perspective, fabric drape, lighting, and styling can all hide the real construction. Treating an AI result as cutter-ready would be unsafe. IRINA instead uses image analysis to suggest structured components and then passes control to a deterministic document model whose measurements, formulas, seam relationships, and validation rules are inspectable. This architecture makes AI useful without letting it become the source of truth for physical production.
+The hardest product decision was defining where AI must stop. Garment photos contain perspective distortion, folds, styling, and hidden seams, so an apparently confident model output may still be unsuitable for manufacturing. The evidence ledger makes uncertainty part of the interface: a proposal remains a proposal until an operator confirms it.
 
-The editor introduced a second challenge: one change must stay coherent across many representations. Moving or resizing a pocket affects the flat sketch, its panel containment validation, the component revision, pattern geometry, fabric estimates, and eventually marker and export consumers. I handled this by giving components stable identities and explicit commands, then publishing domain events to subscribed consumers rather than coupling every UI surface directly to every other one.
+The second challenge was keeping one edit coherent across multiple representations. Moving a pocket can affect the flat sketch, component revision, panel-containment checks, pattern geometry, measurements, fabric estimates, and exports. Stable component identities and domain events let those consumers stay synchronized without tightly coupling every UI surface.
 
-Machine export required equal restraint. “Gerber compatible” is not one universal file format, and cutter behavior depends on the controller, firmware, installed tools, and material configuration. The safest verified workflow is layered DXF into CutWorks, followed by operator mapping and simulation. The legacy G71 generator is deliberately named for the profile it targets and surfaces what it cannot yet represent. The lesson was that production software earns trust by making limitations visible, not by hiding them behind a download button.
+Production export also required restraint. Cutter behavior depends on controller, firmware, installed tools, and material configuration. Tech Pack OS therefore treats file generation as a reviewed handoff, not a one-click guarantee, and makes simulation and controller-specific post-processing part of the workflow.
 
 ## Outcome
 
-IRINA is an active development project with the core engineering loop working: create a garment document, edit parametric construction, validate geometry, draft semantic pattern pieces, and prepare vector or cutter-oriented output. The product already demonstrates both image-led and manual workflows, a reusable component architecture, physical-unit pattern generation, and a researched CutWorks handoff. The next phase is to connect a production image-understanding model to the existing reference pipeline while keeping deterministic geometry and operator-reviewed export as the final authority.
+Tech Pack OS is in active development with the core engineering loop working: capture garment evidence, distinguish facts from assumptions, edit structured construction, validate geometry, draft semantic pattern pieces, and prepare production handoff files. The rebrand makes the product's purpose clearer and gives studios a more trustworthy operating model for AI-assisted apparel specifications.

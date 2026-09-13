@@ -162,13 +162,13 @@ const about = {
         role: "Co-Founder | Software Architect & Full-Stack Engineer",
         achievements: [
           <>
-            Co-founded and engineered a product portfolio spanning NinjaHR,
-            NinjaCommerce, NinjaLearn, and the LocalNinja company platform.
+            Co-founded and operate the LocalNinja anime ecommerce store while
+            engineering a product portfolio spanning NinjaHR, NinjaLearn, and
+            custom commerce platforms.
           </>,
           <>
-            Built multi-tenant SaaS products with Next.js, React, NestJS,
-            PostgreSQL, Firebase, Stripe, DDD, and CQRS, covering HR operations,
-            ecommerce, and interactive software-engineering education.
+            Built ecommerce and multi-tenant SaaS products with Shopify,
+            Next.js, React, NestJS, PostgreSQL, Firebase, Stripe, DDD, and CQRS.
           </>,
           <>
             Designed production cloud deployments using Firebase App Hosting,

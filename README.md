@@ -76,6 +76,10 @@ public/
 
 Drop a new `.mdx` file in `src/app/work/projects/`. Check `_template.mdx` in that folder for the expected frontmatter format.
 
+### Project Screenshot Standard
+
+Capture every new project screenshot at exactly **1438 × 809 pixels** with the webpage set to **95% zoom**. This standard applies to both homepage previews and project gallery screenshots.
+
 ### Editing Content
 
 All personal info, work experience, and skills live in `src/app/resources/content.js`. Site-wide settings (theme, routes, effects) are in `src/app/resources/config.js`.

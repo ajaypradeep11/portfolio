@@ -192,7 +192,7 @@ export default function About() {
               </Flex>
             )}
             <Heading className={styles.textAlign} variant="display-strong-xl">
-              Hi, I&apos;m Ajay!
+              Hi, I&apos;m Pradeep!
             </Heading>
 
             <Text

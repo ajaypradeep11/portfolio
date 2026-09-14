@@ -83,7 +83,7 @@ const about = {
   intro: {
     display: true,
     title: "Introduction",
-    nickName: "Ajay",
+    nickName: "Pradeep",
     preferredName: "AJ",
     description: (
       <>

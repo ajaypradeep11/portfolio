@@ -42,9 +42,11 @@ export function Projects({ range, priorityFirst = false, homepagePreview = false
           key={post.slug}
           href={`/work/${post.slug}`}
           images={
-            homepagePreview && post.metadata.homepageImages?.length
-              ? post.metadata.homepageImages
-              : post.metadata.images
+            homepagePreview && post.metadata.hideHomepageImage
+              ? []
+              : homepagePreview && post.metadata.homepageImages?.length
+                ? post.metadata.homepageImages
+                : post.metadata.images
           }
           title={post.metadata.title}
           description={post.metadata.summary}

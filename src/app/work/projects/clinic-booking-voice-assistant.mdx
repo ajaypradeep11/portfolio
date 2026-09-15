@@ -1,0 +1,49 @@
+---
+title: 'Clinic Booking Voice Assistant - Live Vapi Agent'
+publishedAt: '2026-09-14'
+summary: 'A production voice receptionist built with Vapi, Google Cloud Run, and Firebase that speaks naturally with patients, checks live appointment availability, and completes clinic bookings through a browser-based call.'
+images:
+  - '/images/projects/clinic-booking-voice-assistant/live-demo-black.png'
+team:
+  - name: 'Pradeep'
+    role: 'Founder and Full-Stack Engineer'
+    avatar: '/images/avatar.png'
+    linkedIn: 'https://www.linkedin.com/in/majaypradeep/'
+link: 'https://studio.localninja.ca/work.html'
+ongoing: true
+featuredPosition: 4
+hideHomepageImage: true
+---
+
+## Overview
+
+The Clinic Booking Voice Assistant is a live AI receptionist that patients can call directly from the browser. It uses Vapi for the real-time voice connection and connects to a booking platform running on Google Cloud Run with Firebase-backed availability and appointment data.
+
+Unlike a scripted demo, this is a real conversational workflow. A patient can ask about available appointments, answer follow-up questions naturally, choose a suitable time, and confirm a booking without navigating a form. The live assistant above is the same production integration used by [LocalNinja Studio](https://studio.localninja.ca/work.html).
+
+## Key Features
+
+- **Live browser voice calls**: Starts a real-time Vapi call after the visitor grants microphone access, with clear connecting, listening, speaking, ending, and error states.
+- **Natural appointment discovery**: Understands conversational requests, gathers the information required for a booking, and offers available alternatives when a requested slot is unavailable.
+- **Real booking integration**: Connects the voice agent to backend booking tools deployed on Google Cloud Run rather than simulating responses in the interface.
+- **Firebase-backed data**: Reads availability and persists confirmed appointment data through the clinic platform's Firebase services.
+- **Accessible call controls**: Provides explicit status text, a single start/end control, microphone guidance, responsive layout, and reduced-motion support.
+- **Privacy-aware experience**: Reminds visitors to share only the information required to arrange their visit.
+
+## Technologies Used
+
+- **Vapi Web SDK** for low-latency browser voice calls, call lifecycle events, microphone levels, and assistant audio.
+- **React and TypeScript** for the custom voice interface and interaction state management.
+- **Google Cloud Run** for the booking API and voice-agent tools.
+- **Firebase** for appointment availability, booking records, and supporting application data.
+
+## What I Built
+
+- Designed and implemented the clinic receptionist's browser-based voice experience, including the responsive audio orb and real-time call feedback.
+- Connected the frontend call flow to the configured Vapi assistant using a restricted browser-safe public key.
+- Integrated the assistant with live clinic booking tools so it can check availability and complete an appointment through conversation.
+- Added resilient lifecycle handling for microphone permission, connection failures, call termination, and component cleanup.
+
+## Outcome
+
+The result is a working AI receptionist visitors can speak with immediately. It demonstrates the complete voice-agent stack—from a polished browser interface and streaming speech through tool-enabled backend actions and persistent booking data—inside a real customer workflow.

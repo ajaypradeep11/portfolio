@@ -1,0 +1,243 @@
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: clamp(42rem, 80vh, 51rem);
+  overflow: hidden;
+  background: transparent;
+  color: var(--neutral-on-background-strong);
+
+  &::before {
+    position: absolute;
+    width: min(48rem, 92vw);
+    height: min(48rem, 92vw);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(16, 185, 129, 0.17) 0%,
+      rgba(5, 150, 105, 0.09) 38%,
+      rgba(6, 78, 59, 0) 72%
+    );
+    content: "";
+    filter: blur(8px);
+    pointer-events: none;
+  }
+}
+
+.assistant {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 31rem);
+  padding: 3rem 1.5rem 2.75rem;
+  text-align: center;
+}
+
+.identity {
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    color: var(--neutral-on-background-strong);
+    font-family: var(--font-family-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  p {
+    margin: 0.2rem 0 0;
+    color: var(--neutral-on-background-medium);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+}
+
+.status {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.22rem 0.78rem;
+  border: 1px solid var(--neutral-alpha-strong);
+  border-radius: 999px;
+  background: var(--neutral-alpha-weak);
+  color: var(--neutral-on-background-strong);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.orbControl {
+  --mic-level: 0;
+  --voice-level: 0;
+  position: relative;
+  width: min(17rem, 82vw);
+  margin: 1rem auto 3rem;
+}
+
+.orb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 50%;
+  background: #34d399;
+  transform: scale(calc(1 + var(--mic-level) * 0.025 + var(--voice-level) * 0.04));
+  transition: filter 180ms ease, opacity 180ms ease, transform 180ms ease-out;
+}
+
+.orbSurface {
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(var(--voice-level) * 24deg - var(--mic-level) * 16deg)) scale(1.04);
+  transition: transform 180ms ease-out;
+}
+
+.clouds {
+  transform: translateY(calc(var(--voice-level) * -12px)) scale(calc(1 + var(--voice-level) * 0.16));
+  transform-origin: 50% 50%;
+  transition: transform 180ms ease-out;
+}
+
+.connectingArc {
+  position: absolute;
+  inset: -0.45rem;
+  border: 2px solid transparent;
+  border-top-color: #10b981;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.orbControl[data-state="connecting"] .connectingArc {
+  animation: connect 1.2s linear infinite;
+  opacity: 1;
+}
+
+.orbControl[data-state="unavailable"] .orb {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+.orbControl[data-state="idle"] .orbSurface {
+  animation: drift 12s ease-in-out infinite alternate;
+}
+
+.orbControl[data-activity="speaking"] .orb {
+  filter: saturate(1.12);
+}
+
+.callButton {
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  display: grid;
+  width: 4.15rem;
+  height: 4.15rem;
+  padding: 0;
+  transform: translateX(-50%);
+  place-items: center;
+  border: 0.5rem solid var(--page-background);
+  border-radius: 50%;
+  background: #090909;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+
+  svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: currentColor;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateX(-50%) scale(1.04);
+  }
+
+  &:focus-visible {
+    outline: 3px solid #10b981;
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+  }
+}
+
+.endCall {
+  background: #b91c1c;
+
+  svg {
+    transform: rotate(135deg);
+  }
+}
+
+.caption {
+  margin: 0 0 1rem;
+  color: var(--neutral-on-background-strong);
+  font-family: var(--font-family-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.hint,
+.notice {
+  max-width: 25rem;
+  margin-right: auto;
+  margin-left: auto;
+  color: var(--neutral-on-background-medium);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.hint {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.notice {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@keyframes connect {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: rotate(-4deg) scale(1.04);
+  }
+  to {
+    transform: rotate(5deg) scale(1.08);
+  }
+}
+
+@media (max-width: 600px) {
+  .stage {
+    min-height: 42rem;
+  }
+
+  .assistant {
+    padding: 2.25rem 1rem 2rem;
+  }
+
+  .orbControl {
+    width: min(15rem, 76vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb,
+  .orbSurface,
+  .clouds,
+  .connectingArc,
+  .callButton {
+    animation: none !important;
+    transition: none !important;
+  }
+}

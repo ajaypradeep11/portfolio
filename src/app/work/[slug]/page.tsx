@@ -9,6 +9,7 @@ import { formatDate } from "@/app/utils/formatDate";
 import ScrollToHash from "@/components/ScrollToHash";
 import { createMetadata, createOgImageUrl, toAbsoluteUrl } from "@/app/utils/metadata";
 import { LiveDemoFrame } from "@/components/work/LiveDemoFrame";
+import { ClinicVoiceDemo } from "@/components/work/ClinicVoiceDemo";
 
 interface WorkParams {
   params: {
@@ -54,6 +55,7 @@ export default function Project({ params }: WorkParams) {
       src: person.avatar,
     })) || [];
   const liveDemo = getLiveDemoByWorkSlug(post.slug);
+  const isClinicVoiceDemo = post.slug === "clinic-booking-voice-assistant";
   const postImage =
     toAbsoluteUrl(post.metadata.image || post.metadata.images[0]) ||
     createOgImageUrl(post.metadata.title);
@@ -144,7 +146,9 @@ export default function Project({ params }: WorkParams) {
           )}
         </Flex>
       </Column>
-      {liveDemo ? (
+      {isClinicVoiceDemo ? (
+        <ClinicVoiceDemo />
+      ) : liveDemo ? (
         <LiveDemoFrame
           title={liveDemo.title}
           description={liveDemo.description}

@@ -15,6 +15,7 @@ type Metadata = {
   summary: string;
   image?: string;
   images: string[];
+  screenshots: { src: string; title: string; description: string }[];
   homepageImages?: string[];
   hideHomepageImage?: boolean;
   tag?: string;
@@ -48,6 +49,7 @@ function readMDXFile(filePath: string) {
     summary: data.summary || "",
     image: data.image || "",
     images: data.images || [],
+    screenshots: data.screenshots || [],
     homepageImages: data.homepageImages || [],
     hideHomepageImage: data.hideHomepageImage || false,
     tag: data.tag || [],

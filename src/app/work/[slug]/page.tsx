@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/components/mdx";
 import { getPosts } from "@/app/utils/utils";
-import { AvatarGroup, Button, Carousel, Column, Flex, Heading, Text } from "@/once-ui/components";
+import { Button, Column, Heading, SmartLink } from "@/once-ui/components";
 import { absoluteUrl } from "@/app/resources";
 import { getLiveDemoByWorkSlug } from "@/app/resources/liveDemos";
 import { person, work } from "@/app/resources/content";
@@ -10,6 +10,8 @@ import ScrollToHash from "@/components/ScrollToHash";
 import { createMetadata, createOgImageUrl, toAbsoluteUrl } from "@/app/utils/metadata";
 import { LiveDemoFrame } from "@/components/work/LiveDemoFrame";
 import { ClinicVoiceDemo } from "@/components/work/ClinicVoiceDemo";
+import { ProjectScreenshot } from "@/components/work/ProjectScreenshot";
+import styles from "@/components/work/ProjectStudy.module.scss";
 
 interface WorkParams {
   params: {
@@ -50,10 +52,13 @@ export default function Project({ params }: WorkParams) {
     notFound();
   }
 
-  const avatars =
-    post.metadata.team?.map((person) => ({
-      src: person.avatar,
-    })) || [];
+  const screenshots = post.metadata.screenshots.length
+    ? post.metadata.screenshots
+    : post.metadata.images.map((src, index) => ({
+        src,
+        title: `${post.metadata.title} — Screen ${index + 1}`,
+        description: post.metadata.summary,
+      }));
   const liveDemo = getLiveDemoByWorkSlug(post.slug);
   const isClinicVoiceDemo = post.slug === "clinic-booking-voice-assistant";
   const postImage =
@@ -61,7 +66,7 @@ export default function Project({ params }: WorkParams) {
     createOgImageUrl(post.metadata.title);
 
   return (
-    <Column as="section" maxWidth="xl" horizontal="center" gap="l">
+    <Column as="section" fillWidth maxWidth="xl" className={styles.study}>
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -108,78 +113,63 @@ export default function Project({ params }: WorkParams) {
           ]),
         }}
       />
-      <Column maxWidth="xs" gap="16">
-        <Button href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
-          Projects
-        </Button>
-        <Flex gap="m" vertical="center" wrap>
-          <Heading variant="display-strong-s">{post.metadata.title}</Heading>
-          {post.metadata.ongoing && (
-            <Flex
-              vertical="center"
-              gap="8"
-              paddingX="12"
-              paddingY="4"
-              radius="l"
-              fitWidth
-              style={{
-                borderWidth: 1,
-                borderStyle: "solid",
-                borderColor: "var(--success-border-strong)",
-                backgroundColor: "var(--success-background-strong)",
-              }}
-            >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  backgroundColor: "var(--success-solid-strong)",
-                  animation: "pulse 2s ease-in-out infinite",
-                  flexShrink: 0,
-                }}
-              />
-              <Text variant="label-default-s" onBackground="success-strong">
-                Ongoing
-              </Text>
-            </Flex>
+      <Button href="/work" variant="tertiary" weight="default" size="s" prefixIcon="chevronLeft">
+        All projects
+      </Button>
+      <header className={styles.header}>
+        <div className={styles.intro}>
+          <span className={styles.kicker}>Software project · {post.metadata.ongoing ? "Ongoing" : "Case study"}</span>
+          <Heading as="h1" variant="display-strong-s">{post.metadata.title}</Heading>
+          <p className={styles.summary}>{post.metadata.summary}</p>
+        </div>
+        <dl className={styles.facts}>
+          {post.metadata.team.length > 0 && (
+            <div>
+              <dt>Role & team</dt>
+              <dd>{post.metadata.team.map((member) => (
+                <div key={member.name}>{member.name} · {member.role}</div>
+              ))}</dd>
+            </div>
           )}
-        </Flex>
-      </Column>
-      {isClinicVoiceDemo ? (
-        <ClinicVoiceDemo />
-      ) : liveDemo ? (
-        <LiveDemoFrame
-          title={liveDemo.title}
-          description={liveDemo.description}
-          src={liveDemo.src}
-          standaloneHref={liveDemo.standalonePath}
-          frameHeight={liveDemo.frameHeight}
-          fallbackImage={post.metadata.image || post.metadata.images[0] || liveDemo.fallbackImage}
-          fallbackAlt={post.metadata.title}
-          fallbackPriority
-        />
-      ) : post.metadata.images.length > 0 && (
-        <Carousel
-          indicator="thumbnail"
-          aspectRatio="16 / 9"
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 92vw, 1100px"
-          images={post.metadata.images.map((src: string) => ({
-            src,
-            alt: post.metadata.title,
-          }))}
-        />
+          {post.metadata.publishedAt && (
+            <div><dt>Published</dt><dd>{formatDate(post.metadata.publishedAt)}</dd></div>
+          )}
+          {post.metadata.link && (
+            <div><dt>Explore</dt><dd><SmartLink href={post.metadata.link} suffixIcon="arrowUpRightFromSquare">View project</SmartLink></dd></div>
+          )}
+        </dl>
+      </header>
+      {!isClinicVoiceDemo && screenshots.length > 0 && (
+        <div className={styles.gallery}>
+          {screenshots.map((screenshot, index) => (
+            <ProjectScreenshot key={screenshot.src} {...screenshot} index={index} />
+          ))}
+        </div>
       )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <Flex gap="12" marginBottom="24" vertical="center">
-          {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="m" />}
-          <Text variant="body-default-s" onBackground="neutral-weak">
-            {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-          </Text>
-        </Flex>
-        <CustomMDX source={post.content} />
-      </Column>
+      {(isClinicVoiceDemo || liveDemo) && (
+        <section className={styles.demo} aria-label="Live project demo">
+          <Heading as="h2" variant="heading-strong-xl">Try the live demo</Heading>
+          {isClinicVoiceDemo ? <ClinicVoiceDemo /> : liveDemo && (
+            <LiveDemoFrame
+              title={liveDemo.title}
+              description={liveDemo.description}
+              src={liveDemo.src}
+              standaloneHref={liveDemo.standalonePath}
+              frameHeight={liveDemo.frameHeight}
+              fallbackImage={post.metadata.image || post.metadata.images[0] || liveDemo.fallbackImage}
+              fallbackAlt={post.metadata.title}
+            />
+          )}
+        </section>
+      )}
+      {screenshots.length ? (
+        <details className={styles.notes}>
+          <summary>Engineering notes & project details</summary>
+          <article className={styles.notesBody}><CustomMDX source={post.content} /></article>
+        </details>
+      ) : (
+        <article className={styles.notesBody}><CustomMDX source={post.content} /></article>
+      )}
       <ScrollToHash />
     </Column>
   );

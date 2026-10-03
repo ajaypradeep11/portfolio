@@ -76,6 +76,10 @@ public/
 
 Drop a new `.mdx` file in `src/app/work/projects/`. Check `_template.mdx` in that folder for the expected frontmatter format.
 
+Work detail pages display a screenshot walkthrough with explanations beside each image (stacked on mobile). Add `screenshots` entries with `src`, `title`, and `description` to the frontmatter; `images` still supplies the portfolio previews. Longer MDX content appears under expandable engineering notes. Projects without screenshots show their written case study directly.
+
+The retired wedding routes (`/marriage`, `/marriage/*`, and `/marriages/*`) return 404 through middleware, including requests to their server actions.
+
 ### Project Screenshot Standard
 
 Capture every new project screenshot at exactly **1438 × 809 pixels** with the webpage set to **95% zoom**. This standard applies to both homepage previews and project gallery screenshots.
